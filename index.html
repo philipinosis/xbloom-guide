@@ -1,0 +1,601 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f1e6">
+<title>xBloom, plainly</title>
+<style>
+:root{
+  --bg:#f7f1e6; --card:#fffdf8; --ink:#2a1d13; --dim:#6b5b4b;
+  --line:#e3d6c3; --accent:#7a4a25; --soft:#f1e4d3; --warn:#8a3b12; --ok:#2f6b3a;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#17120e; --card:#221a14; --ink:#f2e8dc; --dim:#b3a291;
+    --line:#3a2d23; --accent:#e0a870; --soft:#2e231b; --warn:#f0a07a; --ok:#8fcf9c;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px 64px}
+header.top{background:var(--bg);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:9}
+header.top .wrap{padding:10px 16px}
+h1{font-size:1.35rem;margin:0 0 6px}
+h2{font-size:1.25rem;margin:32px 0 8px;border-top:2px solid var(--line);padding-top:24px}
+h3{font-size:1rem;margin:18px 0 6px}
+nav{display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+nav a{flex:0 0 auto;min-height:44px;display:flex;align-items:center;padding:0 12px;
+  border:1px solid var(--line);border-radius:22px;background:var(--card);
+  color:var(--ink);text-decoration:none;font-size:.92rem}
+p,li{margin:8px 0}
+small,.note{color:var(--dim);font-size:.88rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:12px 0}
+.card h3{margin-top:0}
+.card p{margin:6px 0}
+.tip{color:var(--accent);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:.92rem;margin:8px 0}
+th,td{text-align:left;padding:7px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--dim);font-weight:600}
+.scroll{overflow-x:auto}
+label{display:block;font-weight:600;font-size:.9rem;margin:12px 0 4px}
+input,select,button{font:inherit;color:var(--ink)}
+input,select{width:100%;min-height:44px;padding:8px 10px;border:1px solid var(--line);
+  border-radius:10px;background:var(--card)}
+button{min-height:44px;padding:10px 14px;border-radius:10px;border:1px solid var(--accent);
+  background:var(--accent);color:#fff;font-weight:600;cursor:pointer}
+@media (prefers-color-scheme:dark){button{color:#1b1209}}
+button.ghost{background:var(--card);color:var(--ink);border-color:var(--line)}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row>div{flex:1 1 140px}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.pour{border:1px solid var(--line);border-radius:10px;padding:10px;margin:10px 0;background:var(--soft)}
+.pour .head{display:flex;justify-content:space-between;align-items:center;font-weight:700}
+.checks{display:flex;gap:16px;margin-top:8px;flex-wrap:wrap}
+.checks label{display:flex;align-items:center;gap:8px;font-weight:500;margin:0;min-height:44px}
+.checks input{width:22px;height:22px;min-height:22px}
+#total{font-weight:700}
+.flag{color:var(--warn);font-weight:600}
+.saved{border:1px solid var(--line);border-radius:10px;padding:10px;margin:8px 0;background:var(--card);
+  display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}
+footer{border-top:2px solid var(--line);margin-top:32px;padding-top:16px;font-size:.9rem}
+footer a{color:var(--accent)}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <nav>
+      <a href="#start">Start here</a>
+      <a href="#settings">Settings</a>
+      <a href="#builder">Builder</a>
+      <a href="#fix">Fix the cup</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<h1>xBloom, plainly</h1>
+<p class="note">A short guide for a friend with a new machine and no pour-over history. Not affiliated with xBloom.</p>
+
+<h2 id="start">Start here</h2>
+
+<p><strong>What pour-over is.</strong> Hot water falls through a bed of ground coffee held in a paper filter. The coffee drips into your cup. The xBloom grinds the beans, heats the water and pours it for you.</p>
+
+<p><strong>Extraction.</strong> Water dissolves solids out of the grounds. Take too little and the cup tastes sour and thin. Take too much and it tastes bitter and drying.</p>
+
+<p><strong>The five levers.</strong></p>
+<ul>
+  <li><strong>Grind size.</strong> The biggest one. Finer grounds slow the water and extract more. Coarser grounds extract less and drain faster.</li>
+  <li><strong>Temperature.</strong> Hotter water dissolves more, faster. Drop it 2-3 &deg;C to soften a harsh cup.</li>
+  <li><strong>Ratio.</strong> Coffee weight to water weight. Ratio sets strength. Grind and heat set extraction. Keep them separate in your head.</li>
+  <li><strong>Pours and bloom.</strong> Fresh coffee holds gas from roasting. The first small pour wets the bed and lets the gas escape, so the later water soaks in evenly.</li>
+  <li><strong>Agitation.</strong> The dock arm vibrates the dripper to mix water through the grounds. It raises extraction. Too much packs fine particles into the filter and stalls the brew.</li>
+</ul>
+
+<p><strong>Fresh beans and a scale.</strong> Coffee goes stale within weeks of roasting, and stale coffee does not bloom. Scoops lie, because grind size changes how much fits in one. Weigh everything. The Studio has a scale built in. The Original does not.</p>
+
+<div class="card">
+<h3>Your first brew</h3>
+<p class="note">xBloom's own published filter baseline, via the Basic Barista Copilot guide.</p>
+<ol>
+  <li>Weigh 15 g of beans. Use a ratio of 1:16, so 240 ml of water.</li>
+  <li>Set grind 35-40, grinder 90 RPM, water 90-93 &deg;C, pour pattern spiral.</li>
+  <li>Pour 1 (the bloom): 45 ml. Rest 30-45 s.</li>
+  <li>Pour 2: 100 ml.</li>
+  <li>Pour 3: 95 ml. Drink it, then change one thing next time.</li>
+</ol>
+</div>
+
+<div class="card">
+<h3>Where to start by roast</h3>
+<p><strong>Light.</strong> Dense beans. Go 2-3 settings finer than the baseline, and keep the water hot.</p>
+<p><strong>Medium.</strong> Use the baseline as written.</p>
+<p><strong>Dark.</strong> Gives up its solubles easily. Go coarser to stay clean, and drop the temperature a little.</p>
+<p class="note">These are starting points, not recipes. Taste, then move.</p>
+</div>
+
+<h2 id="settings">Settings explained</h2>
+<p class="note">In the order the xBloom app asks for them.</p>
+
+<div class="card">
+<h3>Model</h3>
+<p>Two machines. The Studio grinds on a 1-80 scale, controls grinder speed, has a built-in scale, and holds 946 ml of water. The Original grinds on a 1-30 scale and holds 700 ml.</p>
+<p class="tip">Tip: pick the right model in the app first. Every other range depends on it.</p>
+</div>
+
+<div class="card">
+<h3>Dose</h3>
+<p>How much coffee you grind, in grams. It sets the size of the brew.</p>
+<p>Range: 5-18 g on the Studio, matching the Omni Dripper 2 spec. The Original's recipe editor has been reported as locked at 15 g.</p>
+<p class="tip">Tip: leave it at 15 g until everything else makes sense.</p>
+</div>
+
+<div class="card">
+<h3>Grind size</h3>
+<p>The size of the coffee particles. Your main control over taste.</p>
+<p>Range: 1-80 on the Studio (1 is fine, 80 is coarse, about 18.75 &micro;m per step). 1-30 on the Original.</p>
+<div class="scroll">
+<table>
+<tr><th>Method</th><th>Microns</th><th>Studio setting</th></tr>
+<tr><td>Espresso</td><td>180-380</td><td>1-11</td></tr>
+<tr><td>V60</td><td>400-700</td><td>12-28</td></tr>
+<tr><td>Pour-over, general</td><td>410-930</td><td>13-40</td></tr>
+<tr><td>French press</td><td>690-1050</td><td>27-80</td></tr>
+<tr><td>Cold brew</td><td>800-1050</td><td>33-80</td></tr>
+</table>
+</div>
+<p class="note">The chart printed under the Studio's tank cap is broader than this one. Treat both as ranges, not answers.</p>
+<p class="tip">Tip: move 3-5 settings at a time. Smaller moves are hard to taste.</p>
+</div>
+
+<div class="card">
+<h3>Grinder RPM (Studio only)</h3>
+<p>How fast the burrs turn. It changes the spread of particle sizes.</p>
+<p>Range: 60-120 RPM in steps of 10. Low speed gives a wider spread and more body. High speed gives a cleaner cup.</p>
+<p class="tip">Tip: 90 RPM is a fair middle. Go to 120 if the cup tastes muddy.</p>
+</div>
+
+<div class="card">
+<h3>Water temperature</h3>
+<p>How hot the water hits the coffee. Hotter pulls more out.</p>
+<p>Range on the Studio: RT (room temperature), then 40-98 &deg;C in 1 &deg;C steps, then BP (boiling point). The Original goes up to 95 &deg;C. You can set a different temperature for each pour.</p>
+<p class="tip">Tip: 92 &deg;C suits most filter coffee. Drop 2-3 &deg;C if it bites.</p>
+</div>
+
+<div class="card">
+<h3>Ratio</h3>
+<p>Coffee to water, written 1:N. 1:16 with a 15 g dose means 240 ml of water.</p>
+<p>Range: 1:14 to 1:15 for a stronger cup, 1:16 as standard, 1:17 to 1:18 for a lighter one.</p>
+<p class="tip">Tip: change the ratio before the grind when the cup tastes flat and weak.</p>
+</div>
+
+<div class="card">
+<h3>Number of pours</h3>
+<p>How many times the machine adds water. The first pour is the bloom. There is no separate bloom setting.</p>
+<p>Range: up to 9 pours.</p>
+<p class="tip">Tip: three pours cover almost everything. More pours mostly slow the brew down.</p>
+</div>
+
+<div class="card">
+<h3>Per-pour volume</h3>
+<p>How much water each pour adds, in millilitres. The volumes must add up to your total water.</p>
+<p>Range: xBloom publishes no limit. Real recipes run 30-120 ml per pour. The dripper holds about 160 ml of liquid, and the Studio's brewer takes about 500 ml per brew from the app.</p>
+<p class="tip">Tip: bloom with roughly twice the coffee weight, so about 30 ml for a 15 g dose. 45 ml also works.</p>
+</div>
+
+<div class="card">
+<h3>Flow rate (app only)</h3>
+<p>How fast the water leaves the nozzle.</p>
+<p>Range: 3.0-3.5 ml/s in steps of 0.1. The knobs cannot set it.</p>
+<p class="tip">Tip: leave it at 3.0 unless the bed keeps flooding.</p>
+</div>
+
+<div class="card">
+<h3>Pour pattern</h3>
+<p>The shape the nozzle traces over the bed.</p>
+<ul>
+  <li><strong>Centered.</strong> Straight down in one spot.</li>
+  <li><strong>Spiral.</strong> Centre outward, then the outer edge back inward.</li>
+  <li><strong>Circular.</strong> The largest radius only.</li>
+</ul>
+<p class="tip">Tip: spiral wets the whole bed. Use it unless you have a reason not to.</p>
+</div>
+
+<div class="card">
+<h3>Pause after pour</h3>
+<p>How long the machine waits before the next pour, in seconds.</p>
+<p>Range: no published limit. Real recipes show 0 to about 26 s. A bloom rest is normally 30-45 s.</p>
+<p class="tip">Tip: give the bloom its rest. Later pauses can be short or zero.</p>
+</div>
+
+<div class="card">
+<h3>Agitation before and after</h3>
+<p>The dock arm shakes the dripper side to side. Each pour can have a shake before it, after it, both, or neither. The strength of the shake is a machine setting in the app.</p>
+<p class="tip">Tip: try one shake after the bloom. Add more only if the cup tastes weak.</p>
+</div>
+
+<div class="card">
+<h3>Cup type</h3>
+<p>Tells the machine which vessel is on the dock, which sets its overflow threshold.</p>
+<p>Set it wrong and the machine stalls and shows WAIT. The Studio wants a carafe over 300 ml and under 100 mm tall. The Omni Dripper 2 page gives 105 mm or less.</p>
+<p class="tip">Tip: check this first when a brew pauses for no clear reason.</p>
+</div>
+
+<div class="card">
+<h3>How recipes get onto the machine</h3>
+<ul>
+  <li><strong>NFC card.</strong> Tap a card on top of the machine. It works with no phone and no internet.</li>
+  <li><strong>Bluetooth.</strong> Pair your phone, pick a recipe, tap Start. The app pushes it over.</li>
+  <li><strong>Auto Mode (Studio).</strong> Three recipes live on the machine in slots A, B and C, one press each. Replace a slot from the app under Settings, Auto Mode.</li>
+  <li><strong>The knobs.</strong> They change grind size and ratio only. Everything else is app-only.</li>
+</ul>
+<p>The app can also share a recipe as a link, so you can send one to a friend.</p>
+</div>
+
+<h2 id="builder">Recipe builder</h2>
+<p><strong>This page cannot talk to your machine.</strong> No website can. Build the numbers here, then type them into the xBloom app.</p>
+
+<label for="preset">Load a preset</label>
+<select id="preset">
+  <option value="">Choose one...</option>
+  <option value="baseline">xBloom baseline (3 pours)</option>
+  <option value="colombia">Four-pour example (Colombia)</option>
+  <option value="light">Light roast starting point</option>
+  <option value="medium">Medium roast starting point</option>
+  <option value="dark">Dark roast starting point</option>
+</select>
+
+<label for="model">Model</label>
+<select id="model">
+  <option value="studio">xBloom Studio</option>
+  <option value="original">xBloom Original</option>
+</select>
+<p class="note" id="modelNote" hidden>On the Original, the app has been reported to lock the dose at 15 g. You can still edit it here.</p>
+
+<label for="name">Recipe name</label>
+<input id="name" type="text" placeholder="Morning cup">
+
+<label for="bean">Bean or note (optional)</label>
+<input id="bean" type="text" placeholder="Colombia, washed">
+
+<label for="roast">Roast level</label>
+<select id="roast">
+  <option value="light">Light</option>
+  <option value="medium" selected>Medium</option>
+  <option value="dark">Dark</option>
+</select>
+
+<div class="row">
+  <div>
+    <label for="dose">Dose (g)</label>
+    <input id="dose" type="number" inputmode="decimal" step="0.5" min="5" max="18" value="15">
+  </div>
+  <div>
+    <label for="ratio">Ratio (1:N)</label>
+    <input id="ratio" type="number" inputmode="decimal" step="0.5" min="10" max="20" value="16">
+  </div>
+  <div>
+    <label for="water">Total water (ml)</label>
+    <input id="water" type="number" inputmode="decimal" step="1" value="240">
+  </div>
+</div>
+
+<div class="row">
+  <div>
+    <label for="grind">Grind (<span id="grindMax">1-80</span>)</label>
+    <input id="grind" type="number" inputmode="decimal" step="1" min="1" max="80" value="38">
+  </div>
+  <div id="rpmBox">
+    <label for="rpm">Grinder RPM</label>
+    <select id="rpm"></select>
+  </div>
+  <div>
+    <label for="temp">Water temperature</label>
+    <select id="temp"></select>
+  </div>
+</div>
+
+<div class="row">
+  <div>
+    <label for="flow">Flow rate (ml/s)</label>
+    <select id="flow"></select>
+  </div>
+  <div>
+    <label for="pattern">Pour pattern</label>
+    <select id="pattern">
+      <option>Spiral</option><option>Centered</option><option>Circular</option>
+    </select>
+  </div>
+  <div>
+    <label for="cup">Cup type</label>
+    <select id="cup">
+      <option>Omni Dripper 2</option><option>Other dripper</option>
+    </select>
+  </div>
+</div>
+
+<h3>Pours</h3>
+<div id="pours"></div>
+<div class="btns">
+  <button type="button" id="addPour" class="ghost">Add pour</button>
+  <button type="button" id="distribute" class="ghost">Distribute remaining water</button>
+</div>
+<p id="total"></p>
+<p id="warn" class="flag"></p>
+
+<div class="btns">
+  <button type="button" id="save">Save recipe</button>
+  <button type="button" id="copy" class="ghost">Copy as text</button>
+  <button type="button" id="share" class="ghost">Share</button>
+</div>
+<p class="note" id="status" role="status"></p>
+
+<h3>Saved recipes</h3>
+<div id="savedList"></div>
+
+<div class="card">
+<h3>Enter it in the app</h3>
+<p>Open the xBloom app and create a new recipe. Set the global specs first: grind, ratio and dose. Then add the pours one at a time until all the water is used. Save it. Then send it to the machine over Bluetooth, or write it to an NFC card.</p>
+</div>
+
+<h2 id="fix">Fix the cup</h2>
+<p><strong>One change at a time.</strong> Move 3-5 grind settings per step, brew again, and taste before you touch anything else.</p>
+
+<div class="scroll">
+<table>
+<tr><th>Taste</th><th>Cause</th><th>Fix</th></tr>
+<tr><td>Sour, sharp, thin</td><td>Under-extracted</td><td>Grind 3-5 settings finer, or raise the temperature.</td></tr>
+<tr><td>Bitter, harsh, drying</td><td>Over-extracted</td><td>Grind 3-5 settings coarser, or drop 2-3 &deg;C.</td></tr>
+<tr><td>Flat, weak, no sweetness</td><td>Ratio too wide</td><td>Try 1:15 instead of 1:16 before touching the grind.</td></tr>
+<tr><td>Muddy, heavy, unclear</td><td>Too many fines, or too much agitation</td><td>Grind coarser, raise RPM toward 120, cut the agitation.</td></tr>
+<tr><td>Too thin in body</td><td>Grind too clean</td><td>Drop RPM toward 60 for a wider particle spread.</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>Channeling</h3>
+<p>Water carves one fast path through the bed and skips the rest, so the cup tastes sour and bitter at once. Level the bed, switch the pattern from centered to spiral or circular, and cut the agitation.</p>
+</div>
+
+<div class="card">
+<h3>Stalled drawdown</h3>
+<p>The bed will not drain. Grind coarser, cut the agitation, and lower the dose so the bed sits shallower.</p>
+</div>
+
+<div class="card">
+<h3>WAIT, or "Paused, Resume On Device"</h3>
+<p>This is overflow protection, not a fault. Remove the scale's factory tape, put the cup down before grinding starts, keep it off the machine wall, never lift it mid-brew, and set the correct cup type in the app. Do not use an espresso grind for pour-over.</p>
+</div>
+
+<div class="card">
+<h3>Grinder overheating</h3>
+<p>Keep each grind under 30 seconds, and wait 60 seconds between grinds.</p>
+</div>
+
+<footer>
+<h3>Sources</h3>
+<ul>
+<li><a href="https://tbdxsupport.zendesk.com/hc/en-us/articles/25198204646939-Getting-started">xBloom help centre: Getting started (Studio manual and spec table)</a></li>
+<li><a href="https://tbdxsupport.zendesk.com/hc/en-us/articles/25198266531355-Three-Creative-Modes">xBloom help centre: Three Creative Modes</a></li>
+<li><a href="https://tbdxsupport.zendesk.com/hc/en-us/articles/27094427432987-How-do-I-create-a-new-recipe">xBloom help centre: How do I create a new recipe</a></li>
+<li><a href="https://tbdxsupport.zendesk.com/hc/en-us/articles/31951971970459-What-Is-Auto-Mode-and-How-Do-You-Use-It">xBloom help centre: What is Auto Mode</a></li>
+<li><a href="https://xbloom.com/blogs/news/mastering-pour-over-coffee-tips-for-consistency-and-precision">xBloom blog: Mastering pour-over coffee</a></li>
+<li><a href="https://thebasicbarista.com/en-us/blogs/article/how-to-dial-in-your-xbloom-studio-using-copilot-mode">Basic Barista: Dial in your xBloom Studio</a></li>
+<li><a href="https://thebasicbarista.com/en-us/blogs/article/xbloom-studio-grind-size-guide">Basic Barista: xBloom Studio grind size guide</a></li>
+<li><a href="https://coffeegeek.co/equipment/coffee-machines/pour-over/test-xbloom-studio">CoffeeGeek: xBloom Studio test</a></li>
+</ul>
+<p>Not affiliated with xBloom.</p>
+</footer>
+
+</main>
+
+<script>
+var $ = function(id){ return document.getElementById(id); };
+var KEY = 'xbloom-recipes';
+var pours = [];
+
+// Fill the enum-ish selects.
+(function(){
+  var t = ['RT'];
+  for (var c = 40; c <= 98; c++) t.push(String(c));
+  t.push('BP');
+  $('temp').innerHTML = t.map(function(v){
+    return '<option' + (v === '92' ? ' selected' : '') + '>' + v + '</option>';
+  }).join('');
+  var r = '';
+  for (var n = 60; n <= 120; n += 10) r += '<option' + (n === 90 ? ' selected' : '') + '>' + n + '</option>';
+  $('rpm').innerHTML = r;
+  var f = '';
+  for (var i = 30; i <= 35; i++) f += '<option>' + (i / 10).toFixed(1) + '</option>';
+  $('flow').innerHTML = f;
+})();
+
+function isStudio(){ return $('model').value === 'studio'; }
+
+function applyModel(){
+  var max = isStudio() ? 80 : 30;
+  $('grind').max = max;
+  $('grindMax').textContent = '1-' + max;
+  if (+$('grind').value > max) $('grind').value = max;
+  $('rpmBox').hidden = !isStudio();
+  $('modelNote').hidden = isStudio();
+}
+
+function num(el){ var v = parseFloat(el.value); return isNaN(v) ? 0 : v; }
+
+function fromRatio(){
+  var w = num($('dose')) * num($('ratio'));
+  $('water').value = Math.round(w);
+  update();
+}
+function fromWater(){
+  var d = num($('dose'));
+  if (d > 0) $('ratio').value = (num($('water')) / d).toFixed(1);
+  update();
+}
+
+function pourRow(p, i){
+  var d = document.createElement('div');
+  d.className = 'pour';
+  d.innerHTML =
+    '<div class="head"><span>' + (i === 0 ? 'Bloom (pour 1)' : 'Pour ' + (i + 1)) + '</span>' +
+    '<button type="button" class="ghost" data-del="' + i + '">Remove</button></div>' +
+    '<div class="row"><div><label>Volume (ml)</label>' +
+    '<input type="number" inputmode="decimal" step="1" min="0" data-f="vol" data-i="' + i + '" value="' + p.vol + '"></div>' +
+    '<div><label>Pause after (s)</label>' +
+    '<input type="number" inputmode="decimal" step="1" min="0" data-f="pause" data-i="' + i + '" value="' + p.pause + '"></div></div>' +
+    '<div class="checks"><label><input type="checkbox" data-f="before" data-i="' + i + '"' + (p.before ? ' checked' : '') + '> Agitate before</label>' +
+    '<label><input type="checkbox" data-f="after" data-i="' + i + '"' + (p.after ? ' checked' : '') + '> Agitate after</label></div>';
+  return d;
+}
+
+function renderPours(){
+  var box = $('pours');
+  box.innerHTML = '';
+  pours.forEach(function(p, i){ box.appendChild(pourRow(p, i)); });
+  $('addPour').disabled = pours.length >= 9;
+  update();
+}
+
+function sum(){ return pours.reduce(function(a, p){ return a + (parseFloat(p.vol) || 0); }, 0); }
+
+function update(){
+  var s = sum(), target = num($('water'));
+  $('total').textContent = 'Pours add up to ' + s + ' ml. Target is ' + target + ' ml.';
+  var msgs = [];
+  if (Math.abs(s - target) >= 1) msgs.push('Pours and total water differ by ' + Math.abs(s - target).toFixed(0) + ' ml.');
+  if (pours.some(function(p){ return (parseFloat(p.vol) || 0) > 160; })) msgs.push('A pour is over 160 ml. The dripper holds about that much.');
+  if (s > 500) msgs.push('Total is over 500 ml, the Studio brewer cap.');
+  $('warn').textContent = msgs.join(' ');
+}
+
+function setPours(list){ pours = list.map(function(p){
+  return { vol: p.vol, pause: p.pause || 0, before: !!p.before, after: !!p.after }; }); renderPours(); }
+
+var PRESETS = {
+  baseline: { grind: 38, rpm: 90, temp: '92', ratio: 16, dose: 15, roast: 'medium',
+    pours: [{vol:45,pause:40},{vol:100,pause:0},{vol:95,pause:0}] },
+  colombia: { grind: 60, rpm: 60, temp: '95', ratio: 17, dose: 15, roast: 'medium',
+    pours: [{vol:45,pause:17},{vol:30,pause:21},{vol:120,pause:26},{vol:60,pause:0}] },
+  light: { grind: 35, rpm: 90, temp: '93', ratio: 16, dose: 15, roast: 'light',
+    pours: [{vol:45,pause:40},{vol:100,pause:0},{vol:95,pause:0}] },
+  medium: { grind: 38, rpm: 90, temp: '92', ratio: 16, dose: 15, roast: 'medium',
+    pours: [{vol:45,pause:40},{vol:100,pause:0},{vol:95,pause:0}] },
+  dark: { grind: 43, rpm: 90, temp: '90', ratio: 16, dose: 15, roast: 'dark',
+    pours: [{vol:45,pause:40},{vol:100,pause:0},{vol:95,pause:0}] }
+};
+
+function loadPreset(k){
+  var p = PRESETS[k]; if (!p) return;
+  $('dose').value = p.dose; $('ratio').value = p.ratio; $('roast').value = p.roast;
+  applyModel();
+  $('grind').value = Math.min(p.grind, +$('grind').max);
+  $('rpm').value = p.rpm; $('temp').value = p.temp;
+  setPours(p.pours); fromRatio();
+}
+
+function recipe(){
+  return { name: $('name').value || 'Untitled', bean: $('bean').value, model: $('model').value,
+    roast: $('roast').value, dose: $('dose').value, ratio: $('ratio').value, water: $('water').value,
+    grind: $('grind').value, rpm: $('rpm').value, temp: $('temp').value, flow: $('flow').value,
+    pattern: $('pattern').value, cup: $('cup').value, pours: pours };
+}
+
+function asText(){
+  var r = recipe();
+  var L = [r.name, r.bean ? 'Beans: ' + r.bean : '', 'Machine: ' + (r.model === 'studio' ? 'xBloom Studio' : 'xBloom Original'),
+    'Roast: ' + r.roast, 'Grind: ' + r.grind, r.model === 'studio' ? 'Grinder: ' + r.rpm + ' RPM' : '',
+    'Ratio: 1:' + r.ratio, 'Dose: ' + r.dose + ' g', 'Total water: ' + r.water + ' ml',
+    'Temperature: ' + (r.temp === 'RT' || r.temp === 'BP' ? r.temp : r.temp + ' C'),
+    'Flow rate: ' + r.flow + ' ml/s', 'Pattern: ' + r.pattern, 'Cup: ' + r.cup,
+    'Pours: ' + r.pours.length, ''];
+  r.pours.forEach(function(p, i){
+    var a = [p.before ? 'agitate before' : '', p.after ? 'agitate after' : ''].filter(Boolean).join(', ');
+    L.push((i === 0 ? 'Bloom' : 'Pour ' + (i + 1)) + ': ' + p.vol + ' ml, pause ' + p.pause + ' s' + (a ? ', ' + a : ''));
+  });
+  return L.filter(function(x){ return x !== ''; }).join('\n');
+}
+
+function readSaved(){ try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch (e) { return []; } }
+function writeSaved(list){ try { localStorage.setItem(KEY, JSON.stringify(list)); } catch (e) { say('Could not save. Storage is blocked.'); } }
+function say(m){ $('status').textContent = m; }
+
+function renderSaved(){
+  var list = readSaved(), box = $('savedList');
+  box.innerHTML = list.length ? '' : '<p class="note">Nothing saved yet.</p>';
+  list.forEach(function(r, i){
+    var d = document.createElement('div');
+    d.className = 'saved';
+    d.innerHTML = '<span>' + r.name + ' <span class="note">' + r.dose + ' g, 1:' + r.ratio + '</span></span>' +
+      '<span><button type="button" class="ghost" data-load="' + i + '">Load</button> ' +
+      '<button type="button" class="ghost" data-rm="' + i + '">Delete</button></span>';
+    box.appendChild(d);
+  });
+}
+
+function loadRecipe(r){
+  $('name').value = r.name; $('bean').value = r.bean || ''; $('model').value = r.model;
+  applyModel();
+  $('roast').value = r.roast; $('dose').value = r.dose; $('ratio').value = r.ratio; $('water').value = r.water;
+  $('grind').value = r.grind; $('rpm').value = r.rpm; $('temp').value = r.temp; $('flow').value = r.flow;
+  $('pattern').value = r.pattern; $('cup').value = r.cup;
+  setPours(r.pours || []);
+}
+
+// Wiring.
+$('model').addEventListener('change', applyModel);
+$('dose').addEventListener('input', fromRatio);
+$('ratio').addEventListener('input', fromRatio);
+$('water').addEventListener('input', fromWater);
+$('preset').addEventListener('change', function(){ loadPreset(this.value); });
+$('addPour').addEventListener('click', function(){
+  if (pours.length >= 9) { say('Nine pours is the limit.'); return; }
+  pours.push({ vol: 0, pause: 0, before: false, after: false }); renderPours();
+});
+$('distribute').addEventListener('click', function(){
+  if (!pours.length) return;
+  var last = pours.length - 1;
+  var rest = pours.reduce(function(a, p, i){ return i === last ? a : a + (parseFloat(p.vol) || 0); }, 0);
+  pours[last].vol = Math.max(0, Math.round(num($('water')) - rest));
+  renderPours();
+});
+$('pours').addEventListener('input', function(e){
+  var t = e.target, f = t.getAttribute('data-f');
+  if (!f) return;
+  var p = pours[+t.getAttribute('data-i')];
+  p[f] = t.type === 'checkbox' ? t.checked : t.value;
+  update();
+});
+$('pours').addEventListener('click', function(e){
+  var d = e.target.getAttribute('data-del');
+  if (d !== null) { pours.splice(+d, 1); renderPours(); }
+});
+$('save').addEventListener('click', function(){
+  var list = readSaved(); list.push(recipe()); writeSaved(list); renderSaved(); say('Saved.');
+});
+$('savedList').addEventListener('click', function(e){
+  var l = e.target.getAttribute('data-load'), r = e.target.getAttribute('data-rm'), list = readSaved();
+  if (l !== null) { loadRecipe(list[+l]); say('Loaded.'); }
+  if (r !== null) { list.splice(+r, 1); writeSaved(list); renderSaved(); say('Deleted.'); }
+});
+function copyText(){
+  var t = asText();
+  if (navigator.clipboard) { navigator.clipboard.writeText(t).then(function(){ say('Copied.'); }, function(){ say(t); }); }
+  else say(t);
+}
+$('copy').addEventListener('click', copyText);
+$('share').addEventListener('click', function(){
+  if (navigator.share) navigator.share({ title: $('name').value || 'xBloom recipe', text: asText() }).catch(function(){});
+  else copyText();
+});
+
+applyModel();
+loadPreset('baseline');
+renderSaved();
+</script>
+</body>
+</html>
