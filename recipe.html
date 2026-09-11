@@ -7,103 +7,7 @@
 <title>xBloom Recipe Advisor</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <style>
-:root{
-  --bg:#eef1ef; --panel:#fafcfb; --ink:#121816; --dim:#566360;
-  --line:#d3dad7; --line2:#c3ccc9; --accent:#121816; --accent-ink:#f4f7f5;
-  --copper:#0c7361; --copper-ink:#f2fbf8; --focus:#0c7361;
-  --disp:"Bricolage Grotesque","Helvetica Neue",Helvetica,Arial,sans-serif;
-  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-}
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){
-    --bg:#0d1211; --panel:#151b1a; --ink:#e6edea; --dim:#94a6a1;
-    --line:#28322f; --line2:#33403c; --accent:#e6edea; --accent-ink:#0d1211;
-    --copper:#2ea88c; --copper-ink:#04100d; --focus:#3fbf9f;
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#0d1211; --panel:#151b1a; --ink:#e6edea; --dim:#94a6a1;
-  --line:#28322f; --line2:#33403c; --accent:#e6edea; --accent-ink:#0d1211;
-  --copper:#2ea88c; --copper-ink:#04100d; --focus:#3fbf9f;
-}
-*{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 var(--body);
-  padding:20px 18px 40px}
-main{max-width:560px;margin:0 auto}
-h1{font:600 1.5rem/1.2 var(--disp);margin:0 0 16px;letter-spacing:-.01em}
-.num{font-variant-numeric:tabular-nums}
-label.f{display:block;font-size:.8rem;font-weight:600;color:var(--dim);
-  letter-spacing:.04em;text-transform:uppercase;margin:0 0 6px}
-#coffee{width:100%;min-height:46px;padding:10px 12px;font:inherit;color:var(--ink);
-  background:var(--panel);border:1px solid var(--line2);border-radius:10px}
-#coffee::placeholder{color:var(--dim)}
-fieldset{border:0;padding:0;margin:0 0 12px}
-fieldset legend{padding:0;font-size:.8rem;font-weight:600;color:var(--dim);
-  letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px}
-.seg{display:flex;border:1px solid var(--line2);border-radius:10px;overflow:hidden;
-  background:var(--panel)}
-.seg label{flex:1 1 0;display:flex;align-items:center;justify-content:center;
-  min-height:44px;padding:0 6px;font-size:.94rem;cursor:pointer;
-  border-left:1px solid var(--line);transition:background .12s,color .12s}
-.seg label:first-child{border-left:0}
-.seg input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
-.seg input:checked + span{color:inherit;font-weight:600;text-decoration:underline}
-.seg label:has(input:checked){background:var(--accent);color:var(--accent-ink);font-weight:600}
-.seg label:has(input:checked) span{text-decoration:none}
-.seg label:has(input:focus-visible){outline:2px solid var(--focus);outline-offset:-3px}
-.field{margin:0 0 12px}
-#go{width:100%;min-height:52px;margin-top:4px;font:600 1.05rem var(--body);
-  color:var(--copper-ink);background:var(--copper);border:1px solid var(--copper);
-  border-radius:10px;cursor:pointer}
-#go[disabled]{cursor:default}
-button:focus-visible,a:focus-visible,#coffee:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
-#recent{margin-top:20px}
-#recent h2{font-size:.8rem;font-weight:600;color:var(--dim);letter-spacing:.04em;
-  text-transform:uppercase;margin:0 0 6px}
-#recent button{display:block;width:100%;text-align:left;min-height:44px;padding:8px 12px;
-  background:none;border:0;border-top:1px solid var(--line);color:var(--ink);
-  font:inherit;cursor:pointer}
-#recent button span{color:var(--dim);font-size:.86rem}
-#out{margin-top:22px;min-height:3.5rem}
-.quiet{color:var(--dim);font-size:.94rem;margin:0}
-pre.plain{font:12px/1.4 var(--mono);color:var(--ink);background:var(--panel);
-  border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin:10px 0 0;
-  white-space:pre-wrap;word-break:break-word;user-select:text}
-.card{border-top:2px solid var(--line2);padding-top:16px}
-.card h2{font:600 1.35rem/1.25 var(--disp);margin:0 0 14px}
-.lbl{margin:-8px 0 14px}
-.twice{color:var(--ink);font-weight:500;margin:-8px 0 14px}
-.twice + .lbl{margin-top:0}
-.lbl a{color:var(--copper)}
-.rows{margin:0 0 16px}
-.rows div{display:flex;justify-content:space-between;gap:16px;padding:7px 0;
-  border-bottom:1px solid var(--line)}
-.rows dt,.rows b{font-weight:500;color:var(--dim);font-size:.94rem}
-.rows dd,.rows i{margin:0;font-style:normal;font-size:1.2rem;font-weight:600;
-  font-variant-numeric:tabular-nums;text-align:right;line-height:1.2}
-h3{font-size:.8rem;font-weight:600;color:var(--dim);letter-spacing:.04em;
-  text-transform:uppercase;margin:18px 0 6px}
-ul.pours{list-style:none;margin:0;padding:0}
-ul.pours li{padding:6px 0;border-bottom:1px solid var(--line);
-  font-variant-numeric:tabular-nums;display:flex;justify-content:space-between;gap:12px}
-ul.pours em{font-style:normal;color:var(--ink);font-size:.9rem}
-p.notes{margin:0;white-space:pre-line}
-table.adj{width:100%;border-collapse:collapse;font-size:.94rem}
-table.adj td{padding:6px 0;border-bottom:1px solid var(--line);vertical-align:top}
-table.adj td:first-child{color:var(--ink);font-weight:500;width:40%;padding-right:14px}
-p.why{margin:0;color:var(--dim);font-size:.94rem;white-space:pre-line}
-.acts{display:flex;gap:8px;margin-top:20px}
-.acts .primary{background:var(--copper);color:var(--copper-ink);border-color:var(--copper)}
-.acts button,.acts .btn{flex:1 1 0;min-height:46px;font:500 .96rem var(--body);color:var(--ink);
-  background:var(--panel);border:1px solid var(--line2);border-radius:10px;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;text-decoration:none;text-align:center}
-.notice{margin:12px 0 0;font-size:.86rem;color:var(--dim)}
-footer{max-width:560px;margin:36px auto 0;padding-top:14px;border-top:1px solid var(--line);
-  font-size:.9rem}
-footer a{color:var(--copper);display:inline-block;padding:12px 0}
-@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+:root{--bg:#eef1ef; --panel:#fafcfb; --ink:#121816; --dim:#566360;--line:#d3dad7; --line2:#c3ccc9; --accent:#121816; --accent-ink:#f4f7f5;--copper:#0c7361; --copper-ink:#f2fbf8; --focus:#0c7361;--disp:"Bricolage Grotesque","Helvetica Neue",Helvetica,Arial,sans-serif;--body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1211; --panel:#151b1a; --ink:#e6edea; --dim:#94a6a1;--line:#28322f; --line2:#33403c; --accent:#e6edea; --accent-ink:#0d1211;--copper:#2ea88c; --copper-ink:#04100d; --focus:#3fbf9f;}}:root[data-theme="dark"]{--bg:#0d1211; --panel:#151b1a; --ink:#e6edea; --dim:#94a6a1;--line:#28322f; --line2:#33403c; --accent:#e6edea; --accent-ink:#0d1211;--copper:#2ea88c; --copper-ink:#04100d; --focus:#3fbf9f;}*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 var(--body);padding:20px 18px 40px}main{max-width:560px;margin:0 auto}h1{font:600 1.5rem/1.2 var(--disp);margin:0 0 16px;letter-spacing:-.01em}label.f{display:block;font-size:.8rem;font-weight:600;color:var(--dim);letter-spacing:.04em;text-transform:uppercase;margin:0 0 6px}#coffee,.tinp{width:100%;min-height:46px;padding:10px 12px;font:inherit;color:var(--ink);background:var(--panel);border:1px solid var(--line2);border-radius:10px}#coffee::placeholder,.tinp::placeholder{color:var(--dim)}fieldset{border:0;padding:0;margin:0 0 12px}fieldset legend{padding:0;font-size:.8rem;font-weight:600;color:var(--dim);letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px}.seg{display:flex;border:1px solid var(--line2);border-radius:10px;overflow:hidden;background:var(--panel)}.seg label{flex:1 1 0;display:flex;align-items:center;justify-content:center;min-height:44px;padding:0 6px;font-size:.94rem;cursor:pointer;border-left:1px solid var(--line);transition:background .12s,color .12s}.seg label:first-child{border-left:0}.seg input{position:absolute;opacity:0;width:1px;height:1px;margin:0}.seg input:checked + span{color:inherit;font-weight:600;text-decoration:underline}.seg label:has(input:checked){background:var(--accent);color:var(--accent-ink);font-weight:600}.seg label:has(input:checked) span{text-decoration:none}.seg label:has(input:focus-visible){outline:2px solid var(--focus);outline-offset:-3px}.field{margin:0 0 12px}#go,.fix{width:100%;min-height:52px;margin-top:4px;font:600 1.05rem var(--body);color:var(--copper-ink);background:var(--copper);border:1px solid var(--copper);border-radius:10px;cursor:pointer}#go[disabled]{cursor:default}button:focus-visible,a:focus-visible,input:focus-visible,.card h2:focus-visible{outline:2px solid var(--focus);outline-offset:2px}#recent{margin-top:20px}#recent h2{font-size:.8rem;font-weight:600;color:var(--dim);letter-spacing:.04em;text-transform:uppercase;margin:0 0 6px}#recent button{display:block;width:100%;text-align:left;min-height:44px;padding:8px 12px;background:none;border:0;border-top:1px solid var(--line);color:var(--ink);font:inherit;cursor:pointer}#recent button span{color:var(--dim);font-size:.86rem}#out{margin-top:22px;min-height:3.5rem}.quiet{color:var(--dim);font-size:.94rem;margin:0}pre.plain{font:12px/1.4 var(--mono);color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin:10px 0 0;white-space:pre-wrap;word-break:break-word;user-select:text}.card{border-top:2px solid var(--line2);padding-top:16px}.card h2{font:600 1.35rem/1.25 var(--disp);margin:0 0 14px}.lbl{margin:-8px 0 14px}.twice,.max{color:var(--ink);font-weight:500;margin:-8px 0 14px}.mach{margin:0 0 4px;font-size:.8rem;font-weight:600;color:var(--dim);letter-spacing:.04em;text-transform:uppercase}.err{border-top:2px solid var(--line2);padding-top:16px}.err > p{color:var(--ink);font-size:1rem}.err .acts{flex-wrap:wrap}.err .acts .primary{flex:1 1 100%}.lbl a{color:var(--copper)}.rows{margin:0 0 16px}.rows div{display:flex;justify-content:space-between;gap:16px;padding:7px 0;border-bottom:1px solid var(--line)}.rows b{font-weight:500;color:var(--dim);font-size:.94rem}.rows i{margin:0;font-style:normal;font-size:1.2rem;font-weight:600;font-variant-numeric:tabular-nums;text-align:right;line-height:1.2}h3{font-size:.8rem;font-weight:600;color:var(--dim);letter-spacing:.04em;text-transform:uppercase;margin:18px 0 6px}ul.pours{list-style:none;margin:0;padding:0}ul.pours li{padding:6px 0;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums;display:flex;justify-content:space-between;gap:12px}ul.pours em{font-style:normal;color:var(--ink);font-size:.9rem}p.notes{margin:0;white-space:pre-line}table.adj{width:100%;border-collapse:collapse;font-size:.94rem}table.adj td{padding:6px 0;border-bottom:1px solid var(--line);vertical-align:top}table.adj td:first-child{color:var(--ink);font-weight:500;width:40%;padding-right:14px}p.why{margin:0;color:var(--dim);font-size:.94rem;white-space:pre-line}.acts{display:flex;gap:8px;margin-top:20px}.acts .primary{background:var(--copper);color:var(--copper-ink);border-color:var(--copper)}.acts button,.acts .btn{flex:1 1 0;min-height:46px;font:500 .96rem var(--body);color:var(--ink);background:var(--panel);border:1px solid var(--line2);border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;text-decoration:none;text-align:center}.notice{margin:12px 0 0;font-size:.86rem;color:var(--dim)}ul.changed{list-style:none;margin:0;padding:0 0 0 10px;border-left:2px solid var(--copper)}ul.changed li{color:var(--ink);font-size:.94rem;padding:3px 0}section.taste{margin-top:14px;padding-top:10px;border-top:1px solid var(--line)}section.taste h3{margin-top:0}.chips{display:flex;flex-wrap:wrap;gap:6px}.chip{min-height:36px;padding:0 10px;font:500 .9rem var(--body);color:var(--ink);background:var(--panel);border:1px solid var(--line2);border-radius:18px;cursor:pointer}.chip[data-k="right"]{color:var(--copper)}.chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:600}.tin{display:flex;gap:8px;margin-top:10px}.tinp{flex:1 1 0;min-width:0}.fix{width:auto;min-height:44px;margin-top:0;padding:0 14px;font-size:.94rem;font-weight:500}.miss{margin:8px 0 0}footer{max-width:560px;margin:36px auto 0;padding-top:14px;border-top:1px solid var(--line);font-size:.9rem}footer a{color:var(--copper);display:inline-block;padding:12px 0}@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
@@ -111,10 +15,15 @@ footer a{color:var(--copper);display:inline-block;padding:12px 0}
 <h1>xBloom Recipe Advisor</h1>
 
 <form id="form" autocomplete="off">
+  <fieldset><legend>Machine</legend><div class="seg">
+    <label><input type="radio" name="model" value="studio"><span>Studio</span></label>
+    <label><input type="radio" name="model" value="original" checked><span>Original</span></label>
+  </div></fieldset>
+
   <div class="field">
     <label class="f" for="coffee">Coffee</label>
     <input id="coffee" name="coffee" type="text" maxlength="200"
-      placeholder="Ethiopia Guji natural, from Onyx">
+      placeholder="e.g. Ethiopia Guji natural, from Onyx">
   </div>
 
   <fieldset><legend>Roast</legend><div class="seg">
@@ -130,20 +39,15 @@ footer a{color:var(--copper);display:inline-block;padding:12px 0}
     <label><input type="radio" name="process" value="unsure" checked><span>Not sure</span></label>
   </div></fieldset>
 
-  <fieldset><legend>Cups</legend><div class="seg">
-    <label><input type="radio" name="cups" value="1" checked><span>1</span></label>
-    <label><input type="radio" name="cups" value="2"><span>2</span></label>
+  <fieldset><legend>Amount</legend><div class="seg">
+    <label><input type="radio" name="cups" value="1" checked><span>1 cup · 15 g</span></label>
+    <label><input type="radio" name="cups" value="2"><span id="cups2">2 cups · brew twice</span></label>
   </div></fieldset>
 
   <fieldset><legend>Strength</legend><div class="seg">
     <label><input type="radio" name="strength" value="lighter"><span>Lighter</span></label>
     <label><input type="radio" name="strength" value="standard" checked><span>Standard</span></label>
     <label><input type="radio" name="strength" value="stronger"><span>Stronger</span></label>
-  </div></fieldset>
-
-  <fieldset><legend>Machine</legend><div class="seg">
-    <label><input type="radio" name="model" value="studio" checked><span>Studio</span></label>
-    <label><input type="radio" name="model" value="original"><span>Original</span></label>
   </div></fieldset>
 
   <button id="go" type="submit">Make my recipe</button>
@@ -248,557 +152,731 @@ const ORIGINAL_RULES = `- model: "original"
 - pattern: centered, spiral or circular
 - total_ml: 500 or less. Each pour 160 ml or less (Omni Dripper 2 headroom).`;
 
-const CTRL = /[\x00-\x08\x0b\x0c\x0e-\x1f\x7f‪-‮]/g;
-const cleanCoffee = s => String(s == null ? "" : s).replace(/[<>]/g, "").replace(CTRL, "").replace(/\s+/g, " ").trim().slice(0, 200);
-
-const PROCS = ["washed", "natural", "honey"];   // "unsure" means: read the text
+const CTRL=/[\x00-\x08\x0b\x0c\x0e-\x1f\x7f‪-‮]/g;
+const cleanCoffee = s => String(s == null ? "" : s).replace(/<[^>]*>/g, " ").replace(/[<>]/g, "").replace(CTRL, "").replace(/\s+/g, " ").trim().slice(0, 200);
+const PROCS = ["washed", "natural", "honey"];
 function buildPrompt(p){
-  const coffee = cleanCoffee(p.coffee);
-  return TEMPLATE
-    .split("{machine}").join(p.model === "original" ? "Original" : "Studio")
-    .split("{machine_rules}").join(p.model === "original" ? ORIGINAL_RULES : STUDIO_RULES)
-    .split("{roast}").join(p.roast)
-    .split("{cups}").join(String(p.cups))
-    .split("{strength}").join(p.strength)
-    .split("{process}").join(PROCS.includes(p.process) ? p.process
-      : "not stated, infer from the coffee text if possible")
-    .split("{coffee}").join(coffee);
+const coffee=cleanCoffee(p.coffee);
+return TEMPLATE
+.split("{machine}").join(p.model === "original" ? "Original" : "Studio")
+.split("{machine_rules}").join(p.model === "original" ? ORIGINAL_RULES : STUDIO_RULES)
+.split("{roast}").join(p.roast)
+.split("{cups}").join(String(p.cups))
+.split("{strength}").join(p.strength)
+.split("{process}").join(PROCS.includes(p.process) ? p.process
+: "not stated, infer from the coffee text if possible")
+.split("{coffee}").join(coffee);
 }
-
 const API_URL = (location.port === "8018" || location.hostname === "95.216.221.95")
-  ? "/recipe" : "http://95.216.221.95:8018/recipe"; // Jeeves; Philip may change
-const CLAUDE_URL = "https://claude.ai/code/artifact/3eef3cf4-15f6-479e-9149-8fa8983eb65f"; // artifact URL on claude.ai; set after publishing
+? "/recipe" : "http://95.216.221.95:8018/recipe";
+const CLAUDE_URL = "https://claude.ai/code/artifact/3eef3cf4-15f6-479e-9149-8fa8983eb65f";
 const MOCK = new URLSearchParams(location.search).get("mock");
-
+let mockRound = /^taste=/.test(MOCK || "") ? MOCK.slice(6).split(",") : null;
+const MOCKTASTE=mockRound;
+const ST=o=>o?"1‑2":"3‑5", BODY="for more body.", KEPT="Saved as it is.";
+const BIGCAP="This is as big as one brew gets at this dose.", AGAIN=" For more, run it again.";
+// FACTS 177/183: the pour-over band on each grind scale
+const LO=o=>o?12:13, HI=o=>o?25:70, LIM="Grind and heat are at their limits. Try ";
+const TAIL={sour:" If it is still sour, the beans may be stale.",
+bitter:" If it is still bitter, try a lighter roast."};
+const RULES=[
+{key:"sour",chip:"Sour or sharp",advice:(o,r,t,g)=>{const h=typeof t==="number"&&t+2<=(o?95:98);
+return g<=LO(o)?(h?"Grind is as fine as pour-over goes. Raise 2 °C.":LIM+"fresher beans.")
+:"Grind "+ST(o)+" steps finer"+(h?", or raise 2 °C":"");},
+first:(c,w)=>c.g(-c.s,w,()=>c.t(2,w)),repeat:(c,w)=>c.t(2,w)||c.g(-c.s,w)},
+{key:"bitter",chip:"Bitter or harsh",advice:(o,r,t,g)=>{const h=typeof t==="number"&&t-2>=85;
+return g>=HI(o)?(h?"Grind is as coarse as pour-over goes. Drop 2 °C.":LIM+"a lighter roast.")
+:"Grind "+ST(o)+" steps coarser"+(h?", or drop 2‑3 °C":"");},
+first:(c,w)=>c.g(c.s,w,()=>c.t(-2,w)),repeat:(c,w)=>c.t(-2,w)||c.g(c.s,w)},
+{key:"weak",chip:"Weak or flat",advice:(o,r)=>Math.round(r)-1<14?"Already at 1:14. Grind finer instead.":"Try 1:"+(Math.round(r)-1)+" before touching grind",first:(c,w)=>c.ra(-1,w)||c.g(-c.s,w),repeat:(c,w)=>c.g(-c.s,w)},
+{key:"muddy",chip:"Muddy or heavy",advice:(o,r,t,g,p)=>g>=HI(o)?(o||p>=120?"Cut agitation.":"Raise RPM toward 120.")
+:"Grind coarser. If still muddy, "+(o||p>=120?"cut agitation.":"raise RPM."),
+first:(c,w)=>c.g(c.s,w,()=>c.calm(w)),repeat:(c,w)=>c.calm(w)||c.g(c.s,w)},
+{key:"thin",chip:"Thin body",advice:(o,r,t,g,p)=>o||p<=60?"Grind "+ST(o)+" steps finer":"Drop RPM toward 60",first:c=>(!c.o&&c.rp(-10,BODY))||c.g(-c.s,BODY),repeat:c=>c.g(-c.s,BODY)},
+{key:"bigger",chip:"Good, bigger cup",advice:null,first:c=>c.big(),repeat:c=>c.big()},
+{key:"right",chip:"Just right",advice:null,first:c=>c.say(KEPT),repeat:c=>c.say(KEPT)}];
+const KEYS=RULES.map(x=>x.key);
+// a round that only locked the recipe does not make this an older version
+const realRound=h=>h.some(x=>x.symptoms.length!==1||x.symptoms[0]!=="right");
+// bloom = dose x 3, capped at the dripper's 160 ml; middle pours are multiples of 5
+function buildPours(dose,total,bloomPause,shakeAfter){
+const bm=Math.round(Math.min(160,dose*3)),rem=Math.max(0,Math.round(total)-bm);
+let n=Math.max(1,Math.round(rem/100));
+const mid=()=>Math.ceil(rem/n/5)*5;
+while(n>1&&(mid()>160||rem-mid()*(n-1)>160)) n++;
+const each=n>1?mid():rem;
+const ps=[{label:"Bloom",ml:bm,pause_s:bloomPause,shake_before:false,shake_after:!!shakeAfter}];
+for(let i=0;i<n;i++) ps.push({label:"Pour "+(i+2),ml:i===n-1?rem-each*(n-1):each,
+pause_s:i===n-1?0:20,shake_before:false,shake_after:false});
+return ps;
+}
+function parseTaste(text){
+let s=" "+String(text==null?"":text).toLowerCase()+" ";
+s=s.replace(/\b(not|no|isn'?t|never|without)\b(\s+(?!but\b)\w+){0,2}?\s+(sour|sharp|acidic|tart|bitter|harsh|burnt|astringent|drying|dry|weak|flat|watery|muddy|heavy|muddled|sludgy|thin|bigger|larger|volume|more|good|great|nice|perfect|love|loved|tea)\b/g," ");
+const tw=/\bthin\s+(coffee|flavou?r)/.test(s);
+s=s.replace(/\bthin\s+(coffee|flavou?r)\w*/g," ");
+const nb=s.replace(/\bheavy\s+body\b/g," ");
+const big=/\b(bigger|larger|volume)\b/.test(s)
+||(/\b(good|great|nice|perfect|loved?)\b/.test(s)&&/\bmore\b/.test(s)&&!/\bmore\s+body\b/.test(s));
+const h={sour:/\b(sour|sharp|acidic|tart)\b/.test(s),
+bitter:/\b(bitter|harsh|burnt|astringent|drying)\b/.test(s)||/\btoo\s+dry\b/.test(s),
+weak:tw||/\b(weak|flat|watery)\b/.test(s),muddy:/\b(muddy|muddled|sludgy)\b/.test(nb)||/\bheavy\b/.test(nb),
+thin:/\bthin\b|\blight body\b|\bmore\s+body\b|\btea[- ]?like\b|\blike tea\b/.test(s),bigger:big,
+right:!big&&/\b(perfect|just right|leave it)\b/.test(s)};
+return KEYS.filter(k=>h[k]);
+}
+function applyTaste(recipe,symptoms,orig){
+const r=JSON.parse(JSON.stringify(recipe));
+const hist=(Array.isArray(r.history)?r.history:[]).slice(),last=hist[hist.length-1];
+let keys=KEYS.filter(k=>Array.isArray(symptoms)&&symptoms.indexOf(k)>=0);
+if(keys.indexOf("right")>=0) keys=["right"];
+if(!keys.length) return {recipe:r,changes:[]};
+const ch=[],st=orig?1:3,GLO=LO(orig),GHI=HI(orig);
+const say=s=>{ch.push(s);return true;};
+const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
+const EF="Grind "+GLO+" is as fine as pour-over goes.";
+const EC="Grind "+GHI+" is as coarse as pour-over goes.";
+const ml=()=>{let t=Math.round(r.dose_g*r.ratio);
+if(!orig&&t>500){t=500;r.ratio=Math.round(t/r.dose_g*10)/10;} return t;};
+const dir={}, pd=(last&&last.dir)||{};  // one lever moves one way per round
+const blk=(lv,v)=>say(cap(c.k)+" pulls the other way, so "+lv+" stays at "+v+". Try one note at a time.");
+const sam=()=>say(cap(c.k)+" wants the same move; one step at a time.");
+const hit=(l,s)=>dir[l]?(dir[l].d!==s?1:2):(pd[l]&&pd[l].d!==s&&has(pd[l].k)?1:0);
+const bec=k=>"because it was "+(!!last&&last.symptoms.indexOf(k)>=0?"still ":"")+k+".";
+const c={o:orig,s:st,k:"",say:say,
+// w===null moves the grind silently; the caller writes its own sentence
+g:(d,w,tf)=>{const f=r.grind,s=d<0?-1:1,x=hit("grind",s);
+if(x) return x===1?blk("grind",f):sam();
+if(d<0?f<=GLO:f>=GHI) return w!==null&&((tf?tf():false)||say((d<0?EF:EC)+(TAIL[c.k]||"")));
+r.grind=Math.min(GHI,Math.max(GLO,f+d));dir.grind={d:s,k:c.k};
+return w===null||say("Grind "+f+" → "+r.grind+", "+w);},
+t:(d,w)=>{const f=r.temp_c,t=f+d;
+if(typeof f!=="number"||(d>0?t>(orig?95:98):t<85)) return false;
+r.temp_c=t; return say("Temperature "+f+" → "+t+" °C, "+w);},
+ra:(d,w)=>{const f=r.ratio,t=f+d;
+if(t<14||t>18) return false;
+r.ratio=t; return say(cap(w.replace(/^because /,"").replace(/\.$/,""))+", so ratio 1:"+f+" → 1:"+t+". "+r.dose_g+" g now makes "+ml()+" ml.");},
+rp:(d,w)=>{const f=r.rpm,t=f+d,s=d<0?-1:1,x=hit("RPM",s);
+if(typeof f!=="number") return false;
+if(x) return x===1?blk("RPM",f):sam();
+if(t<60||t>120) return false;
+r.rpm=t; dir.RPM={d:s,k:c.k}; return say("RPM "+f+" → "+t+", "+w);},
+calm:w=>{const b=r.pours&&r.pours[0],
+off=()=>!!b&&!!b.shake_after&&(b.shake_after=false,say("Bloom shake off now, "+w));
+return orig?off():(c.rp(10,w)||off());},
+big:()=>{
+if(!orig&&r.dose_g<18){const d0=r.dose_g,r0=r.ratio;r.dose_g=18;const m=ml();
+return say("Dose "+d0+" → 18 g, so "+m+" ml at "+(r.ratio===r0?"the same ":"")+"1:"+r.ratio+".");}
+const f=r.ratio;
+if(f>=18) return say(BIGCAP);
+r.ratio=f+1;const g0=r.grind,ok=!orig&&c.g(-1,null),m=ml();
+return say("Ratio 1:"+f+" → 1:"+r.ratio+", so "+r.dose_g+" g makes "+m+" ml, a touch lighter."
++(ok?" Grind "+g0+" → "+r.grind+" to keep up.":""));}};
+const has=k=>keys.indexOf(k)>=0,skip={},late=[];
+if(has("bigger")&&["sour","bitter","weak","muddy","thin"].some(k=>has(k))){
+keys=keys.filter(k=>k!=="bigger"); late.push("Fixed the taste first. Ask for a bigger cup next round."); }
+if(has("muddy")&&has("thin")){keys=keys.filter(k=>k!=="thin");
+late.push("Muddy and thin body pull against each other. Fixed the muddy first; ask for body next round.");}
+const HEAD="Sour and bitter together usually means uneven extraction. ";
+const sb=h=>!!h&&h.symptoms.indexOf("sour")>=0&&h.symptoms.indexOf("bitter")>=0;
+if(has("sour")&&has("bitter")){
+const b=(r.pours&&r.pours[0])||{},cl=[];
+if(r.pattern&&r.pattern!=="spiral"){cl.push("pattern "+r.pattern+" → spiral"); r.pattern="spiral";}
+if(b.pause_s!==45){cl.push("bloom pause "+b.pause_s+" → 45 s"); b.pause_s=45;}
+if(!b.shake_after){cl.push("shake after bloom on"); b.shake_after=true;}
+if(cl.length) say(HEAD+cap(cl.join(" and "))+".");
+else if(sb(last)&&sb(hist[hist.length-2]))
+say("Sour and bitter together is usually channeling, not grind. Level the bed and keep the pour even.");
+else {const f=r.grind;c.k="bitter";const ok=c.g(st,null);
+say(r.grind!==f?HEAD+"The bloom already pauses 45 s with a shake, so grind "+f+" → "+r.grind+".":ok?HEAD.trim():HEAD+EC);}
+skip.sour=skip.bitter=true;
+}
+if(has("weak")&&has("muddy")){
+const f=r.grind;c.k="muddy";const ok=c.g(st,null),FIN="Weak and muddy together points at fines, so the ratio stays at 1:"+r.ratio+".";
+say(r.grind!==f?"Grind "+f+" → "+r.grind+". "+FIN:ok?FIN:EC);
+skip.weak=skip.muddy=true;
+}
+if(has("sour")&&has("muddy")&&!has("bitter")&&!skip.muddy){
+c.k="sour"; c.t(2,bec("sour")); c.k="muddy"; c.calm(bec("muddy"));
+say("Grind stays at "+r.grind+": sour wants finer, muddy wants coarser.");
+skip.sour=skip.muddy=true;
+}
+RULES.forEach(x=>{
+if(!has(x.key)||skip[x.key]) return;
+let n=1;
+for(let i=hist.length-1;i>=0&&hist[i].symptoms.indexOf(x.key)>=0;i--) n++;
+c.k=x.key;
+(n%2===0?x.repeat:x.first)(c,bec(x.key));
+});
+if(has("right")){r.locked=true;
+hist.push({symptoms:keys,changes:ch});r.history=hist.slice(-20);
+return {recipe:r,changes:ch};}
+late.forEach(say);
+r.total_ml=ml();
+const b0=(r.pours&&r.pours[0])||{pause_s:40,shake_after:true};
+r.pours=buildPours(r.dose_g,r.total_ml,b0.pause_s,b0.shake_after);
+hist.push({symptoms:keys,changes:ch,dir:dir});
+r.history=hist.slice(-20);
+return {recipe:r,changes:ch};
+}
 const BASE = {name:"House filter", dose_g:15, ratio:16, total_ml:240, grind:36, rpm:90,
-  temp_c:92, flow_ml_s:3, pattern:"spiral",
-  pours:[{label:"Bloom",ml:45,pause_s:40,shake_after:true},
-         {label:"Pour 2",ml:100,pause_s:20},{label:"Pour 3",ml:95,pause_s:0}],
-  tasting_notes:"Stone fruit and brown sugar.\nSyrupy body, gentle acidity.\nClean, dry finish.",
-  why:"A 1:16 ratio at 92 °C is the middle of xBloom's own filter baseline.\nGrind 36 keeps a medium roast sweet without going bitter.",
-  adjust:adjustFor(false, 16)};
-
-// no RPM on the Original, and its grind scale is 1-30, so its rows differ
-function adjustFor(orig, ratio){
-  const st = orig ? "1‑2" : "3‑5";
-  return [{taste:"Sour or sharp",do:"Grind " + st + " steps finer, or raise 2 °C"},
-    {taste:"Bitter or harsh",do:"Grind " + st + " steps coarser, or drop 2‑3 °C"},
-    {taste:"Weak or flat",do:"Try 1:" + Math.max(14, Math.round(ratio) - 1) + " before touching grind"},
-    {taste:"Muddy or heavy",do:orig ? "Grind coarser. If still muddy, cut agitation." : "Grind coarser. If still muddy, raise RPM."},
-    {taste:"Thin body",do:orig ? "Grind 2 steps finer" : "Drop RPM toward 60"}];
+temp_c:92, flow_ml_s:3, pattern:"spiral",
+pours:[{label:"Bloom",ml:45,pause_s:40,shake_after:true},
+{label:"Pour 2",ml:100,pause_s:20},{label:"Pour 3",ml:95,pause_s:0}],
+tasting_notes:"Stone fruit and brown sugar.\nSyrupy body, gentle acidity.\nClean, dry finish.",
+why:"A 1:16 ratio at 92 °C is the middle of xBloom's own filter baseline.\nGrind 36 keeps a medium roast sweet without going bitter.",
+adjust:adjustFor(false,16,92)};
+function adjustFor(orig,ratio,temp,grind,rpm){
+return RULES.filter(x=>x.advice).map(x=>({taste:x.chip,do:x.advice(orig,ratio,temp,grind,rpm)}));
 }
-
-const wait = ms => new Promise(r => setTimeout(r, ms));
-
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
 async function mockAsk(onText){
-  if (MOCK === "slow") await wait(6500);
-  await wait(300); onText('{"name":"Guji natural, medium","dose_g":15,');
-  await wait(300); onText(JSON.stringify(Object.assign({}, BASE, {name:"Guji natural, medium"})).slice(0, 420));
-  await wait(200);
-  if (MOCK === "err") throw new Error("mock error");
-  return JSON.parse(JSON.stringify(Object.assign({}, BASE, {name:"Guji natural, medium"})));
+if (MOCK === "slow") await wait(6500);
+await wait(300); onText('{"name":"Guji natural, medium","dose_g":15,');
+await wait(300); onText(JSON.stringify(Object.assign({}, BASE, {name:"Guji natural, medium"})).slice(0, 420));
+await wait(200);
+if (MOCK === "err") throw new Error("mock error");
+return JSON.parse(JSON.stringify(Object.assign({}, BASE, {name:"Guji natural, medium"})));
 }
-
-/* ---- tasting notes, from origin, process and roast ---- */
-const ORIGINS = [
-  [/\b(ethiopia|ethiopian|yirgacheffe|guji|sidamo|sidama)\b/, "Floral and bright up front, with peach and lemon. The body is light and tea-like."],
-  [/\bkenya\b/, "Blackcurrant and tomato-leaf brightness with a juicy body."],
-  [/\bcolombia[n]?\b/, "Red apple and caramel, with a soft nutty finish."],
-  [/\bbrazil(ian)?\b/, "Peanut and cocoa, with heavy sweetness. Low acidity."],
-  [/\bguatemala[n]?\b/, "Cocoa and orange over a firm body. The finish is clean."],
-  [/\bcosta\s*rica[n]?\b/, "Honey sweetness and apricot, with a crisp finish."],
-  [/\bhondura[ns]\b/, "Milk chocolate and dried apricot. Mild acidity."],
-  [/\bel\s*salvador\b/, "Almond and red apple, with soft caramel."],
-  [/\bnicaragua[n]?\b/, "Toffee and walnut with a gentle citrus edge."],
-  [/\bmexic(o|an)\b/, "Brown sugar and cocoa, with a light nutty edge. Easy body."],
-  [/\bperu(vian)?\b/, "Mild cocoa and hazelnut with soft citrus."],
-  [/\b(rwanda[n]?|burundi)\b/, "Red berry and orange peel over a silky body."],
-  [/\b(sumatra[n]?|indonesia[n]?|sulawesi)\b/, "Earthy cedar and dark chocolate. Heavy body, low acidity."],
-  [/\b(panama|gei?sha)\b/,"Jasmine and bergamot with papaya. The body is very light."],
-  [/\byemen(i)?\b/, "Dried fruit and spice over cocoa. Wild and heavy."],
-  [/\bindia[n]?\b/, "Spice and cocoa over a thick, low-acid body."],
-  [/\buganda[n]?\b/, "Dark fruit and cocoa with a dense body."],
-  [/\bblend\b/, "Built for balance: chocolate sweetness and a steady body."]
+const ORIGINS=[
+[/\b(ethiopia|ethiopian|yirgacheffe|guji|sidamo|sidama)\b/, "Floral and bright up front, with peach and lemon. The body is light and tea-like."],
+[/\bkenya\b/, "Blackcurrant and tomato-leaf brightness with a juicy body."],
+[/\bcolombia[n]?\b/, "Red apple and caramel, with a soft nutty finish."],
+[/\bbrazil(ian)?\b/, "Peanut and cocoa, with heavy sweetness. Low acidity."],
+[/\bguatemala[n]?\b/, "Cocoa and orange over a firm body. It finishes dry."],
+[/\bcosta\s*rica[n]?\b/, "Apricot and cane sugar, with a crisp finish."],
+[/\bhondura[ns]\b/, "Milk chocolate and dried apricot. Mild acidity."],
+[/\bel\s*salvador\b/, "Almond and red apple, with soft caramel."],
+[/\bnicaragua[n]?\b/, "Toffee and walnut with a gentle citrus edge."],
+[/\bmexic(o|an)\b/, "Brown sugar and cocoa, with a light nutty edge. Easy body."],
+[/\bperu(vian)?\b/, "Mild cocoa and hazelnut with soft citrus."],
+[/\b(rwanda[n]?|burundi)\b/, "Red berry and orange peel over a silky body."],
+[/\b(sumatra[n]?|indonesia[n]?|sulawesi)\b/, "Earthy cedar and dark chocolate. Heavy body, low acidity."],
+[/\b(panama|gei?sha)\b/,"Jasmine and bergamot with papaya. The body is very light."],
+[/\byemen(i)?\b/, "Dried fruit and spice over cocoa. Wild and heavy."],
+[/\bindia[n]?\b/, "Spice and cocoa over a thick, low-acid body."],
+[/\buganda[n]?\b/, "Dark fruit and cocoa with a dense body."],
+[/\becuador(ian)?\b/, "Cane sugar and stone fruit, with a round body."],
+[/\bbolivia[n]?\b/, "Caramel and orange over a clean, light body."],
+[/\btanzania[n]?\b/, "Black tea and citrus with a crisp finish."],
+[/\b(papua|png)\b/, "Sweet tobacco and cocoa. Heavy body."],
+[/\bvietnam(ese)?\b/, "Dark cocoa and roasted nut. Very low acidity."],
+[/\b(yunnan|chin(a|ese))\b/, "Dried longan and cocoa, with gentle acidity."],
+[/\b(congo|drc)\b/, "Plum and cocoa over a syrupy body."],
+[/\bblend\b/, "Built for balance: chocolate sweetness and a steady body."]
 ];
-const PROCESS = [
-  [/\b(anaerobic|co-?ferment(ed)?|coferment(ed)?)\b/, "Anaerobic ferment pushes bold fruit and spice. Back off if it turns boozy."],
-  [/\bnatural\b/, "Natural process brings berry and winey sweetness. Look for fruit, not ferment funk."],
-  [/\bhoney\b/, "Honey process adds syrupy sweetness, halfway between clean and fruity."],
-  [/\bwashed\b/, "Washed process keeps it clean. Acidity and clarity lead."]
+const PROCESS=[
+[/\b(anaerobic|co-?ferment(ed)?|coferment(ed)?)\b/, "Anaerobic ferment pushes bold fruit and spice. Back off if it turns boozy."],
+[/\bnatural\b/, "Natural process brings berry and winey sweetness. Look for fruit, not ferment funk."],
+[/\bhoney\b/, "Honey process adds syrupy sweetness, halfway between clean and fruity."],
+[/\bwashed\b/, "Washed process keeps it clean. Acidity and clarity lead."]
 ];
-const ROAST_NOTE = {
-  light: "Bright and juicy, with the sweetness arriving late.",
-  medium: "Sweetness sits in the middle with a clean finish.",
-  dark: "Toast and molasses, with the roast sitting on top."
+const ROAST_NOTE={
+light: "Bright and juicy, with the sweetness arriving late.",
+medium: "Sweetness sits in the middle with a clean finish.",
+dark: "Toast and molasses, with the roast sitting on top."
 };
-const ROAST_LOOK = {
-  light: "Sweetness should land before the brightness does.",
-  medium: "The body should come out round, with no bitter edge.",
-  dark: "Smoke should show without ash. Harshness means you pulled too much."
+const ROAST_LOOK={
+light: "Brightness should read as juice, not as sourness.",
+medium: "The body should come out round, with no bitter edge.",
+dark: "Smoke should show without ash. Harshness means you pulled too much."
 };
-function notesFor(text, roast, process){
-  const low = String(text || "").toLowerCase();
-  const hit = table => { const m = table.find(x => x[0].test(low)); return m ? m[1] : ""; };
-  const origin = hit(ORIGINS);
-  // the control wins; its own word matches its row, and "unsure" matches none
-  const pm = PROCESS.find(x => x[0].test(String(process || ""))) || PROCESS.find(x => x[0].test(low));
-  const proc = pm ? pm[1] : "";
-  const r = Object.hasOwn(ROAST_NOTE, roast) ? roast : "medium";
-  return (origin ? [origin, proc || ROAST_NOTE[r], ROAST_LOOK[r]]
-    : [ROAST_NOTE[r], ROAST_LOOK[r]]).filter(Boolean).join("\n");
+function notesFor(text,roast,process){
+const low = String(text || "").toLowerCase();
+const hit = table => { const m = table.find(x => x[0].test(low)); return m ? m[1] : ""; };
+const r = Object.hasOwn(ROAST_NOTE, roast) ? roast : "medium";
+const origin=hit(ORIGINS);
+const pm = PROCESS.find(x => x[0].test(String(process || ""))) || PROCESS.find(x => x[0].test(low));
+const proc = pm ? pm[1] : "";
+const BRIGHT=/bright|floral|jasmine|blackcurrant|citrus|berry|juicy|tea-like|acidity/i;
+if (r === "dark" && BRIGHT.test(origin + " " + proc))
+return [ROAST_NOTE.dark,
+"The roast covers most of the origin here. Expect cocoa and toast ahead of fruit.",
+ROAST_LOOK.dark].join("\n");
+return (origin ? [origin,proc,ROAST_LOOK[r]]
+: [ROAST_NOTE[r], ROAST_LOOK[r]]).filter(Boolean).join("\n");
 }
-
-/* ---- last resort: build the recipe here, from the fact sheet's rules ---- */
-const RATIOS = {lighter:17, standard:16, stronger:15};
-function short(t){                               // a name of 28 characters or less
-  const c = t.indexOf(",");
-  const s = (c >= 10 && c <= 28) ? t.slice(0, c)
-    : (t.length > 28 ? t.slice(0, 29).replace(/\s*\S*$/, "") : t);
-  return s.replace(/[\s,;:.\-]+$/, "").replace(/(\s*\b(and|with|from|the|of)\b)+\s*[,.\-]*$/i, "").replace(/[\s,;:.\-]+$/, "") || "House filter";
+const RATIOS={lighter:17,standard:16,stronger:15};
+const SAY = {lighter:"A lighter cup is", standard:"Standard strength is", stronger:"A stronger cup is"};
+function short(t){
+if(t.length > 28)
+t = t.replace(/\b(hacienda|finca|estate|farm|washing station|micro-?lot)\b/gi, " ")
+.replace(/\bthermal\s+shock\b/gi, " ")
+.replace(/\s+/g, " ").replace(/\s+([,;:.])/g, "$1").trim();
+const c = t.indexOf(",");
+let s=(c >= 10 && c <= 28) ? t.slice(0,c)
+: (t.length > 28 ? t.slice(0, 29).replace(/\s*\S*$/, "") : t);
+s = s.replace(/[^\p{L}\p{N}\s&'’.\-]/gu, "").replace(/\s+/g, " ").trim();
+if (!/[\p{L}\p{N}]/u.test(s)) return "House filter";
+return s.replace(/[\s,;:.\-]+$/, "").replace(/(\s*\b(and|with|from|the|of)\b)+\s*[,.\-]*$/i, "").replace(/[\s,;:.\-]+$/, "") || "House filter";
 }
 function localRecipe(p){
-  const orig = p.model === "original";
-  const txt = cleanCoffee(p.coffee);
-  const low = txt.toLowerCase();
-  // only a roast in context overrides the control; "dark chocolate" must not
-  const rm = /\b(light|medium|dark)[- ]?roast(ed)?\b/i.exec(low) || /\broast(ed)?\s*:?\s*(light|medium|dark)\b/i.exec(low);
-  const named = rm && (Object.hasOwn(ROAST_NOTE, rm[1]) ? rm[1] : rm[2]);
-  const roast = named || (Object.hasOwn(ROAST_NOTE, p.roast) ? p.roast : "medium");
-  const dose = (orig || Number(p.cups) !== 2) ? 15 : 18;
-  const rat = Object.hasOwn(RATIOS, p.strength) ? RATIOS[p.strength] : 16;
-  const total = Math.min(500, dose * rat);
-
-  const baseGrind = orig ? 18 : 36;              // Studio 1 = fine, 80 = coarse
-  const step = orig ? 1 : 3;
-  let grind = baseGrind + (roast === "light" ? -step : roast === "dark" ? step : 0);
-  let temp = 92 + (roast === "light" ? 2 : roast === "dark" ? -3 : 0);
-  let bloomPause = 40; const offs = [];
-  const proc = PROCS.includes(p.process) ? p.process        // the control wins over the text
-    : /\b(natural|anaerobic|co-?ferment(ed)?|coferment(ed)?)\b/.test(low) ? "natural"
-    : /\bhoney\b/.test(low) ? "honey" : "";
-  if (proc === "natural"){ temp -= 2; bloomPause = 45; offs.push("a fruity process"); }
-  else if (proc === "honey"){ temp -= 1; offs.push("honey process"); }
-  if (/\bdecaf\b/.test(low)){ grind -= 2; temp -= 2; offs.push("decaf"); }
-  grind = Math.min(orig ? 30 : 80, Math.max(1, grind));
-  temp = Math.min(orig ? 95 : 98, Math.max(40, temp));
-
-  const bloomMl = Math.min(160, dose * 3);
-  const rem = total - bloomMl;
-  let n = Math.max(1, Math.round(rem / 100));
-  const mid = () => Math.round(rem / n / 5) * 5;      // middle pours land on 5 ml
-  while (n > 1 && (mid() > 160 || rem - mid() * (n - 1) > 160)) n++;
-  const each = n > 1 ? mid() : rem;
-  const pours = [{label:"Bloom", ml:bloomMl, pause_s:bloomPause,
-    agitate_before:false, agitate_after:true}];
-  for (let i = 0; i < n; i++){
-    const last = i === n - 1;
-    pours.push({label:"Pour " + (i + 2), ml: last ? rem - each * (n - 1) : each,
-      pause_s: last ? 0 : 20, agitate_before:false, agitate_after:false});
-  }
-
-  const ratio = Math.round((total / dose) * 10) / 10;
-  const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
-  const dg = grind - baseGrind, why0 = [cap(roast) + " roast"].concat(offs);
-  const gw = dg ? Math.abs(dg) + (Math.abs(dg) === 1 ? " step " : " steps ")
-      + (dg < 0 ? "finer" : "coarser") + " than the baseline" : "the xBloom baseline";
-  const why = [
-    (why0.length > 1 ? why0.slice(0, -1).join(", ") + " and " + why0[why0.length - 1] : why0[0])
-      + ", so grind " + grind + ", " + gw + ", at "
-      + (temp === 92 && dg ? "the baseline 92" : temp) + " °C.",  // say baseline once
-    cap(p.strength || "standard") + " strength is 1:" + ratio + ", so " + dose + " g makes " + total + " ml."
-  ];
-
-  return {
-    name: short(rm ? txt.slice(0, rm.index) + txt.slice(rm.index + rm[0].length) : txt) + ", " + roast,
-    model: orig ? "original" : "studio",
-    dose_g: dose, ratio: ratio, total_ml: total,
-    grind: grind, rpm: orig ? null : 90, temp_c: temp, flow_ml_s: 3.0,
-    pattern: "spiral", cup: "omni", pours: pours,
-    tasting_notes: notesFor(txt, roast, p.process), why: why.join("\n"), adjust: adjustFor(orig, ratio)
-  };
+const orig = p.model === "original";
+const txt=cleanCoffee(p.coffee);
+const low=txt.toLowerCase();
+const rm=/\b(light|medium|dark)[- ]?roast(ed)?\b/i.exec(low) || /\broast(ed)?\s*:?\s*(light|medium|dark)\b/i.exec(low);
+const named=rm && (Object.hasOwn(ROAST_NOTE,rm[1]) ? rm[1] : rm[2]);
+const roast = named || (Object.hasOwn(ROAST_NOTE, p.roast) ? p.roast : "medium");
+const dose=(orig || Number(p.cups) !== 2) ? 15 : 18;
+const rat=Object.hasOwn(RATIOS,p.strength) ? RATIOS[p.strength] : 16;
+const total=Math.min(500,dose * rat);
+const baseGrind=orig ? 18 : 36;
+const step=orig ? 1 : 3;
+let grind = baseGrind + (roast === "light" ? -step : roast === "dark" ? step : 0);
+let temp = 92 + (roast === "light" ? 2 : roast === "dark" ? -3 : 0);
+let bloomPause=40;const offs=[];
+const proc=PROCS.includes(p.process) ? p.process
+: /\b(natural|anaerobic|co-?ferment(ed)?|coferment(ed)?)\b/.test(low) ? "natural"
+: /\bhoney\b/.test(low) ? "honey" : "";
+if (proc === "natural"){ temp -= 2; bloomPause = 45; offs.push(/\b(anaerobic|co-?ferment(ed)?|coferment(ed)?)\b/.test(low)
+? "an anaerobic ferment" : "a natural process"); }
+else if (proc === "honey"){ temp -= 1; offs.push("honey process"); }
+if (/\bdecaf(f?einated)?\b/.test(low)){ grind -= (orig ? 1 : 2); temp -= 2; offs.push("decaf"); }
+grind=Math.min(orig ? 30 : 80,Math.max(1,grind));
+temp=Math.min(orig ? 95 : 98,Math.max(40,temp));
+const pours=buildPours(dose,total,bloomPause,true);
+const ratio=Math.round((total / dose) * 10) / 10;
+const cap=s=>s.charAt(0).toUpperCase() + s.slice(1);
+const dg = grind - baseGrind, why0 = [cap(roast) + " roast"].concat(offs);
+const gw = dg ? Math.abs(dg) + (Math.abs(dg) === 1 ? " step " : " steps ")
++ (dg < 0 ? "finer" : "coarser") + " than the baseline"
+: (orig ? "the middle of the Original's range" : "the xBloom baseline");
+const why=[
+(why0.length > 1 ? why0.slice(0, -1).join(", ") + " and " + why0[why0.length - 1] : why0[0])
++ ", so grind " + grind + ", " + gw + ", at "
++ temp + " °C.",
+(Object.hasOwn(SAY,p.strength) ? SAY[p.strength] : SAY.standard)
++ " 1:" + ratio + ", so " + dose + " g makes " + total + " ml."
+];
+return {
+name: short((rm ? txt.slice(0, rm.index) + " " + txt.slice(rm.index + rm[0].length) : txt)
+.replace(/\s+/g, " ").replace(/\s+([,;:.])/g, "$1").trim()) + ", " + roast,
+model: orig ? "original" : "studio",
+dose_g: dose,ratio: ratio,total_ml: total,
+grind: grind,rpm: orig ? null : 90,temp_c: temp,flow_ml_s: 3.0,
+pattern: "spiral", cup: "omni", pours: pours,
+tasting_notes: notesFor(txt, roast, p.process), why: why.join("\n"), adjust: adjustFor(orig, ratio, temp)
+};
 }
-const localResult = p => Object.assign(localRecipe(p), {local:true});
-
-async function askModel(payload, onText, onStatus, signal){
-  if (MOCK === "local") return localResult(payload);
-  if (MOCK) return mockAsk(onText);
-  try {                                          // in-Claude sampling; any failure falls through to the server
-    const sample = await (window.claude?.use?.("sample") ?? Promise.resolve(null));
-    if (sample){
-      const j = await Promise.race([
-        sample.json(buildPrompt(payload), {modelTier:"complex", onText:({text})=>onText(text)}),
-        new Promise((_, rej) => setTimeout(() => rej(new Error("sample timed out")), 100000)),
-        new Promise((_, rej) => signal.addEventListener("abort", () => rej(new Error("cancelled"))))
-      ]);
-      if (j && typeof j === "object" && !Array.isArray(j)) return j;  // anything else falls through
-    }
-  } catch(e){ console.warn("sample failed, using server", e); }
-  // an https page cannot call an http server, so do not try
-  if (!(location.protocol === "https:" && /^http:/i.test(API_URL))){
-    try {
-      if (onStatus) onStatus("Asking the recipe server…");
-      let sig = signal;                            // the wait-exit button, plus a hard cap
-      if (AbortSignal.any) sig = AbortSignal.any([signal, AbortSignal.timeout(125000)]);
-      else { const c = new AbortController();
-        signal.addEventListener("abort", () => c.abort());
-        setTimeout(() => c.abort(), 125000); sig = c.signal; }
-      const r = await fetch(API_URL,{method:"POST",headers:{"content-type":"application/json"},
-        body:JSON.stringify(payload), signal:sig});
-      if(!r.ok){
-        let msg = "HTTP " + r.status;
-        try { const j = await r.json(); if (j && j.error) msg = String(j.error); } catch(e){}
-        const err = new Error(msg); err.status = r.status; throw err;
-      }
-      return await r.json();
-    } catch(e){
-      if (e && e.status === 429) throw e;         // a live server said no; say so
-      console.warn("server failed, building locally", e);
-    }
-  }
-  if (onStatus){ onStatus("Building from xBloom's rules…"); await wait(150); }
-  return localResult(payload);
+const localResult=p=>Object.assign(localRecipe(p),{local:true});
+async function askModel(payload,onText,onStatus,signal){
+if (MOCK === "local" || MOCKTASTE) return localResult(payload);
+if(MOCK) return mockAsk(onText);
+try {
+const sample = await (window.claude?.use?.("sample") ?? Promise.resolve(null));
+if(sample){
+const j=await Promise.race([
+sample.json(buildPrompt(payload), {modelTier:"complex", onText:({text})=>onText(text)}),
+new Promise((_, rej) => setTimeout(() => rej(new Error("sample timed out")), 100000)),
+new Promise((_, rej) => signal.addEventListener("abort", () => rej(new Error("cancelled"))))
+]);
+if (j && typeof j === "object" && !Array.isArray(j)) return j;
 }
-
-/* ---- validation + clamp ---- */
-function normalize(raw, model){
-  const r = (raw && typeof raw === "object") ? raw : {};
-  const orig = model === "original";
-  let fixes = 0;
-  const num = v => (typeof v === "number" && isFinite(v)) ? v
-    : (typeof v === "string" && v.trim() !== "" && isFinite(Number(v)) ? Number(v) : null);
-  // count a fix when a supplied value had to move, or a needed value was unusable
-  const fix = (given, out) => { if (given === null || given !== out) fixes++; return out; };
-  const clamp = (given, lo, hi, fallback, round) => {
-    let v = num(given);
-    if (v === null) return fix(null, fallback);
-    if (round) v = round(v);
-    const c = Math.min(hi, Math.max(lo, v));
-    return (c === num(given)) ? c : fix(num(given), c);
-  };
-
-  const o = {};
-  o.name = (typeof r.name === "string" && r.name.trim()) ? r.name.trim().slice(0,40) : "xBloom recipe";
-  o.dose_g = orig ? (num(r.dose_g) === 15 ? 15 : fix(num(r.dose_g), 15))
-                  : clamp(r.dose_g, 5, 18, 15, v => Math.round(v*10)/10);
-  o.grind = clamp(r.grind, 1, orig ? 30 : 80, orig ? 18 : 36, Math.round);
-  o.rpm = orig ? null : clamp(r.rpm, 60, 120, 90, v => Math.round(v/10)*10);
-
-  const tc = String(r.temp_c).trim().toUpperCase();
-  if (tc === "RT" || tc === "BP") o.temp_c = tc;
-  else o.temp_c = clamp(r.temp_c, 40, orig ? 95 : 98, 92, Math.round);
-
-  o.flow_ml_s = clamp(r.flow_ml_s, 3.0, 3.5, 3.0, v => Math.round(v*10)/10);
-
-  const pats = ["spiral","centered","circular"];
-  const p = String(r.pattern || "").toLowerCase();
-  o.pattern = pats.includes(p) ? p : fix(r.pattern == null ? null : r.pattern, "spiral");
-
-  let pours = Array.isArray(r.pours)
-    ? r.pours.slice(0, 9).filter(x => { if (x && typeof x === "object") return true; fixes++; return false; })
-    : null;
-  if (!pours || !pours.length) { pours = BASE.pours.map(x => Object.assign({}, x)); fixes++; }
-  o.pours = pours.map((q, i) => {
-    const ml = clamp(q.ml, 5, 160, 45, Math.round);
-    const lo = i === 0 ? 30 : 0;
-    const ps = clamp(q.pause_s, lo, 45, i === 0 ? 40 : 0, Math.round);
-    return { label: (typeof q.label === "string" && q.label.trim()) ? q.label.trim().slice(0,24)
-               : (i === 0 ? "Bloom" : "Pour " + (i+1)),
-             ml: ml, pause_s: ps,
-             shake_before: !!(q.shake_before ?? q.agitate_before),
-             shake_after: !!(q.shake_after ?? q.agitate_after) };
-  });
-
-  let sum = o.pours.reduce((a,b) => a + b.ml, 0);
-  if (sum > 500){                                  // scale pours down to the brewer limit
-    const k = 500 / sum;
-    o.pours.forEach(x => { x.ml = Math.max(5, Math.floor(x.ml * k)); });
-    sum = o.pours.reduce((a,b) => a + b.ml, 0);
-    while (sum > 500) {                            // flooring can still leave a few ml over
-      const big = o.pours.reduce((a,b) => b.ml > a.ml ? b : a);
-      const cut = Math.min(sum - 500, big.ml - 5);
-      if (cut <= 0) break;
-      big.ml -= cut; sum -= cut;
-    }
-    fixes++;
-  }
-  const givenTotal = num(r.total_ml);
-  if (givenTotal !== sum) { if (givenTotal !== null) fixes++; }
-  o.total_ml = sum;
-
-  const ratio = num(r.ratio);
-  o.ratio = Math.round((o.total_ml / o.dose_g) * 10) / 10;
-  if (ratio === null || Math.abs(ratio - o.ratio) > 0.15) fixes++;
-
-  o.tasting_notes = typeof r.tasting_notes === "string" ? r.tasting_notes.trim().slice(0,600) : "";
-  o.why = typeof r.why === "string" ? r.why.trim().slice(0,600) : "";
-  o.adjust = adjustFor(orig, o.ratio);             // always ours: the model never sees the machine
-
-  return { recipe: o, fixes: fixes };
+} catch(e){ console.warn("sample failed, using server", e); }
+if (!(location.protocol === "https:" && /^http:/i.test(API_URL))){
+try {
+if (onStatus) onStatus("Asking the recipe server…");
+let sig=signal;
+if(AbortSignal.any) sig=AbortSignal.any([signal,AbortSignal.timeout(125000)]);
+else {const c=new AbortController();
+signal.addEventListener("abort", () => c.abort());
+setTimeout(()=>c.abort(),125000);sig=c.signal;}
+const r = await fetch(API_URL,{method:"POST",headers:{"content-type":"application/json"},
+body:JSON.stringify(payload),signal:sig});
+if(!r.ok){
+let msg = "HTTP " + r.status;
+try {const j=await r.json();if(j && j.error) msg=String(j.error);} catch(e){}
+const err=new Error(msg);err.status=r.status;throw err;
 }
-
-/* ---- copy text, app order ---- */
-function copyText(r, payload){
-  const model = payload && payload.model;
-  const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
-  const t = (r.temp_c === "RT" || r.temp_c === "BP") ? r.temp_c : r.temp_c + " °C";
-  const line3 = ["Grind " + r.grind];
-  if (r.rpm != null) line3.push("RPM " + r.rpm);
-  line3.push(t, "Flow " + r.flow_ml_s.toFixed(1) + " ml/s", cap(r.pattern));
-  const L = [
-    r.name + " · xBloom " + (model === "original" ? "Original" : "Studio"),
-    "Dose " + r.dose_g + " g · Ratio 1:" + r.ratio + " · Water " + r.total_ml + " ml",
-    line3.join(" · ")
-  ];
-  r.pours.forEach(p => {
-    let s = p.label + " " + p.ml + " ml";
-    if (p.pause_s) s += ", pause " + p.pause_s + " s";
-    if (p.shake_before) s += ", shake before";
-    if (p.shake_after) s += ", shake after";
-    L.push(s);
-  });
-  if (model === "original" && Number(payload.cups) === 2)
-    L.push("15 g makes one cup. Brew this twice for two.");
-  const tn =String(r.tasting_notes || "").split("\n").map(s => s.trim()).filter(Boolean).join(" ");
-  if (tn) L.push("Tasting notes: " + tn);
-  const wy = String(r.why || "").split("\n").map(s => s.trim()).filter(Boolean).join(" ");
-  if (wy) L.push("Why: " + wy);
-  L.push("Adjust: " + r.adjust.map(a => a.taste + ": " + a.do).join(" | "));
-  return L.join("\n").replace(/‑/g, "-");          // U+2011 is for display only
+return await r.json();
+} catch(e){
+if(e && e.status === 429) throw e;
+console.warn("server failed, building locally", e);
 }
-
-/* ---- storage ---- */
+}
+if (onStatus){ onStatus("Building from xBloom's rules…"); await wait(150); }
+return localResult(payload);
+}
+function normalize(raw,model){
+const r = (raw && typeof raw === "object") ? raw : {};
+const orig = model === "original";
+let fixes=0;
+const num = v => (typeof v === "number" && isFinite(v)) ? v
+: (typeof v === "string" && v.trim() !== "" && isFinite(Number(v)) ? Number(v) : null);
+const fix=(given,out)=>{if(given === null || given !== out) fixes++;return out;};
+const clamp=(given,lo,hi,fallback,round)=>{
+let v=num(given);
+if(v === null) return fix(null,fallback);
+if(round) v=round(v);
+const c=Math.min(hi,Math.max(lo,v));
+return (c === num(given)) ? c : fix(num(given),c);
+};
+const o={};
+o.name = (typeof r.name === "string" && r.name.trim()) ? r.name.trim().slice(0,40) : "xBloom recipe";
+o.dose_g=orig ? (num(r.dose_g) === 15 ? 15 : fix(num(r.dose_g),15))
+: clamp(r.dose_g,5,18,15,v=>Math.round(v*10)/10);
+o.grind=clamp(r.grind,1,orig ? 30 : 80,orig ? 18 : 36,Math.round);
+o.rpm=orig ? null : clamp(r.rpm,60,120,90,v=>Math.round(v/10)*10);
+const tc=String(r.temp_c).trim().toUpperCase();
+if (tc === "RT" || tc === "BP") o.temp_c = tc;
+else o.temp_c=clamp(r.temp_c,40,orig ? 95 : 98,92,Math.round);
+o.flow_ml_s=clamp(r.flow_ml_s,3.0,3.5,3.0,v=>Math.round(v*10)/10);
+const pats = ["spiral","centered","circular"];
+const p = String(r.pattern || "").toLowerCase();
+o.pattern = pats.includes(p) ? p : fix(r.pattern == null ? null : r.pattern, "spiral");
+let pours=Array.isArray(r.pours)
+? r.pours.slice(0, 9).filter(x => { if (x && typeof x === "object") return true; fixes++; return false; })
+: null;
+if(!pours || !pours.length){pours=BASE.pours.map(x=>Object.assign({},x));fixes++;}
+o.pours=pours.map((q,i)=>{
+const ml=clamp(q.ml,5,160,45,Math.round);
+const lo=i === 0 ? 30 : 0;
+const ps=clamp(q.pause_s,lo,45,i === 0 ? 40 : 0,Math.round);
+return { label: (typeof q.label === "string" && q.label.trim()) ? q.label.trim().slice(0,24)
+: (i === 0 ? "Bloom" : "Pour " + (i+1)),
+ml: ml,pause_s: ps,
+shake_before: !!(q.shake_before ?? q.agitate_before),
+shake_after: !!(q.shake_after ?? q.agitate_after)};
+});
+let sum=o.pours.reduce((a,b)=>a + b.ml,0);
+if(sum > 500){
+const k=500 / sum;
+o.pours.forEach(x=>{x.ml=Math.max(5,Math.floor(x.ml * k));});
+sum=o.pours.reduce((a,b)=>a + b.ml,0);
+while(sum > 500){
+const big=o.pours.reduce((a,b)=>b.ml > a.ml ? b : a);
+const cut=Math.min(sum - 500,big.ml - 5);
+if(cut <= 0) break;
+big.ml -= cut;sum -= cut;
+}
+fixes++;
+}
+const givenTotal=num(r.total_ml);
+if(givenTotal !== sum){if(givenTotal !== null) fixes++;}
+o.total_ml=sum;
+const ratio=num(r.ratio);
+o.ratio=Math.round((o.total_ml / o.dose_g) * 10) / 10;
+if(ratio === null || Math.abs(ratio - o.ratio) > 0.15) fixes++;
+o.tasting_notes = typeof r.tasting_notes === "string" ? r.tasting_notes.trim().slice(0,600) : "";
+o.why = typeof r.why === "string" ? r.why.trim().slice(0,600) : "";
+const isStr = x => typeof x === "string";
+if(Array.isArray(r.history)) o.history=r.history.slice(-20)
+.filter(h=>h && Array.isArray(h.symptoms) && Array.isArray(h.changes))
+.map(h=>{const e={symptoms:h.symptoms.filter(isStr),changes:h.changes.filter(isStr)};
+if (h.dir && typeof h.dir === "object") e.dir = h.dir;
+return e;});
+if(r.locked) o.locked=true;
+o.adjust=adjustFor(orig,o.ratio,o.temp_c,o.grind,o.rpm);
+return {recipe: o,fixes: fixes};
+}
+function copyText(r,payload){
+const model=payload && payload.model;
+const cap=s=>s.charAt(0).toUpperCase() + s.slice(1);
+const t = (r.temp_c === "RT" || r.temp_c === "BP") ? r.temp_c : r.temp_c + " °C";
+const line3 = ["Grind " + r.grind];
+if (r.rpm != null) line3.push("RPM " + r.rpm);
+line3.push(t, "Flow " + r.flow_ml_s.toFixed(1) + " ml/s", cap(r.pattern));
+const L=[
+r.name + " · xBloom " + (model === "original" ? "Original" : "Studio"),
+"Dose " + r.dose_g + " g · Ratio 1:" + r.ratio + " · Water " + r.total_ml + " ml",
+line3.join(" · ")
+];
+r.pours.forEach(p=>{
+let s = p.label + " " + p.ml + " ml";
+if (p.pause_s) s += ", pause " + p.pause_s + " s";
+if (p.shake_before) s += ", shake before";
+if (p.shake_after) s += ", shake after";
+L.push(s);
+});
+if (model === "original" && Number(payload.cups) === 2)
+L.push("15 g makes one cup. Brew this twice for two.");
+const tn =String(r.tasting_notes || "").split("\n").map(s => s.trim()).filter(Boolean).join(" ");
+if (tn) L.push("Tasting notes: " + tn);
+const wy = String(r.why || "").split("\n").map(s => s.trim()).filter(Boolean).join(" ");
+const hs=Array.isArray(r.history) ? r.history : [];
+const hy=hs.reduce((a,h)=>a.concat(h.changes),[]).filter(s=>s !== KEPT);
+if (wy) L.push((realRound(hs) ? "Why (first version): " : "Why: ") + wy);
+L.push("Adjust: " + r.adjust.map(a => a.taste + ": " + a.do).join(" | "));
+if (hy.length) L.push("Changed: " + hy.join(" "));
+return L.join("\n").replace(/‑/g, "-").replace(/ /g, " ");
+}
 const KEY = "xbloom.recent";
 function readRecent(){
-  try { const v = JSON.parse(localStorage.getItem(KEY) || "[]");
-    return Array.isArray(v) ? v.filter(e => e && typeof e.recipe === "object" && e.recipe
-      && typeof e.payload === "object" && e.payload) : []; }
-  catch(e){ return []; }
+try { const v = JSON.parse(localStorage.getItem(KEY) || "[]");
+return Array.isArray(v) ? v.filter(e => e && typeof e.recipe === "object" && e.recipe
+&& typeof e.payload === "object" && e.payload) : []; }
+catch(e){return [];}
 }
 function pushRecent(entry){
-  try { localStorage.setItem(KEY, JSON.stringify([entry].concat(readRecent()).slice(0,5))); }
-  catch(e){ /* storage blocked */ }
-  drawRecent();
-}
-
-/* ---- DOM ---- */
-const $ = s => document.querySelector(s);
-const out = $("#out"), go = $("#go"), form = $("#form");
-const el = (tag, cls, text) => { const n = document.createElement(tag);
-  if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
-const bring = n => n.scrollIntoView({ block:"start",
-  behavior: matchMedia("(prefers-reduced-motion:reduce)").matches ? "auto" : "smooth" });
-
-function inputs(){
-  const g = n => form.querySelector('input[name="'+n+'"]:checked').value;
-  return { coffee: cleanCoffee($("#coffee").value), roast: g("roast"), process: g("process"),
-           cups: Number(g("cups")), strength: g("strength"), model: g("model") };
-}
-function setInputs(p){
-  $("#coffee").value = p.coffee || "";
-  const v = Object.assign({process:"unsure"}, p);   // older Recent entries carry no process
-  ["roast","process","cups","strength","model"].forEach(n => {
-    form.querySelectorAll('input[name="'+n+'"]').forEach(i => {
-      if (i.value === String(v[n])) i.checked = true;
-    });
-  });
-}
-
-function drawRecent(){
-  const list = readRecent(), box = $("#recent"), holder = $("#recentList");
-  holder.textContent = "";
-  box.hidden = list.length < 2;                    // one entry just repeats the card
-  if (box.hidden) return;
-  list.forEach(e => {
-    try {
-      const b = el("button", null); b.type = "button";
-      b.appendChild(document.createTextNode(String(e.recipe.name || "Recipe") + " "));
-      b.appendChild(el("span", null, "xBloom " + (e.payload.model === "original" ? "Original" : "Studio")));
-      b.addEventListener("click", () => {
-        try { setInputs(e.payload);
-          const n = normalize(e.recipe, e.payload.model); show(n.recipe, e.payload, n.fixes, e.local); }
-        catch(err){ console.warn("recent entry failed to open", err); }
-      });
-      holder.appendChild(b);
-    } catch(err){ console.warn("skipped a recent entry", err); }
-  });
-}
-
-function rowsBox(pairs){
-  const d = el("div", "rows");
-  pairs.forEach(([k, v]) => { const r = el("div");
-    r.appendChild(el("b", null, k)); r.appendChild(el("i", null, v)); d.appendChild(r); });
-  return d;
-}
-
-function show(r, payload, fixes, local){
-  const card = el("div", "card");
-  card.appendChild(el("h2", null, r.name));
-  if (payload.model === "original" && Number(payload.cups) === 2)
-    card.appendChild(el("p", "quiet twice", "15 g makes one cup. Brew this twice for two."));
-  if (local){
-    const lbl = el("p", "quiet lbl");
-    lbl.appendChild(document.createTextNode(
-      "Built from xBloom's rules. For notes on this exact coffee, open the "));
-    if (CLAUDE_URL){
-      const a = el("a", null, "Claude version");
-      a.href = CLAUDE_URL; a.target = "_blank"; a.rel = "noopener";
-      lbl.appendChild(a); lbl.appendChild(document.createTextNode("."));
-    } else lbl.appendChild(document.createTextNode("Claude version."));
-    card.appendChild(lbl);
-  }
-  const t = (r.temp_c === "RT" || r.temp_c === "BP") ? r.temp_c : r.temp_c + "\u00a0°C";
-  const pairs = [
-    ["Dose", r.dose_g + " g"],
-    ["Ratio", "1:" + r.ratio],
-    ["Water", r.total_ml + " ml"],
-    ["Grind", String(r.grind)]
-  ];
-  if (r.rpm != null) pairs.push(["RPM", String(r.rpm)]);
-  pairs.push(["Temperature", t], ["Flow", r.flow_ml_s.toFixed(1) + " ml/s"],
-    ["Pattern", r.pattern.charAt(0).toUpperCase() + r.pattern.slice(1)]);
-  card.appendChild(rowsBox(pairs));
-
-  card.appendChild(el("h3", null, "Pours"));
-  const ul = el("ul", "pours");
-  r.pours.forEach(p => {
-    const li = el("li");
-    const flags = [];
-    if (p.shake_before) flags.push("shake before");
-    if (p.shake_after) flags.push("shake after");
-    li.appendChild(el("span", null, p.label + (flags.length ? " · " : "")));
-    if (flags.length) li.firstChild.appendChild(el("em", null, flags.join(", ")));
-    li.appendChild(el("span", null, p.ml + " ml" + (p.pause_s ? " · pause " + p.pause_s + " s" : "")));
-    ul.appendChild(li);
-  });
-  card.appendChild(ul);
-
-  if (r.tasting_notes){
-    card.appendChild(el("h3", null, "Tasting notes"));
-    card.appendChild(el("p", "notes", r.tasting_notes));
-  }
-
-  card.appendChild(el("h3", null, "Adjust to taste"));
-  const tb = el("table", "adj"), tbody = el("tbody");
-  r.adjust.forEach(a => { const tr = el("tr");
-    tr.appendChild(el("td", null, a.taste)); tr.appendChild(el("td", null, a.do)); tbody.appendChild(tr); });
-  tb.appendChild(tbody); card.appendChild(tb);
-
-  if (r.why){
-    card.appendChild(el("h3", null, "Why"));
-    card.appendChild(el("p", "why", r.why));
-  }
-
-  const acts = el("div", "acts");
-  const copyBtn = el("button", null, "Copy"); copyBtn.type = "button";
-  const shareBtn = el("button", null, "Share"); shareBtn.type = "button";
-  const againBtn = el("button", null, "Again"); againBtn.type = "button";
-  const text = () => copyText(r, payload);
-  const flash = (btn, word) => { const old = btn.textContent; btn.textContent = word;
-    setTimeout(() => { btn.textContent = old; }, 1500); };
-  const plain = el("pre", "plain"); plain.hidden = true;
-  const execCopy = s => {                    // http origins have no navigator.clipboard
-    const ta = el("textarea"); ta.value = s; ta.readOnly = true;
-    ta.style.cssText = "position:fixed;top:-1000px;left:-1000px;opacity:0";
-    document.body.appendChild(ta); ta.select();
-    let ok = false;
-    try { ok = document.execCommand("copy"); } catch(err){ ok = false; }
-    ta.remove();
-    return ok;
-  };
-  const failed = btn => { plain.textContent = text(); plain.hidden = false; flash(btn, "Copy failed"); };
-  const fallback = btn => { if (execCopy(text())) flash(btn, "Copied"); else failed(btn); };
-  const toClip = btn => {
-    if (navigator.clipboard && navigator.clipboard.writeText)
-      navigator.clipboard.writeText(text()).then(() => flash(btn, "Copied"), () => fallback(btn));
-    else fallback(btn);
-  };
-  copyBtn.addEventListener("click", () => toClip(copyBtn));
-  shareBtn.addEventListener("click", () => {
-    if (navigator.share) navigator.share({ title: r.name, text: text() })
-      .catch(e => { if (!e || e.name !== "AbortError") toClip(shareBtn); });
-    else toClip(shareBtn);
-  });
-  againBtn.addEventListener("click", () => run(payload));
-  acts.appendChild(copyBtn); acts.appendChild(shareBtn); acts.appendChild(againBtn);
-  card.appendChild(acts); card.appendChild(plain);
-
-  if (fixes > 0) card.appendChild(el("p", "notice",
-    "Adjusted " + fixes + " value" + (fixes === 1 ? "" : "s") + " to the machine's limits."));
-
-  out.textContent = ""; out.appendChild(card); bring(card);
-}
-
-function showError(payload, status){
-  const msg = status === 429
-    ? "You've hit the hourly limit of 30 recipes. Try again in an hour."
-    : "The recipe server isn't reachable right now.";
-  const box = el("div", "err");
-  box.setAttribute("role", "alert");
-  box.appendChild(el("p", "quiet", msg));
-  const acts = el("div", "acts");
-  const loc = el("button", "primary", "Use xBloom's rules"); loc.type = "button";
-  loc.addEventListener("click", () => {
-    const n = normalize(localResult(payload), payload.model);
-    show(n.recipe, payload, n.fixes, true);
-    pushRecent({ payload: payload, recipe: n.recipe, fixes: n.fixes, local: true });
-  });
-  acts.appendChild(loc);
-  const retry = el("button", null, "Retry"); retry.type = "button";
-  retry.addEventListener("click", () => run(payload));
-  acts.appendChild(retry);
-  if (CLAUDE_URL){
-    const a = el("a", "btn", "Ask Claude instead");
-    a.href = CLAUDE_URL; a.target = "_blank"; a.rel = "noopener";
-    acts.appendChild(a);
-  }
-  box.appendChild(acts);
-  out.textContent = ""; out.appendChild(box); bring(box);
-}
-
-async function run(payload){
-  go.disabled = true; go.textContent = "Writing…";
-  out.textContent = "";
-  const status = el("p", "quiet");
-  status.setAttribute("aria-live", "polite");
-  let base = "Writing your recipe\u2026";
-  const t0 = Date.now();
-  const ac = new AbortController();
-  let exitBtn = null;
-  const paint = () => { const s = Math.round((Date.now() - t0) / 1000);
-    status.textContent = s >= 5 ? base.replace(/\u2026$/, "") + " · " + s + " s so far" : base;
-    if (s >= 20 && !exitBtn && MOCK !== "local"){   // a long wait needs a way out
-      exitBtn = el("button", null, "Use xBloom's rules"); exitBtn.type = "button";
-      exitBtn.addEventListener("click", () => ac.abort());
-      const box = el("div", "acts"); box.appendChild(exitBtn); out.appendChild(box);
-    } };
-  paint();
-  out.appendChild(status);
-  const tick = setInterval(paint, 1000);
-  try {
-    const raw = await askModel(payload, text => {
-      const m = /"name"\s*:\s*"([^"]*)"/.exec(String(text || ""));
-      base = (m && m[1].trim())
-        ? "Writing your recipe: " + m[1].trim() + "…" : "Writing your recipe…";
-      paint();
-    }, s => { base = s; paint(); }, ac.signal);
-    const local = !!(raw && raw.local);
-    const n = normalize(raw, payload.model);
-    show(n.recipe, payload, n.fixes, local);
-    pushRecent({ payload: payload, recipe: n.recipe, fixes: n.fixes, local: local });
-  } catch (e) {
-    console.warn("recipe request failed", e);
-    showError(payload, e && e.status);
-  } finally {
-    clearInterval(tick);
-    go.disabled = false; go.textContent = "Make my recipe";
-  }
-}
-
-form.addEventListener("submit", ev => { ev.preventDefault(); run(inputs()); });
+try {const l=readRecent(),same=JSON.stringify(entry.payload);
+if(l.length && JSON.stringify(l[0].payload) === same) l[0]=entry;else l.unshift(entry);
+localStorage.setItem(KEY,JSON.stringify(l.slice(0,5)));}
+catch(e){/* storage blocked */}
 drawRecent();
-window.normalize = normalize; window.copyText = copyText; window.BASE = BASE;
-window.localRecipe = localRecipe; window.notesFor = notesFor;
-window.buildPrompt = buildPrompt;
+}
+const $=s=>document.querySelector(s);
+const out = $("#out"), go = $("#go"), form = $("#form");
+const el=(tag,cls,text)=>{const n=document.createElement(tag);
+if(cls) n.className=cls;if(text != null) n.textContent=text;return n;};
+const bring = n => n.scrollIntoView({ block:"start",
+behavior: matchMedia("(prefers-reduced-motion:reduce)").matches ? "auto" : "smooth" });
+function inputs(){
+const g = n => form.querySelector('input[name="'+n+'"]:checked').value;
+return { coffee: cleanCoffee($("#coffee").value), roast: g("roast"), process: g("process"),
+cups: Number(g("cups")), strength: g("strength"), model: g("model") };
+}
+function setCups2(){
+$("#cups2").textContent = form.querySelector('input[name="model"]:checked').value === "original"
+? "2 cups · brew twice" : "Max · 18 g";
+}
+const MKEY = "xbloom.machine";
+const pick = (n,v) => { form.querySelector('input[name="'+n+'"][value="'+v+'"]').checked = true; };
+form.addEventListener("change", ev => { if (ev.target.name !== "model") return;
+setCups2(); pick("cups", ev.target.value === "studio" ? 2 : 1);
+try {localStorage.setItem(MKEY,ev.target.value);} catch(e){}});
+function restoreMachine(){let m=null;
+try {m=localStorage.getItem(MKEY);} catch(e){}
+if (m !== "studio" && m !== "original") return;
+pick("model", m); pick("cups", m === "studio" ? 2 : 1); }
+function setInputs(p){
+$("#coffee").value = p.coffee || "";
+const v = Object.assign({process:"unsure"}, p);
+["roast","process","cups","strength","model"].forEach(n => {
+form.querySelectorAll('input[name="'+n+'"]').forEach(i => {
+if(i.value === String(v[n])) i.checked=true;
+});
+});
+setCups2();
+}
+function drawRecent(){
+const list = readRecent(), box = $("#recent"), holder = $("#recentList");
+holder.textContent = "";
+box.hidden=list.length < 2;
+if(box.hidden) return;
+list.forEach(e=>{
+try {
+const b = el("button", null); b.type = "button";
+b.appendChild(document.createTextNode(String(e.recipe.name || "Recipe") + " "));
+b.appendChild(el("span", null, "xBloom " + (e.payload.model === "original" ? "Original" : "Studio")));
+b.addEventListener("click", () => {
+try {setInputs(e.payload);
+const n=normalize(e.recipe,e.payload.model);show(n.recipe,e.payload,n.fixes,e.local);}
+catch(err){ console.warn("recent entry failed to open", err); }
+});
+holder.appendChild(b);
+} catch(err){ console.warn("skipped a recent entry", err); }
+});
+}
+function rowsBox(pairs){
+const d = el("div", "rows");
+pairs.forEach(([k, v]) => { const r = el("div");
+r.appendChild(el("b", null, k)); r.appendChild(el("i", null, v)); d.appendChild(r); });
+return d;
+}
+function show(r,payload,fixes,local){
+const card = el("div", "card");
+card.appendChild(el("p", "mach", "xBloom " + (payload.model === "original" ? "Original" : "Studio")));
+const h2 = el("h2", null, r.name); h2.setAttribute("tabindex", "-1"); card.appendChild(h2);
+if (payload.model === "original" && Number(payload.cups) === 2)
+card.appendChild(el("p", "quiet twice", "15 g makes one cup. Brew this twice for two."));
+else if (r.ratio >= 18) card.appendChild(el("p", "quiet max", "This is the most one brew makes." + AGAIN));
+else if (payload.model !== "original" && r.dose_g >= 18)
+card.appendChild(el("p", "quiet max", "18 g is all the dripper holds."
++ (r.locked ? "" : " The taste panel below can stretch the water.")));
+if(local){
+const lbl = el("p", "quiet lbl");
+lbl.appendChild(document.createTextNode(
+"Built from xBloom's rules. For notes on this exact coffee, open the "));
+const a = el("a", null, "Claude version");
+a.href = CLAUDE_URL; a.target = "_blank"; a.rel = "noopener";
+lbl.appendChild(a); lbl.appendChild(document.createTextNode("."));
+card.appendChild(lbl);
+}
+const t = (r.temp_c === "RT" || r.temp_c === "BP") ? r.temp_c : r.temp_c + "\u00a0°C";
+const pairs=[
+["Dose", r.dose_g + " g"],
+["Ratio", "1:" + r.ratio],
+["Water", r.total_ml + " ml"],
+["Grind", String(r.grind)]
+];
+if (r.rpm != null) pairs.push(["RPM", String(r.rpm)]);
+pairs.push(["Temperature", t], ["Flow", r.flow_ml_s.toFixed(1) + " ml/s"],
+["Pattern", r.pattern.charAt(0).toUpperCase() + r.pattern.slice(1)]);
+card.appendChild(rowsBox(pairs));
+card.appendChild(el("h3", null, "Pours"));
+const ul = el("ul", "pours");
+r.pours.forEach(p=>{
+const li = el("li");
+const flags=[];
+if (p.shake_before) flags.push("shake before");
+if (p.shake_after) flags.push("shake after");
+li.appendChild(el("span", null, p.label + (flags.length ? " · " : "")));
+if (flags.length) li.firstChild.appendChild(el("em", null, flags.join(", ")));
+li.appendChild(el("span", null, p.ml + " ml" + (p.pause_s ? " · pause " + p.pause_s + " s" : "")));
+ul.appendChild(li);
+});
+card.appendChild(ul);
+const hist=Array.isArray(r.history) ? r.history : [];
+if (hist.length){ card.appendChild(el("h3", "changedH", "Changed"));
+const cl = el("ul", "changed");
+hist[hist.length - 1].changes.forEach(t => cl.appendChild(el("li", null, t)));
+card.appendChild(cl);}
+if(r.tasting_notes){
+card.appendChild(el("h3", null, "Tasting notes"));
+card.appendChild(el("p", "notes", r.tasting_notes));
+}
+card.appendChild(el("h3", null, "Adjust to taste"));
+const tb = el("table", "adj"), tbody = el("tbody");
+r.adjust.forEach(a => { const tr = el("tr");
+tr.appendChild(el("td", null, a.taste)); tr.appendChild(el("td", null, a.do)); tbody.appendChild(tr); });
+tb.appendChild(tbody);card.appendChild(tb);
+if(r.why){
+card.appendChild(el("h3", null, realRound(hist) ? "Why (first version)" : "Why"));
+card.appendChild(el("p", "why", r.why));
+}
+if(!r.locked) card.appendChild(tastePanel(r,payload,local));
+const acts = el("div", "acts");
+const copyBtn = el("button", null, "Copy"); copyBtn.type = "button";
+const shareBtn = el("button", null, "Share"); shareBtn.type = "button";
+const againBtn = el("button", null, "Again"); againBtn.type = "button";
+const text=()=>copyText(r,payload);
+const flash=(btn,word)=>{const old=btn.textContent;btn.textContent=word;
+setTimeout(()=>{ btn.textContent=old; },1500); };
+const plain = el("pre", "plain"); plain.hidden = true;
+const execCopy=s=>{
+const ta = el("textarea"); ta.value = s; ta.readOnly = true;
+ta.style.cssText = "position:fixed;top:-1000px;left:-1000px;opacity:0";
+document.body.appendChild(ta); ta.select();
+let ok=false;
+try { ok = document.execCommand("copy"); } catch(err){ ok = false; }
+ta.remove();
+return ok;
+};
+const failed = btn => { plain.textContent = text(); plain.hidden = false; flash(btn, "Copy failed"); };
+const fallback = btn => { if (execCopy(text())) flash(btn, "Copied"); else failed(btn); };
+const toClip=btn=>{
+if (navigator.clipboard && navigator.clipboard.writeText)
+navigator.clipboard.writeText(text()).then(() => flash(btn, "Copied"), () => fallback(btn));
+else fallback(btn);
+};
+copyBtn.addEventListener("click", () => toClip(copyBtn));
+shareBtn.addEventListener("click", () => {
+if (navigator.share) navigator.share({ title: r.name,text: text() })
+.catch(e => { if (!e || e.name !== "AbortError") toClip(shareBtn); });
+else toClip(shareBtn);
+});
+againBtn.addEventListener("click", () => run(payload));
+acts.appendChild(copyBtn); acts.appendChild(shareBtn); acts.appendChild(againBtn);
+card.appendChild(acts); card.appendChild(plain);
+if (fixes > 0) card.appendChild(el("p", "notice",
+"Adjusted " + fixes + " value" + (fixes === 1 ? "" : "s") + " to the machine's limits."));
+out.textContent = ""; out.appendChild(card); bring(card);
+}
+function tastePanel(r,payload,local){
+const sec=el("section","taste");
+sec.appendChild(el("h3",null,"How did it taste?"));
+const miss=el("p","quiet miss","I did not catch a symptom. Pick a chip."); miss.hidden=true;
+miss.setAttribute("role","status");
+const chips=el("div","chips");
+RULES.forEach(x=>{
+const b=el("button","chip",x.chip);
+b.type="button"; b.setAttribute("aria-pressed","false"); b.setAttribute("data-k",x.key);
+b.addEventListener("click",()=>{miss.hidden=true;
+b.setAttribute("aria-pressed",b.getAttribute("aria-pressed")==="true"?"false":"true");});
+chips.appendChild(b);
+});
+const inp=el("input","tinp");
+inp.type="text"; inp.maxLength=120; inp.placeholder='or type it: "a bit sour, thin"';
+inp.addEventListener("input",()=>{miss.hidden=true;});
+const fix=el("button","fix","Fix the recipe"); fix.type="button";
+const tin=el("div","tin"); tin.appendChild(inp); tin.appendChild(fix);
+sec.appendChild(chips); sec.appendChild(tin); sec.appendChild(miss);
+const apply=()=>{
+const typed=parseTaste(inp.value);
+const keys=KEYS.filter(k=>typed.indexOf(k)>=0
+||chips.querySelector('[data-k="'+k+'"]').getAttribute("aria-pressed")==="true");
+if(!keys.length){miss.hidden=false;return;}
+const n=normalize(applyTaste(r,keys,payload.model==="original").recipe,payload.model);
+show(n.recipe,payload,n.fixes,local);
+pushRecent({payload:payload,recipe:n.recipe,fixes:n.fixes,local:local});
+const h=out.querySelector(".card h2"); if(h) h.focus();
+};
+fix.addEventListener("click",apply);
+inp.addEventListener("keydown",ev=>{if(ev.key==="Enter"){ev.preventDefault();apply();}});
+return sec;
+}
+function showError(payload,status){
+const msg=status === 429
+? "You've hit the hourly limit of 30 recipes. Try again in an hour."
+: "The recipe server isn't reachable right now.";
+const box = el("div", "err");
+box.setAttribute("role", "alert");
+box.appendChild(el("p", "quiet", msg));
+const acts = el("div", "acts");
+const loc = el("button", "primary", "Use xBloom's rules"); loc.type = "button";
+loc.addEventListener("click", () => {
+const n=normalize(localResult(payload),payload.model);
+show(n.recipe,payload,n.fixes,true);
+pushRecent({ payload: payload,recipe: n.recipe,fixes: n.fixes,local: true });
+});
+acts.appendChild(loc);
+const retry = el("button", null, "Retry"); retry.type = "button";
+retry.addEventListener("click", () => run(payload));
+acts.appendChild(retry);
+const ask = el("a", "btn", "Ask Claude instead");
+ask.href = CLAUDE_URL; ask.target = "_blank"; ask.rel = "noopener";
+acts.appendChild(ask);
+box.appendChild(acts);
+out.textContent = ""; out.appendChild(box); bring(box);
+}
+async function run(payload){
+go.disabled = true; go.textContent = "Writing…";
+out.textContent = "";
+const status = el("p", "quiet");
+status.setAttribute("aria-live", "polite");
+let base = "Writing your recipe\u2026";
+const t0=Date.now();
+const ac=new AbortController();
+let exitBtn=null;
+const paint=()=>{ const s=Math.round((Date.now() - t0) / 1000);
+status.textContent = s >= 5 ? base.replace(/\u2026$/, "") + " · " + s + " s so far" : base;
+if (s >= 20 && !exitBtn && MOCK !== "local"){
+exitBtn = el("button", null, "Use xBloom's rules"); exitBtn.type = "button";
+exitBtn.addEventListener("click", () => ac.abort());
+const box = el("div", "acts"); box.appendChild(exitBtn); out.appendChild(box);
+} };
+paint();
+out.appendChild(status);
+const tick=setInterval(paint,1000);
+try {
+const raw=await askModel(payload,text=>{
+const m = /"name"\s*:\s*"([^"]*)"/.exec(String(text || ""));
+base=(m && m[1].trim())
+? "Writing your recipe: " + m[1].trim() + "…" : "Writing your recipe…";
+paint();
+},s=>{ base=s; paint(); },ac.signal);
+const local=!!(raw && raw.local);
+let n=normalize(raw,payload.model);
+if (mockRound){
+n = normalize(applyTaste(n.recipe, mockRound, payload.model === "original").recipe, payload.model);
+mockRound=null; }
+show(n.recipe,payload,n.fixes,local);
+pushRecent({ payload: payload,recipe: n.recipe,fixes: n.fixes,local: local });
+} catch (e){
+console.warn("recipe request failed", e);
+showError(payload,e && e.status);
+} finally {
+clearInterval(tick);
+go.disabled = false; go.textContent = "Make my recipe";
+}
+}
+form.addEventListener("submit", ev => { ev.preventDefault(); run(inputs()); });
+restoreMachine(); drawRecent(); setCups2();
+window.normalize=normalize; window.copyText=copyText; window.BASE=BASE;
+window.localRecipe=localRecipe; window.notesFor=notesFor;
+window.buildPrompt=buildPrompt; window.inputs=inputs;
+window.applyTaste=applyTaste; window.parseTaste=parseTaste; window.buildPours=buildPours;
+window.adjustFor=adjustFor; window.RULES=RULES;
 </script>
 </body>
 </html>
