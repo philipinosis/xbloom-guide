@@ -7,7 +7,7 @@
 <title>xBloom Recipe Advisor</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <style>
-:root{--bg:#eef1ef; --panel:#fafcfb; --ink:#121816; --dim:#566360;--line:#d3dad7; --line2:#c3ccc9; --accent:#121816; --accent-ink:#f4f7f5;--copper:#0c7361; --copper-ink:#f2fbf8; --focus:#0c7361;--disp:"Bricolage Grotesque","Helvetica Neue",Helvetica,Arial,sans-serif;--body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1211; --panel:#151b1a; --ink:#e6edea; --dim:#94a6a1;--line:#28322f; --line2:#33403c; --accent:#e6edea; --accent-ink:#0d1211;--copper:#2ea88c; --copper-ink:#04100d; --focus:#3fbf9f;}}:root[data-theme="dark"]{--bg:#0d1211; --panel:#151b1a; --ink:#e6edea; --dim:#94a6a1;--line:#28322f; --line2:#33403c; --accent:#e6edea; --accent-ink:#0d1211;--copper:#2ea88c; --copper-ink:#04100d; --focus:#3fbf9f;}*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 var(--body);padding:20px 18px 40px}main{max-width:560px;margin:0 auto}h1{font:600 1.5rem/1.2 var(--disp);margin:0 0 16px;letter-spacing:-.01em}label.f{display:block;font-size:.8rem;font-weight:600;color:var(--dim);letter-spacing:.04em;text-transform:uppercase;margin:0 0 6px}#coffee,.tinp{width:100%;min-height:46px;padding:10px 12px;font:inherit;color:var(--ink);background:var(--panel);border:1px solid var(--line2);border-radius:10px}#coffee::placeholder,.tinp::placeholder{color:var(--dim)}fieldset{border:0;padding:0;margin:0 0 12px}fieldset legend{padding:0;font-size:.8rem;font-weight:600;color:var(--dim);letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px}.seg{display:flex;border:1px solid var(--line2);border-radius:10px;overflow:hidden;background:var(--panel)}.seg label{flex:1 1 0;display:flex;align-items:center;justify-content:center;min-height:44px;padding:0 6px;font-size:.94rem;cursor:pointer;border-left:1px solid var(--line);transition:background .12s,color .12s}.seg label:first-child{border-left:0}.seg input{position:absolute;opacity:0;width:1px;height:1px;margin:0}.seg input:checked + span{color:inherit;font-weight:600;text-decoration:underline}.seg label:has(input:checked){background:var(--accent);color:var(--accent-ink);font-weight:600}.seg label:has(input:checked) span{text-decoration:none}.seg label:has(input:focus-visible){outline:2px solid var(--focus);outline-offset:-3px}.field{margin:0 0 12px}#go,.fix{width:100%;min-height:52px;margin-top:4px;font:600 1.05rem var(--body);color:var(--copper-ink);background:var(--copper);border:1px solid var(--copper);border-radius:10px;cursor:pointer}#go[disabled]{cursor:default}button:focus-visible,a:focus-visible,input:focus-visible,.card h2:focus-visible{outline:2px solid var(--focus);outline-offset:2px}#recent{margin-top:20px}#recent h2{font-size:.8rem;font-weight:600;color:var(--dim);letter-spacing:.04em;text-transform:uppercase;margin:0 0 6px}#recent button{display:block;width:100%;text-align:left;min-height:44px;padding:8px 12px;background:none;border:0;border-top:1px solid var(--line);color:var(--ink);font:inherit;cursor:pointer}#recent button span{color:var(--dim);font-size:.86rem}#out{margin-top:22px;min-height:3.5rem}.quiet{color:var(--dim);font-size:.94rem;margin:0}pre.plain{font:12px/1.4 var(--mono);color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin:10px 0 0;white-space:pre-wrap;word-break:break-word;user-select:text}.card{border-top:2px solid var(--line2);padding-top:16px}.card h2{font:600 1.35rem/1.25 var(--disp);margin:0 0 14px}.lbl{margin:-8px 0 14px}.twice,.max{color:var(--ink);font-weight:500;margin:-8px 0 14px}.mach{margin:0 0 4px;font-size:.8rem;font-weight:600;color:var(--dim);letter-spacing:.04em;text-transform:uppercase}.err{border-top:2px solid var(--line2);padding-top:16px}.err > p{color:var(--ink);font-size:1rem}.err .acts{flex-wrap:wrap}.err .acts .primary{flex:1 1 100%}.lbl a{color:var(--copper)}.rows{margin:0 0 16px}.rows div{display:flex;justify-content:space-between;gap:16px;padding:7px 0;border-bottom:1px solid var(--line)}.rows b{font-weight:500;color:var(--dim);font-size:.94rem}.rows i{margin:0;font-style:normal;font-size:1.2rem;font-weight:600;font-variant-numeric:tabular-nums;text-align:right;line-height:1.2}h3{font-size:.8rem;font-weight:600;color:var(--dim);letter-spacing:.04em;text-transform:uppercase;margin:18px 0 6px}ul.pours{list-style:none;margin:0;padding:0}ul.pours li{padding:6px 0;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums;display:flex;justify-content:space-between;gap:12px}ul.pours em{font-style:normal;color:var(--ink);font-size:.9rem}p.notes{margin:0;white-space:pre-line}table.adj{width:100%;border-collapse:collapse;font-size:.94rem}table.adj td{padding:6px 0;border-bottom:1px solid var(--line);vertical-align:top}table.adj td:first-child{color:var(--ink);font-weight:500;width:40%;padding-right:14px}p.why{margin:0;color:var(--dim);font-size:.94rem;white-space:pre-line}.acts{display:flex;gap:8px;margin-top:20px}.acts .primary{background:var(--copper);color:var(--copper-ink);border-color:var(--copper)}.acts button,.acts .btn{flex:1 1 0;min-height:46px;font:500 .96rem var(--body);color:var(--ink);background:var(--panel);border:1px solid var(--line2);border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;text-decoration:none;text-align:center}.notice{margin:12px 0 0;font-size:.86rem;color:var(--dim)}ul.changed{list-style:none;margin:0;padding:0 0 0 10px;border-left:2px solid var(--copper)}ul.changed li{color:var(--ink);font-size:.94rem;padding:3px 0}section.taste{margin-top:14px;padding-top:10px;border-top:1px solid var(--line)}section.taste h3{margin-top:0}.chips{display:flex;flex-wrap:wrap;gap:6px}.chip{min-height:36px;padding:0 10px;font:500 .9rem var(--body);color:var(--ink);background:var(--panel);border:1px solid var(--line2);border-radius:18px;cursor:pointer}.chip[data-k="right"]{color:var(--copper)}.chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:600}.tin{display:flex;gap:8px;margin-top:10px}.tinp{flex:1 1 0;min-width:0}.fix{width:auto;min-height:44px;margin-top:0;padding:0 14px;font-size:.94rem;font-weight:500}.miss{margin:8px 0 0}footer{max-width:560px;margin:36px auto 0;padding-top:14px;border-top:1px solid var(--line);font-size:.9rem}footer a{color:var(--copper);display:inline-block;padding:12px 0}@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+:root{--bg:#eef1ef; --panel:#fafcfb; --ink:#121816; --dim:#566360;--line:#d3dad7; --line2:#c3ccc9; --accent:#121816; --accent-ink:#f4f7f5;--copper:#0c7361; --copper-ink:#f2fbf8; --focus:#0c7361;--disp:"Bricolage Grotesque","Helvetica Neue",Helvetica,Arial,sans-serif;--body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1211; --panel:#151b1a; --ink:#e6edea; --dim:#94a6a1;--line:#28322f; --line2:#33403c; --accent:#e6edea; --accent-ink:#0d1211;--copper:#2ea88c; --copper-ink:#04100d; --focus:#3fbf9f;}}:root[data-theme="dark"]{--bg:#0d1211; --panel:#151b1a; --ink:#e6edea; --dim:#94a6a1;--line:#28322f; --line2:#33403c; --accent:#e6edea; --accent-ink:#0d1211;--copper:#2ea88c; --copper-ink:#04100d; --focus:#3fbf9f;}*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 var(--body);padding:20px 18px 40px}main{max-width:560px;margin:0 auto}h1{font:600 1.5rem/1.2 var(--disp);margin:0 0 16px;letter-spacing:-.01em}label.f,fieldset legend,#recent h2,#slots h2,.mach,h3{font-size:.8rem;font-weight:600;color:var(--dim);letter-spacing:.04em;text-transform:uppercase}label.f{display:block;margin:0 0 6px}fieldset legend{padding:0;margin-bottom:6px}#recent h2,#slots h2{margin:0 0 6px}.mach{margin:0 0 4px}h3{margin:18px 0 6px}#coffee,.tinp,.acts button,.acts .btn,#slotRows button,.chip{color:var(--ink);background:var(--panel);border:1px solid var(--line2)}#coffee,.tinp{width:100%;min-height:46px;padding:10px 12px;font:inherit;border-radius:10px}#coffee::placeholder,.tinp::placeholder{color:var(--dim)}fieldset{border:0;padding:0;margin:0 0 12px}.seg{display:flex;border:1px solid var(--line2);border-radius:10px;overflow:hidden;background:var(--panel)}.seg label{flex:1 1 0;display:flex;align-items:center;justify-content:center;min-height:44px;padding:0 6px;font-size:.94rem;cursor:pointer;border-left:1px solid var(--line);transition:background .12s,color .12s}.seg label:first-child{border-left:0}.seg input{position:absolute;opacity:0;width:1px;height:1px;margin:0}.seg input:checked + span{color:inherit;font-weight:600;text-decoration:underline}.seg label:has(input:checked){background:var(--accent);color:var(--accent-ink);font-weight:600}.seg label:has(input:checked) span{text-decoration:none}.seg label:has(input:focus-visible){outline:2px solid var(--focus);outline-offset:-3px}.field{margin:0 0 12px}#go,.fix{width:100%;min-height:52px;margin-top:4px;font:600 1.05rem var(--body);color:var(--copper-ink);background:var(--copper);border:1px solid var(--copper);border-radius:10px;cursor:pointer}#go[disabled]{cursor:default}button:focus-visible,a:focus-visible,input:focus-visible,.card h2:focus-visible{outline:2px solid var(--focus);outline-offset:2px}#recent,#slots{margin-top:20px}.st{color:var(--ink);font-weight:500}[hidden]{display:none!important}button[disabled],.acts .primary[disabled]{background:var(--line2);border-color:var(--line2);color:var(--dim)}#slotRows b{color:var(--ink)}#recent button{display:block;width:100%;text-align:left;min-height:44px;padding:8px 12px;background:none;border:0;border-top:1px solid var(--line);color:var(--ink);font:inherit;cursor:pointer}#recent button span{color:var(--dim);font-size:.86rem}#out{margin-top:22px;min-height:3.5rem}.quiet{color:var(--dim);font-size:.94rem;margin:0}pre.plain{font:12px/1.4 var(--mono);color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin:10px 0 0;white-space:pre-wrap;word-break:break-word;user-select:text}.card{border-top:2px solid var(--line2);padding-top:16px}.card h2{font:600 1.35rem/1.25 var(--disp);margin:0 0 14px}.lbl{margin:-8px 0 14px}.twice,.max{color:var(--ink);font-weight:500;margin:-8px 0 14px}.err{border-top:2px solid var(--line2);padding-top:16px}.err > p{color:var(--ink);font-size:1rem}.lbl a{color:var(--copper)}.rows{margin:0 0 16px}.rows div{display:flex;justify-content:space-between;gap:16px;padding:7px 0;border-bottom:1px solid var(--line)}.rows b{font-weight:500;color:var(--dim);font-size:.94rem}.rows i{margin:0;font-style:normal;font-size:1.2rem;font-weight:600;font-variant-numeric:tabular-nums;text-align:right;line-height:1.2}ul.pours{list-style:none;margin:0;padding:0}ul.pours li{padding:6px 0;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums;display:flex;justify-content:space-between;gap:12px}ul.pours em{font-style:normal;color:var(--ink);font-size:.9rem}p.notes{margin:0;white-space:pre-line}table.adj{width:100%;border-collapse:collapse;font-size:.94rem}table.adj td{padding:6px 0;border-bottom:1px solid var(--line);vertical-align:top}table.adj td:first-child{color:var(--ink);font-weight:500;width:40%;padding-right:14px}p.why{margin:0;color:var(--dim);font-size:.94rem;white-space:pre-line}.acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}.acts .primary{flex:1 1 100%;background:var(--copper);color:var(--copper-ink);border-color:var(--copper)}.acts button,.acts .btn,#slotRows button{flex:1 1 0;min-height:46px;font:500 .96rem var(--body);border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;text-decoration:none;text-align:center}#slotRows button{flex:0 0 auto;padding:0 14px}.notice{margin:12px 0 0;font-size:.86rem;color:var(--dim)}ul.changed{list-style:none;margin:0;padding:0 0 0 10px;border-left:2px solid var(--copper)}ul.changed li{color:var(--ink);font-size:.94rem;padding:3px 0}section.taste{margin-top:14px;padding-top:10px;border-top:1px solid var(--line)}section.taste h3{margin-top:0}.chips{display:flex;flex-wrap:wrap;gap:6px}.chip{min-height:36px;padding:0 10px;font:500 .9rem var(--body);border-radius:18px;cursor:pointer}.chip[data-k="right"]{color:var(--copper)}.chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:600}.tin{display:flex;gap:8px;margin-top:10px}.tinp{flex:1 1 0;min-width:0}.fix{width:auto;min-height:44px;margin-top:0;padding:0 14px;font-size:.94rem;font-weight:500}.miss{margin:8px 0 0}footer{max-width:560px;margin:36px auto 0;padding-top:14px;border-top:1px solid var(--line);font-size:.9rem}footer a{color:var(--copper);display:inline-block;padding:12px 0}@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
@@ -56,10 +56,15 @@
 <div id="out"></div>
 
 <section id="recent" hidden><h2>Recent</h2><div id="recentList"></div></section>
+<section id="slots" hidden><h2>Auto Mode slots</h2><div class="rows" id="slotRows"></div>
+<p class="quiet">Writes all three slots at once. The machine keeps them until you, or the app, write again.</p>
+<div class="acts"><button id="slotGo" type="button">Write A, B, C to machine</button></div>
+<p class="quiet" id="slotSt" role="status"></p></section>
 </main>
 
 <footer><a href="index.html">Settings explained</a></footer>
 
+<script src="ble.js"></script>
 <script>
 "use strict";
 // PROMPT: keep identical to server/xbloom_api.py
@@ -170,7 +175,8 @@ return TEMPLATE
 const API_URL = (location.port === "8018" || location.hostname === "95.216.221.95")
 ? "/recipe" : "http://95.216.221.95:8018/recipe";
 const CLAUDE_URL = "https://claude.ai/code/artifact/3eef3cf4-15f6-479e-9149-8fa8983eb65f";
-const MOCK = new URLSearchParams(location.search).get("mock");
+const Q=new URLSearchParams(location.search),M0=Q.get("mock"),DBG=Q.get("debug")==="ble",
+BLE=/^ble($|=)/.test(M0||"")?M0.slice(4):null,MOCK=BLE===null?M0:/^taste=/.test(BLE)?BLE:"1";
 let mockRound = /^taste=/.test(MOCK || "") ? MOCK.slice(6).split(",") : null;
 const MOCKTASTE=mockRound;
 const ST=o=>o?"1‑2":"3‑5", BODY="for more body.", KEPT="Saved as it is.";
@@ -198,7 +204,6 @@ first:(c,w)=>c.g(c.s,w,()=>c.calm(w)),repeat:(c,w)=>c.calm(w)||c.g(c.s,w)},
 const KEYS=RULES.map(x=>x.key);
 // a round that only locked the recipe does not make this an older version
 const realRound=h=>h.some(x=>x.symptoms.length!==1||x.symptoms[0]!=="right");
-// bloom = dose x 3, capped at the dripper's 160 ml; middle pours are multiples of 5
 function buildPours(dose,total,bloomPause,shakeAfter){
 const bm=Math.round(Math.min(160,dose*3)),rem=Math.max(0,Math.round(total)-bm);
 let n=Math.max(1,Math.round(rem/100));
@@ -472,7 +477,7 @@ new Promise((_, rej) => signal.addEventListener("abort", () => rej(new Error("ca
 ]);
 if (j && typeof j === "object" && !Array.isArray(j)) return j;
 }
-} catch(e){ console.warn("sample failed, using server", e); }
+} catch(e){ console.warn(e); }
 if (!(location.protocol === "https:" && /^http:/i.test(API_URL))){
 try {
 if (onStatus) onStatus("Asking the recipe server…");
@@ -491,7 +496,7 @@ const err=new Error(msg);err.status=r.status;throw err;
 return await r.json();
 } catch(e){
 if(e && e.status === 429) throw e;
-console.warn("server failed, building locally", e);
+console.warn(e);
 }
 }
 if (onStatus){ onStatus("Building from xBloom's rules…"); await wait(150); }
@@ -557,6 +562,7 @@ o.total_ml=sum;
 const ratio=num(r.ratio);
 o.ratio=Math.round((o.total_ml / o.dose_g) * 10) / 10;
 if(ratio === null || Math.abs(ratio - o.ratio) > 0.15) fixes++;
+o.cup=/^omni$/i.test(r.cup||"omni")?"omni":"other";
 o.tasting_notes = typeof r.tasting_notes === "string" ? r.tasting_notes.trim().slice(0,600) : "";
 o.why = typeof r.why === "string" ? r.why.trim().slice(0,600) : "";
 const isStr = x => typeof x === "string";
@@ -632,7 +638,7 @@ $("#cups2").textContent = form.querySelector('input[name="model"]:checked').valu
 const MKEY = "xbloom.machine";
 const pick = (n,v) => { form.querySelector('input[name="'+n+'"][value="'+v+'"]').checked = true; };
 form.addEventListener("change", ev => { if (ev.target.name !== "model") return;
-setCups2(); pick("cups", ev.target.value === "studio" ? 2 : 1);
+setCups2(); drawSlots(); pick("cups", ev.target.value === "studio" ? 2 : 1);
 try {localStorage.setItem(MKEY,ev.target.value);} catch(e){}});
 function restoreMachine(){let m=null;
 try {m=localStorage.getItem(MKEY);} catch(e){}
@@ -661,12 +667,43 @@ b.appendChild(el("span", null, "xBloom " + (e.payload.model === "original" ? "Or
 b.addEventListener("click", () => {
 try {setInputs(e.payload);
 const n=normalize(e.recipe,e.payload.model);show(n.recipe,e.payload,n.fixes,e.local);}
-catch(err){ console.warn("recent entry failed to open", err); }
+catch(err){ console.warn(err); }
 });
 holder.appendChild(b);
-} catch(err){ console.warn("skipped a recent entry", err); }
+} catch(err){ console.warn(err); }
 });
 }
+const SKEY="xbloom.slots";let current;
+function slotsRead(){let v;try{v=JSON.parse(localStorage.getItem(SKEY));}catch(e){}
+return Array.isArray(v)&&v.length===3?v.map(x=>x&&typeof x.name=="string"?x:null):[null,null,null];}
+const sendLine=()=>{const ins=BLE===null&&(location.protocol==="file:"||!isSecureContext);
+return ins||!(window.XBLE&&navigator.bluetooth)?"To send this to the machine, open "
++(ins?"https://philipinosis.github.io/xbloom-guide/recipe.html":"this page")
++" in Chrome on a Mac or Android phone.":"";};
+let sending;
+function sender(btn,st,sq,done){let rt=null;
+const fin=t=>{sending=false;btn.disabled=false;drawSlots();
+st.textContent=t;st.classList.toggle("st",t!==sendLine());};
+const go=()=>{if(sending)return;sending=true;btn.disabled=true;drawSlots();if(rt){rt.remove();rt=null;btn.hidden=false}
+let q;try{q=sq();}catch(e){return fin(e.message);}
+XBLE.send(q,{onStatus:t=>st.textContent=t,onStep:(i,n)=>st.textContent="Sending "+i+" of "+n},
+{timeoutMs:BLE===null?15000:1500}).then(()=>fin(done),e=>{fin(e&&e.message||"Send failed.");btn.hidden=true;
+rt=el("button",null,"Retry");rt.addEventListener("click",go);btn.after(rt);});};
+btn.addEventListener("click",go);}
+function drawSlots(){const rows=$("#slotRows"),s=slotsRead(),line=sendLine(),
+off=inputs().model!=="studio"||!(current||s.some(Boolean));
+$("#slots").hidden=off;
+const g=$("#slotGo");
+// Retry, if there, owns the button and status
+if(!g.nextElementSibling){g.hidden=!!line;$("#slotSt").textContent=line;}
+g.disabled=off||sending||!s.every(Boolean);
+rows.textContent="";if(off)return;
+s.forEach((x,i)=>{const d=el("div");
+d.append(el("b",null,"ABC"[i]+" · "+(x&&x.name||"Empty").slice(0,24)));
+const u=el("button",null,"Use this recipe");u.disabled=!current;
+u.addEventListener("click",()=>{const v=slotsRead();v[i]=current;
+try{localStorage.setItem(SKEY,JSON.stringify(v));}catch(e){}drawSlots();});
+d.append(u);rows.append(d);});}
 function rowsBox(pairs){
 const d = el("div", "rows");
 pairs.forEach(([k, v]) => { const r = el("div");
@@ -674,6 +711,7 @@ r.appendChild(el("b", null, k)); r.appendChild(el("i", null, v)); d.appendChild(
 return d;
 }
 function show(r,payload,fixes,local){
+current=r;
 const card = el("div", "card");
 card.appendChild(el("p", "mach", "xBloom " + (payload.model === "original" ? "Original" : "Studio")));
 const h2 = el("h2", null, r.name); h2.setAttribute("tabindex", "-1"); card.appendChild(h2);
@@ -745,7 +783,7 @@ setTimeout(()=>{ btn.textContent=old; },1500); };
 const plain = el("pre", "plain"); plain.hidden = true;
 const execCopy=s=>{
 const ta = el("textarea"); ta.value = s; ta.readOnly = true;
-ta.style.cssText = "position:fixed;top:-1000px;left:-1000px;opacity:0";
+ta.style.cssText = "position:fixed;left:-9999px";
 document.body.appendChild(ta); ta.select();
 let ok=false;
 try { ok = document.execCommand("copy"); } catch(err){ ok = false; }
@@ -767,10 +805,21 @@ else toClip(shareBtn);
 });
 againBtn.addEventListener("click", () => run(payload));
 acts.appendChild(copyBtn); acts.appendChild(shareBtn); acts.appendChild(againBtn);
-card.appendChild(acts); card.appendChild(plain);
+let bl=sendLine();
+try{if(!bl) XBLE.encodeRecipe(r);}catch(e){bl=e.message;}
+const bst=el("p","quiet",bl);bst.setAttribute("role","status");
+if(!bl){const sb=el("button","primary","Send to machine");acts.append(sb);
+sender(sb,bst,()=>XBLE.loadSequence(r),"Armed. Press the right knob on the machine to brew.");}
+card.appendChild(acts);card.append(bst);
+if(payload.model==="original") card.append(el("p","quiet","Untested on the Original."));
+if(DBG){const L=[],d=q=>q.forEach(x=>L.push(x.label+" "+XBLE.hex(x.frame)));
+try{d(XBLE.loadSequence(r));const sl=slotsRead();
+if(sl.every(Boolean)){L.push("");d(XBLE.slotSequence(sl));}}catch(e){L.push(e.message);}
+plain.textContent=L.join("\n");plain.hidden=false;}
+card.appendChild(plain);
 if (fixes > 0) card.appendChild(el("p", "notice",
 "Adjusted " + fixes + " value" + (fixes === 1 ? "" : "s") + " to the machine's limits."));
-out.textContent = ""; out.appendChild(card); bring(card);
+out.textContent = ""; out.appendChild(card); bring(card); drawSlots();
 }
 function tastePanel(r,payload,local){
 const sec=el("section","taste");
@@ -863,15 +912,34 @@ mockRound=null; }
 show(n.recipe,payload,n.fixes,local);
 pushRecent({ payload: payload,recipe: n.recipe,fixes: n.fixes,local: local });
 } catch (e){
-console.warn("recipe request failed", e);
+console.warn(e);
 showError(payload,e && e.status);
 } finally {
 clearInterval(tick);
 go.disabled = false; go.textContent = "Make my recipe";
 }
 }
+sender($("#slotGo"),$("#slotSt"),()=>XBLE.slotSequence(slotsRead()),
+"Written to A, B and C.");
+if(BLE!==null&&window.XBLE){const qf=+(/^fail(\d+)$/.exec(BLE)||[0,0])[1];
+const F=window.__bleFrames=[],P=x=>Promise.resolve(x),ls=[];let ns=0;
+const nb=(cmd,m,x)=>{const b=XBLE.frame(cmd,[x,0,0,0],7);b[1]=2;b[9]=m;
+ls.forEach(f=>f({target:{value:b}}));};
+const state=x=>nb(0x1f57,0xc1,x);
+const nt={startNotifications:()=>P(),addEventListener:(t,f)=>ls.push(f),removeEventListener(){ls.length=0}};
+const wr={writeValueWithoutResponse(fr){F.push(XBLE.hex(fr));
+if(qf&&F.length>=qf)return P();
+const cmd=fr[3]|fr[4]<<8;nb(cmd,0xc2,0);
+if(cmd===0x1f41){state(0x1d);state(0x1f);}
+if(cmd===0x2cf7){ns=0;state(fr[10]===0x91?0x41:0x01);}
+if(cmd===0x2cf6&&++ns===3){state(0x43);state(0x25);state(0x01);}
+return P();}};
+const gt={connect:()=>P(gt),disconnect(){},getPrimaryService:()=>
+P({getCharacteristic:u=>P(u===XBLE.WRITE?wr:nt)})};
+Object.defineProperty(navigator,"bluetooth",
+{configurable:true,value:{requestDevice:()=>wait(800).then(()=>({gatt:gt}))}});}
 form.addEventListener("submit", ev => { ev.preventDefault(); run(inputs()); });
-restoreMachine(); drawRecent(); setCups2();
+restoreMachine(); drawRecent(); setCups2(); drawSlots();
 window.normalize=normalize; window.copyText=copyText; window.BASE=BASE;
 window.localRecipe=localRecipe; window.notesFor=notesFor;
 window.buildPrompt=buildPrompt; window.inputs=inputs;

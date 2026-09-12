@@ -97,7 +97,7 @@ Recipe-builder cautions for the developer:
 
 ## How recipes get to the machine
 
-Four routes, all documented [2]:
+Five routes. The first four are documented [2]:
 
 1. **NFC recipe card.** Tap a physical card on top of the machine. The machine reads the
    grind and brew parameters off the NFC chip. This works with no internet and no phone
@@ -114,6 +114,7 @@ Four routes, all documented [2]:
 4. **On-machine editing.** The knobs adjust grind size and coffee:water ratio mid-recipe.
    Everything else (grind speed, temperature, pour pattern, pour count) is app-only
    [2][5].
+5. **Bluetooth from this site.** See the Bluetooth protocol section.
 
 **Sharing.** Yes, recipes are shareable between users. The app has "How do I share
 recipes?" and "How do I save recipes shared by others" articles [18]. Sharing produces a
@@ -323,6 +324,227 @@ Original's temperature floor and app-side ranges. FOR PHILIP: opening either in 
 browser would close several of the gaps below.
 
 ---
+
+## Bluetooth protocol (reverse-engineered, community sources)
+
+Not from xBloom. Six community repos, three of them with independent encoders, are listed at
+the end of this section. Where they differ, the split is recorded below. The protocol was
+captured and tested on Studio firmware V12.0D.500. `ble.js` in this repo implements it for
+Chrome. It can load a recipe and write the Auto Mode slots. It cannot commit, start or cancel a
+brew, and it cannot start or stop the grinder: those opcodes throw.
+
+### GATT
+
+- Service `0000e0ff-3c17-d293-8e48-14fe2e4da212`
+- Write `0000ffe1-0000-1000-8000-00805f9b34fb`
+- Notify `0000ffe2-0000-1000-8000-00805f9b34fb`
+
+Write without response. A write with response is rejected with CBATTError 14. No pairing.
+
+### Command frame
+
+```
+58 01 TYPE | CMD u16 LE | LEN u32 LE | 01 | DATA | CRC16 u16 LE
+```
+
+`LEN` counts the whole frame and equals 12 plus the length of DATA. `TYPE` is `0x01` for
+normal commands and `0x02` for the mode switch and slot writes. The `01` at offset 9 is a
+sub-type byte the app's builder always sends. Emit it once. A builder that adds the byte to
+a payload that already starts with `01` makes a frame one byte too long, and the machine
+rejects it.
+
+The CRC is CRC-16/KERMIT: polynomial 0x8408, initial value 0, no final XOR, over bytes 0 to
+LEN-3. It gives `0x2189` over `123456789`.
+
+Command ids are u16 little endian, so 8100 (`0x1FA4`) goes on the wire as `A4 1F`.
+
+| Id | Hex | Name | DATA |
+| --- | --- | --- | --- |
+| 8100 | `0x1FA4` | session handshake | two u32 LE, 185 and 1 |
+| 8022 | `0x1F56` | back to home | empty |
+| 8102 | `0x1FA6` | bypass and dose | three u32 LE, 0, 0 and the dose in grams |
+| 8104 | `0x1FA8` | cup weight range | two f32 LE, max then min |
+| 8001 | `0x1F41` | recipe with grinding | the recipe blob |
+| 8004 | `0x1F44` | recipe without grinding | the recipe blob |
+| 11511 | `0x2CF7` | mode switch, type 2 | `00000000` Pro, `91327856` Auto |
+| 11510 | `0x2CF6` | slot write, type 2 | slot, flags, then the blob |
+
+Captured frames: handshake `580101A41F1400000001B900000001000000BDD1`, home
+`580101561F0C00000001C015`, dose 16 g `580101A61F1800000001000000000000000010000000088C`,
+cup 200/80 `580101A81F1400000001000048430000A0422A0F`, Pro mode
+`580102F72C1000000001000000002A90`, Auto mode `580102F72C100000000191327856FF58`.
+
+The cup range is 110/90 for the Omni dripper and 200/80 for anything else. Only those two are
+HCI-confirmed. brAzzi64 marks the xPod and tea values as untested defaults, and Janczykkkko
+hard-codes 110/90 for every cup.
+
+### Recipe blob
+
+```
+LEN u8 (bytes of all segments) | segments | grind u8 | ratio u8
+```
+
+Each pour is one 8-byte segment:
+
+```
+ml | temp_c | pattern | vib | (256 - pause_s) & 0xFF | 0x00 | rpm | flow x 10
+```
+
+- Pattern: `0x00` centered, `0x01` circular, `0x02` spiral.
+- Vib: `0x01` shake before the pour, `0x02` shake after, `0x03` both, `0x00` neither.
+- RPM rides on the first pour only. Later pours carry 0.
+- A pour over 127 ml splits. Each full 127 ml gets a 4-byte lead `127, temp, pattern, vib`.
+  The remainder gets the 8-byte segment that carries the pause, RPM and flow. A remainder of
+  0 leaves the last 127 ml as the 8-byte segment.
+- The ratio byte is `round(total_ml / dose_g * 10)`, which is what matthewnitschke and
+  Janczykkkko both write. The sources split on who checks it.
+  matthewnitschke and Janczykkkko say the machine validates the byte against the sum of the
+  pours divided by the dose and rejects a load that does not match. brAzzi64 `PROTOCOL.md`
+  lines 632-635 puts the check in the app, in `RecipeDetailActivity`, and says the firmware
+  appears to ignore the byte, and the app's own check is an exact equality, not a rounding. We
+  derive the byte from the pours either way. Never copy it from an example.
+- Temperature is the number in Celsius. The app sends 98 for BP. RT has no known byte, so
+  this site refuses to send an RT recipe.
+- Pause is stored as a negated count, so the byte stops reading as a pause above 127 s. brAzzi64
+  caps it at 59. matthewnitschke and Janczykkkko allow 0 to 255 and name a practical cap near
+  99. `ble.js` caps at 127, the last value the byte still carries.
+- Grind `0xFE` is the no-grind wire sentinel for pre-ground coffee (matthewnitschke,
+  Janczykkkko). A literal `0` grinds at the finest setting instead. Every recipe from this site
+  grinds, so `ble.js` refuses grind 0 and always sends command `0x1F41`.
+
+`ble.js` refuses a recipe outside these ranges: dose 1-18 g as a whole number, grind 1-80,
+temperature 40-98 C, RPM 0 or 60-120, flow 3.0-3.5 ml/s, pour 1-255 ml, pause 0-127 s, ratio
+byte at most 255, blob body at most 255 bytes.
+
+### Load sequence
+
+Five frames, in this order, with a pause after each write. The sequence arms the machine. It
+does not brew. A human presses the knob.
+
+1. Session `0x1FA4`, wait 500 ms
+2. Home `0x1F56`, wait 2000 ms
+3. Dose `0x1FA6`, wait 400 ms
+4. Cup `0x1FA8`, wait 400 ms
+5. Recipe `0x1F41`, wait 400 ms, then wait for state `0x1F` armed
+
+The 2 s settle after Home is load-bearing. A fresh session will not arm without it.
+
+Pace the writes. Do not wait for an ack between them. Both hardware-tested clients say so. Wait
+for the machine only where a state is listed above.
+
+### Auto Mode slot sequence
+
+1. Session `0x1FA4`, wait 500 ms
+2. Pro mode `0x2CF7` with `00000000`, wait 1000 ms, expect state `0x01` idle
+3. Slot A `0x2CF6`, wait 1000 ms
+4. Slot B, the same
+5. Slot C, the same, then expect state `0x25` slots saved
+6. Auto mode `0x2CF7` with `91327856`, wait 1000 ms
+
+The 1000 ms waits come from saya6k, which found type 2 writes need at least 0.8 s between them.
+A 0.3 s gap fails and 0.8 s or more succeeds, confirmed on hardware.
+
+Slot DATA is `slot | flags | blob`, where slot 0, 1 and 2 are A, B and C, and flags `0x12`
+means the scale is on and the grinder is on.
+
+Two constraints. Write all three slots or the machine hangs at state `0x43` and shows RETRY.
+Write them in Pro mode only, because Auto mode parks the machine at state `0x41` and refuses.
+
+### Status notifications
+
+A status frame reads `58 02 07 57 1F 10 00 00 00 C1 <state> 00 00 00 CRC`. That is 16 bytes in
+every captured vector, but `ble.js` does not depend on the length. Read the frame by byte 0
+`0x58`, byte 3 `0x57` and byte 9 `0xC1`. The state is byte 10. An ack has the same shape with
+byte 3 echoing the command's low byte. Match on byte 3 alone. matthewnitschke's prose calls byte 4 a
+constant `0x07`, but its own captured slot ack carries `0x2C` there, so what the sources
+support is that byte 4 echoes the command's high byte. Byte 3 is right either way. Several notifications can arrive
+in one value, so split on the u32 LE length at offset 5.
+
+States: `0x01` idle, `0x0C` no water, `0x1D` loading, `0x1F` armed, `0x43` saving slots,
+`0x25` slots saved. State `0x41` is where the machine parks in Auto mode. matthewnitschke
+calls it complete, the Auto-mode selector; Janczykkkko calls it the Auto-mode park.
+
+### Where the sources disagree, and what this repo does
+
+1. **Ratio byte.** brAzzi64 truncates `ratio x 10`; matthewnitschke and Janczykkkko round it.
+   This repo rounds, with the other two. They agree on every whole ratio.
+2. **Notification byte 4.** matthewnitschke's prose calls byte 4 a constant `0x07` sub-type.
+   Janczykkkko's captured frames hold `0x1F` there, and matthewnitschke's own captured slot ack
+   holds `0x2C`. Every capture matches the command's high byte. This repo never tests byte 4 and
+   keys on bytes 0, 3 and 9 instead. Captures beat prose.
+3. **Byte 3 of a pour segment.** matthewnitschke and Janczykkkko read it as an agitation code
+   coupled to the pattern, and both emit `0x01` for a centered pour with no shake. brAzzi64's
+   `_vibration_code`, taken from the decompiled app, emits `0x00`. We follow brAzzi64.
+   matthewnitschke's own legacy section agrees with it (`recipe-payload.md` line 104: 0 none,
+   1 before, 2 after, 3 both). A centered pour with no shake is the one page input where the
+   two readings differ, and nobody has tested it on hardware.
+4. **Command 11512, recipe order.** brAzzi64 says the app sends it after the three slot
+   writes. matthewnitschke says any trailing frame leaves the machine hung at state `0x43`
+   showing RETRY. Janczykkkko's `save_slots`, which was run on hardware, omits it. We omit it.
+   Command 40525 is inbound only, so it never comes up.
+5. **Pause cap.** brAzzi64's validator stops at 59 s. matthewnitschke and Janczykkkko allow
+   0 to 255 and name a practical cap near 99 s. This repo caps at 127, because the byte is a
+   negated count and stops reading as one above that.
+
+One smaller split. matthewnitschke reads command `0x1FA8` as stage temperatures 110 and 90.
+brAzzi64 reads the same bytes as a cup weight range. We send the captured bytes and leave the
+meaning open.
+
+### UNVERIFIED
+
+- The protocol on firmware newer than V12.0D.500, and on an xBloom Original. Nothing here was
+  run on an Original.
+- The RT temperature byte. No source has one.
+- BP as 98 C. It is a docstring claim in brAzzi64's encoder, not a capture.
+- The pattern mapping against what the machine's display shows. The cloud JSON uses 2 and 3,
+  BLE uses 0, 1 and 2, and nobody has published the link.
+- That Chrome's device picker surfaces the machine at all. No scan was run, by rule.
+- What command `0x1FA8` really sets, cup weight or stage temperature. matthewnitschke gives a
+  third set of numbers in `recipe-setup.md`, 90 and 40, which contradicts the 110 and 90 in its
+  own `load-sequence.md`. We send the HCI capture, 110/90 for the Omni dripper.
+- RPM 0 on a spiral first pour. Original recipes have no RPM, so we send 0. matthewnitschke
+  says RPM 0 is valid only with a centered pattern, and Janczykkkko's validator rejects it
+  outright.
+- Pour temperatures from 96 to 98 C. Only brAzzi64's range reaches that high.
+  matthewnitschke and Janczykkkko both stop at 95.
+- Whether commands 8102 and 8104 echo an ack at all. Neither appears in brAzzi64's `CMD_NAMES`
+  or saya6k's response list, while matthewnitschke says every command echoes. `ble.js` treats
+  acks as advisory and never blocks on one.
+
+### Corrections to earlier sections of this file
+
+From `research/PORTING.md`:
+
+- `grandWater` is the ratio denominator, not millilitres. Light Roast is dose 15,
+  `grandWater` 16, pour sum 240 ml.
+- The share bundle rotated. The entry is `assets/main-DgnhqKwz.js`, the recipe view is still
+  `assets/Home-N9kunfWn.js`, and the HTTP layer is `assets/api-B5uAdcd7.js`.
+- The share page calls `POST https://client-api.xbloom.com/RecipeDetail.html` with the JSON
+  body `{"tableIdOfRSA": "<token>", "interfaceVersion": 19700101, "skey": "testskey"}`. No
+  auth.
+- Unknown 6 is closed. The three Auto Mode presets are decoded in
+  `research/angle_share_link.md` section 4.
+- Unknown 7 is closed as far as public sources allow. There is no QR code anywhere in
+  xBloom's corpus.
+- The NFC card holds the whole recipe, about 128 bytes, ISO 15693, no NDEF. That is why the
+  machine brews from a card with no phone and no internet.
+
+### Repos read
+
+Every file is mirrored under `research/fetched/ble/` at the commit listed.
+
+- brAzzi64/xbloom-ble @ 840a1974c1e28629083b954c74c506bd64b463db. HCI captures and a
+  decompiled app. Wins any tie.
+- matthewnitschke/xbloom-api-doc @ 0d4cba8b779fd1646907475ccf5b8ac8221326d7. Clean-room docs
+  and a Swift CLI.
+- Janczykkkko/xbloom-ble @ c8712a46821016affe752277e62db11e4c9039c0. A third encoder, the load
+  and slot client, and the notification test vectors.
+- Lui35/Xbloom @ 53f6efe9019f5550074a06c6c431c0a0f2e4e7ef. A working `navigator.bluetooth`
+  client.
+- saya6k/hacs-xbloom @ 3000c0f02b487d45df4eddf6ef4f66b10a88ece8. Command ids, and the 0.8 s
+  minimum gap between type 2 writes.
+- fhenwood/PyBloom @ a4438abe2b2f428a397ff6150dd43d0a420a3555. Cross-check only.
+
 
 ## Unknowns
 

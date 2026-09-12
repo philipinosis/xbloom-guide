@@ -9,6 +9,8 @@ the numbers you enter in the xBloom app.
   machine, get a recipe in app order with tasting notes and an adjust-to-taste chart.
   It asks a model when one is reachable (claude.ai, or the server below) and otherwise
   builds the recipe from the fact-sheet rules in the browser.
+  In Chrome on a Mac or an Android phone the page can send the recipe straight to a Studio
+  over Bluetooth (`ble.js`).
 - `server/` — the recipe backend (Python standard library, one file). See `server/README.md`.
 - `FACTS.md` — the sourced fact sheet every number comes from.
 
