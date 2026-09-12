@@ -11,6 +11,8 @@ the numbers you enter in the xBloom app.
   builds the recipe from the fact-sheet rules in the browser.
   In Chrome on a Mac or an Android phone the page can send the recipe straight to a Studio
   over Bluetooth (`ble.js`).
+  Send to my app pushes the recipe into the xBloom app library through the cloud API
+  (`cloud.js`) once you paste your key.
 - `server/` — the recipe backend (Python standard library, one file). See `server/README.md`.
 - `FACTS.md` — the sourced fact sheet every number comes from.
 

@@ -116,6 +116,9 @@ Five routes. The first four are documented [2]:
    [2][5].
 5. **Bluetooth from this site.** See the Bluetooth protocol section.
 
+- **Cloud push from this site.** The page can also put a recipe in your app library through
+  xBloom's own API. See the Cloud API (community sources) section.
+
 **Sharing.** Yes, recipes are shareable between users. The app has "How do I share
 recipes?" and "How do I save recipes shared by others" articles [18]. Sharing produces a
 public link of the form `https://share-h5.xbloom.com/?id=<token>`. xBloom publishes its
@@ -544,6 +547,185 @@ Every file is mirrored under `research/fetched/ble/` at the commit listed.
 - saya6k/hacs-xbloom @ 3000c0f02b487d45df4eddf6ef4f66b10a88ece8. Command ids, and the 0.8 s
   minimum gap between type 2 writes.
 - fhenwood/PyBloom @ a4438abe2b2f428a397ff6150dd43d0a420a3555. Cross-check only.
+
+
+## Cloud API (community sources)
+
+Not from xBloom. Three community ports of the phone app's REST API agree on the calls below.
+Nothing here is official documentation. `cloud.js` in this repo implements the read call and the
+create call for the browser. The create call needs your own app login. No server of ours sits in
+the middle.
+
+### Read, no login
+
+Two endpoints answer with no credentials. Both take plain JSON.
+
+| Endpoint | Body | Answers |
+| --- | --- | --- |
+| `POST https://client-api.xbloom.com/tRecipeDetail.thtml` | `{"tableId": 39703, "interfaceVersion": 19700101, "skey": "testskey"}` | one recipe, with `pourList` as an array |
+| `POST https://client-api.xbloom.com/RecipeDetail.html` | `{"tableIdOfRSA": "<share token>", "interfaceVersion": 19700101, "skey": "testskey"}` | the same shape, from a share link |
+
+### Create
+
+`POST https://client-api.xbloom.com/tuRecipeAdd.tuhtml`, header
+`content-type: application/json; charset=utf-8`. The body is a bare base64 string, not JSON. All
+three ports do this. Keep it.
+
+Build the body in six steps:
+
+1. Build one flat JSON object: the envelope fields plus the recipe fields.
+2. Serialise it compactly, then encode it as UTF-8.
+3. Split the bytes into 117-byte chunks.
+4. Encrypt each chunk with RSA-1024 PKCS#1 v1.5. Each chunk gives exactly 128 bytes.
+5. Concatenate the blocks, then base64 the result.
+6. POST that string.
+
+The decoded body is always `128 * ceil(length / 117)` bytes. A length that is not a multiple of
+128 is a bug. PKCS#1 v1.5 padding is random, so two sends of one recipe never match. Never cache
+or compare a body.
+
+The public key is an X.509 SPKI, 1024-bit modulus, exponent 65537. The same base64 sits in all
+three ports:
+
+```
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC4LF40GZ72SdhMyl765K/i4nY5CPcHz2Q1IKWKZ9S79xmK7G8pUhbVf4EZLvnNF1+9IvOFQUKV5Z7ZNNviqSpnql9tAT+8+J/He0R7pcirvVSxgdr2i9V/C/gmqAEZ5qVTzRnd3uWdFoKzPdEBxP0IporJ1VBbCv90yBSOhVxO+QIDAQAB
+```
+
+The DER is 162 bytes. Its sha256 is
+`298ed009fbca82e00be9654d81a8b293f81517115b2a9c614fbb70317a7d7f0a`.
+
+### Envelope fields
+
+Seven fields, identical in all three ports.
+
+| Field | Value |
+| --- | --- |
+| `interfaceVersion` | `20240918` |
+| `skey` | `"testskey"` |
+| `phoneType` | `"Android"` |
+| `clientType` | `2` |
+| `languageType` | `1` |
+| `memberId` | int, from your login |
+| `token` | string, from your login |
+
+### Recipe fields
+
+| Field | What this site sends |
+| --- | --- |
+| `theName` | the recipe name, 40 characters at most |
+| `dose` | the dose in grams, as a float |
+| `grandWater` | the ratio denominator, not millilitres. 16 means 1:16 |
+| `grinderSize` | the grind number, as a float |
+| `rpm` | the grinder RPM. An Original recipe sends 120 |
+| `cupType` | 1 xPod, 2 Omni or xdripper, 3 other, 4 tea. This site sends 2 |
+| `adaptedModel` | `1` |
+| `isEnableBypassWater` | `2`, bypass off |
+| `isSetGrinderSize` | `1`, grind on |
+| `theColor` | `"#C9D5B8"` |
+| `theSubsetId` | `0` |
+| `bypassTemp` | `85.0` |
+| `bypassVolume` | `5.0` |
+| `subSetType` | `2`, user-made |
+| `appPlace` | `[4]`, the My recipes section |
+| `createTimeStamp` | milliseconds since the epoch |
+| `isShortcuts` | `2`, a normal recipe |
+| `pourDataJSONStr` | the pour list as a JSON string, not an array |
+
+A read never returns `appPlace` or `pourDataJSONStr`. It returns `pourList` instead.
+
+### Pour fields
+
+Eight fields per pour, in order.
+
+| Field | Value |
+| --- | --- |
+| `theName` | the pour label, "Bloom", "Pour 2" and so on |
+| `volume` | millilitres, float |
+| `temperature` | Celsius, float |
+| `flowRate` | millilitres per second, float |
+| `pattern` | 1 centered, 2 circular, 3 spiral |
+| `pausing` | seconds, int |
+| `isEnableVibrationBefore` | 1 shake before the pour, 2 no shake |
+| `isEnableVibrationAfter` | 1 shake after the pour, 2 no shake |
+
+The three ports give three different pattern tables. This site follows the one that matches the
+Bluetooth enum read as 1-based. It is still unconfirmed.
+
+### Auth
+
+- The credential pair is `memberId` and `token`. Both ride inside the encrypted body.
+- Both come from the `tMemberLogin.thtml` response. `token` is the string, `memberId` is
+  `member.tableId`.
+- `skey` stays the literal `testskey` on every call, even an authenticated one. It is a key built
+  into the app, not a session key.
+- `interfaceVersion` is `20240918` on the create call and `19700101` on the two reads.
+
+### The host answers a browser
+
+Checked from the live GitHub Pages page on 2026-09-11. Evidence:
+`qa-evidence/cloud_cors.json`.
+
+```
+access-control-allow-origin: *
+access-control-allow-headers: Accept, Origin, X-Requested-With, Content-Type,Last-Modified,device,token
+access-control-allow-methods: GET, HEAD, POST, PUT, DELETE, OPTIONS
+access-control-allow-credentials: true
+access-control-max-age: 3600
+```
+
+`POST tRecipeDetail.thtml` answered 200 and returned the Light Roast preset. The preflight for
+`tuRecipeAdd.tuhtml` answered 200. Nothing was written. So the page calls the API itself.
+
+### How this page handles your key
+
+- Save puts it in `localStorage["xbloom.skey"]`, on that device only.
+- Storage belongs to the page's origin, not to the file. On `philipinosis.github.io` every
+  site published under that account can read it, so do not publish a Pages site that runs
+  untrusted script. Opened from disk in Chrome, every other local HTML file can read it.
+- The page hides "Connect the xBloom app" and never reads a stored key on a plain `http:`
+  origin (the Jeeves copy at `95.216.221.95:8018`). Paste the key only on the `https:` page.
+- It never goes into a URL, a log, the Copy text, Recent or the Auto Mode slots.
+- It leaves the browser only inside the encrypted body, and only to `client-api.xbloom.com`.
+- Forget deletes it.
+
+### Capture the key
+
+1. Install Proxyman and trust its certificate on the phone.
+2. Add `client-api.xbloom.com` on port 443 to SSL Proxying.
+3. Start recording, then open the xBloom app and log in.
+4. Find `POST /tMemberLogin.thtml` in the list.
+5. Open its Response tab and copy the whole JSON.
+6. Paste it under "Connect the xBloom app" on the recipe page.
+7. Ignore the request body. Base64 gibberish there is normal.
+8. Never send that JSON to anyone.
+
+### UNVERIFIED
+
+- Whether the server takes the raw base64 body, a quoted one, or both. Nobody captured the app's
+  own request.
+- Which pattern code means which pour shape. Three sources give three tables.
+- Whether `adaptedModel: 2` works for a Studio, or hides the recipe.
+- The accepted `grinderSize` range. 1 to 80, 40 to 120 and 1 to 150 are all claimed.
+- What `rpm` an Original recipe should carry. The Original has no RPM control. We send 120.
+- Whether `cupType: 2` shows as Omni. Every readable preset is `cupType: 1`.
+- Whether `theSubsetId: 0`, `subSetType: 2` and `appPlace: [4]` are right for a user recipe. No
+  read echoes any of the three.
+- Whether `isShortcuts` should be 1 or 2. The two read endpoints answer differently for one
+  recipe.
+- Whether a pour at 96 to 98 C is accepted. Two ports document 40 to 95.
+- The maximum pour count. Every preset has 4. This site allows 9.
+- Whether the `token` expires, and after how long.
+- What `theVersion` is in the create response.
+- Whether a pushed recipe appears under My recipes. Nobody in this project has seen one yet.
+
+### Repos read
+
+- Janczykkkko/xbloom-ble @ c8712a46821016affe752277e62db11e4c9039c0. The Python client, the
+  wrapping, and the field map.
+- denull0/xbloom-agent @ 79e55c78bdb0448b695bcf62566866f0ffc4d604. A TypeScript port, and the
+  failure-message keys.
+- cryptofishbug/xbloom-recipe-cli @ f0e9dc0ce66cdfff25ed24d38cc428f55787063b. The origin of the
+  other two. Built from a HAR capture and a decompiled APK.
 
 
 ## Unknowns
