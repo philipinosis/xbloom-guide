@@ -349,7 +349,8 @@ Artifact `sample` capability with `modelTier: "complex"`. You supply nothing.
 ### 2. Claude Opus 5.5 with your key
 
 The "Connect Claude" disclosure stores an Anthropic API key in this browser's localStorage,
-under `xbloom.anthropic`. It works only in a secure context: https, localhost or a local file.
+under `xbloom.anthropic`. It works only in a secure context: https or localhost. A local file
+also counts, but any other local file can read the key, so prefer a spend-capped key.
 
 The page sends the request straight from the browser.
 
@@ -374,9 +375,10 @@ the result either way.
 ### 3. The recipe server
 
 A "Server URL" field in the same disclosure stores an address in localStorage, under
-`xbloom.api`. When the server itself serves the page, the default is `/recipe`. Otherwise
-there is no default. Browsers block an http server from an https page. The page says so
-instead of failing silently.
+`xbloom.api`. When the page is served from Jeeves (port 8018 or its IP), the default is
+`/recipe`. Otherwise there is no default. Browsers block an http server from an https page.
+The page says so instead of failing silently. If the server sets `XBLOOM_API_KEY`, paste the
+same value into the Server key field; the page sends it as the `x-xbloom-key` header.
 
 The server (`server/xbloom_api.py`) picks its upstream once, at startup:
 
@@ -395,6 +397,7 @@ If no model answers, the page builds the recipe itself. The rules come from this
 ### Honesty
 
 Every card names the backend that wrote it. A rules recipe never claims to come from a model.
+Recent entries saved before v7 carry no backend line.
 
 ### UNVERIFIED
 
