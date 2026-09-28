@@ -5,7 +5,9 @@ import json
 import math
 import os
 import re
+import subprocess
 import sys
+import tempfile
 import threading
 import time
 import urllib.error
@@ -297,8 +299,72 @@ def loads_loose(text):
     return json.loads(body[start:end + 1])
 
 
+def pick_upstream():
+    """Choose the model backend once, at startup."""
+    if (os.environ.get("ANTHROPIC_API_KEY") or "").strip():
+        return "anthropic"
+    cli = os.environ.get("CLAUDE_BIN") or ""
+    if cli and os.access(cli, os.X_OK):
+        return "claude-cli"
+    return "openclaw"
+
+
+UPSTREAM = pick_upstream()
+
+
+def ask_anthropic(prompt):
+    """Return (recipe object, total tokens or None) from the Anthropic Messages API."""
+    req = urllib.request.Request(
+        os.environ.get("ANTHROPIC_URL") or "https://api.anthropic.com/v1/messages",
+        data=json.dumps({"model": "claude-opus-5-5", "max_tokens": 8000,
+                         "messages": [{"role": "user", "content": prompt}]}).encode("utf-8"),
+        headers={"content-type": "application/json",
+                 "x-api-key": (os.environ.get("ANTHROPIC_API_KEY") or "").strip(),
+                 "anthropic-version": "2023-06-01"},
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=120) as resp:
+            envelope = json.loads(resp.read(2_000_000).decode("utf-8"))
+    except urllib.error.HTTPError as e:
+        log("upstream %d" % e.code)  # code only, never the body
+        raise
+    text = "".join(b.get("text", "") for b in envelope.get("content") or []
+                   if isinstance(b, dict) and b.get("type") == "text")
+    if envelope.get("stop_reason") == "refusal" or not text:
+        raise ValueError("no text reply, stop_reason %s" % envelope.get("stop_reason"))
+    usage = envelope.get("usage") or {}
+    tokens = None
+    if "input_tokens" in usage and "output_tokens" in usage:
+        tokens = usage["input_tokens"] + usage["output_tokens"]
+    return loads_loose(text), tokens
+
+
+def ask_claude_cli(prompt):
+    """Return (recipe object, None) from the Claude Code CLI. The prompt goes on stdin."""
+    with tempfile.TemporaryDirectory() as empty:
+        run = subprocess.run(
+            [os.environ["CLAUDE_BIN"], "-p", "--model", "opus", "--output-format", "json"],
+            input=prompt, capture_output=True, text=True, timeout=120,
+            cwd=empty, env=dict(os.environ))
+    log("claude-cli rc %d out %d B err %d B" % (run.returncode, len(run.stdout), len(run.stderr)))
+    if run.returncode != 0:
+        raise RuntimeError("claude-cli exit %d" % run.returncode)
+    envelope = json.loads(run.stdout)
+    if envelope.get("is_error") or not isinstance(envelope.get("result"), str):
+        raise ValueError("claude-cli reported an error")
+    return loads_loose(envelope["result"]), None
+
+
+def ask_model(prompt):
+    if UPSTREAM == "anthropic":
+        return ask_anthropic(prompt)
+    if UPSTREAM == "claude-cli":
+        return ask_claude_cli(prompt)
+    return ask_openclaw(prompt)
+
+
 def ask_openclaw(prompt):
-    """Return (recipe object, total tokens or None). The gateway is the only upstream."""
+    """Return (recipe object, total tokens or None) from the openclaw gateway."""
     req = urllib.request.Request(
         os.environ.get("OPENCLAW_URL") or "http://127.0.0.1:18789/v1/chat/completions",
         data=json.dumps({"model": "openclaw",
@@ -356,6 +422,8 @@ class Handler(BaseHTTPRequestHandler):
         path = self.path.split("?", 1)[0]  # /?mock=1 still serves the page
         if path == "/health":
             return self._finish(200, "ok", "text/plain; charset=utf-8")
+        if path == "/upstream":
+            return self._finish(200, json.dumps({"upstream": UPSTREAM}))
         if path in ("/", "/recipe.html", "/index.html"):
             page = INDEX if path == "/index.html" else PAGE
             if page is None:
@@ -404,7 +472,7 @@ class Handler(BaseHTTPRequestHandler):
         if problem:
             return self._error(400, problem)
         try:
-            recipe, tokens = ask_openclaw(build_prompt(payload))
+            recipe, tokens = ask_model(build_prompt(payload))
         except Exception as e:
             detail = e.code if isinstance(e, urllib.error.HTTPError) else str(e)[:120]
             log("upstream failed: %s %s" % (type(e).__name__, detail))  # never the body
@@ -417,14 +485,14 @@ class Handler(BaseHTTPRequestHandler):
         except ValueError:
             log("clamp left a non-finite number")
             return self._error(502, "model unavailable")
-        note = " openclaw" + ("" if tokens is None else " %s tok" % tokens)
+        note = " " + UPSTREAM + ("" if tokens is None else " %s tok" % tokens)
         self._finish(200, out, note=note)
 
 
 if __name__ == "__main__":
-    if not (os.environ.get("OPENCLAW_GATEWAY_TOKEN") or "").strip():
+    if UPSTREAM == "openclaw" and not (os.environ.get("OPENCLAW_GATEWAY_TOKEN") or "").strip():
         print("xbloom_api: OPENCLAW_GATEWAY_TOKEN is not set", file=sys.stderr)
         sys.exit(1)
     port = int(os.environ.get("PORT") or 8018)
-    log("xbloom_api on 0.0.0.0:%d" % port)
+    log("xbloom_api on 0.0.0.0:%d upstream=%s" % (port, UPSTREAM))
     ThreadingHTTPServer(("0.0.0.0", port), Handler).serve_forever()
