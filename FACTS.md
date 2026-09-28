@@ -328,6 +328,84 @@ browser would close several of the gaps below.
 
 ---
 
+## Recipe backends
+
+Compiled 2026-09-27. This section describes how `recipe.html` gets a recipe. The page tries
+four paths in the order below and uses the first one that answers.
+
+| Order | Path | Needs | Card label |
+| --- | --- | --- | --- |
+| 1 | Claude on claude.ai | nothing from you, but only in the Artifact copy | "Written by Claude on claude.ai." |
+| 2 | Claude Opus 5.5 with your key | an Anthropic API key in "Connect Claude" | "Written by Claude Opus 5.5." |
+| 3 | The recipe server | an address in "Server URL" | "Written by the recipe server." |
+| 4 | Rules in the page | nothing | starts "Built from xBloom's rules." |
+
+### 1. Claude on claude.ai
+
+This path works only in the Artifact copy of the page at
+https://claude.ai/code/artifact/3eef3cf4-15f6-479e-9149-8fa8983eb65f. The page calls the
+Artifact `sample` capability with `modelTier: "complex"`. You supply nothing.
+
+### 2. Claude Opus 5.5 with your key
+
+The "Connect Claude" disclosure stores an Anthropic API key in this browser's localStorage,
+under `xbloom.anthropic`. It works only in a secure context: https, localhost or a local file.
+
+The page sends the request straight from the browser.
+
+| Item | Value |
+| --- | --- |
+| Endpoint | `POST https://api.anthropic.com/v1/messages` |
+| Headers | `x-api-key`, `anthropic-version: 2023-06-01`, `anthropic-dangerous-direct-browser-access: true` |
+| Model | `claude-opus-5-5` |
+| `max_tokens` | 8000 |
+| Timeout | 60 s |
+| Prompt | the same TEMPLATE the server uses |
+| Reply | clamped by the page's `normalize()` |
+
+The key goes to api.anthropic.com and nowhere else. The page never writes it into a URL or a
+Recent entry. Clear removes it. If the API rejects the key (401 or 403), the page shows
+"Anthropic rejected this key." and moves on to the next path.
+
+The taste panel uses this path too. It sends Claude the previous recipe and your feedback. If
+Claude does not answer, the `applyTaste` rules adjust the recipe instead. `normalize()` clamps
+the result either way.
+
+### 3. The recipe server
+
+A "Server URL" field in the same disclosure stores an address in localStorage, under
+`xbloom.api`. When the server itself serves the page, the default is `/recipe`. Otherwise
+there is no default. Browsers block an http server from an https page. The page says so
+instead of failing silently.
+
+The server (`server/xbloom_api.py`) picks its upstream once, at startup:
+
+| Condition | Upstream |
+| --- | --- |
+| `ANTHROPIC_API_KEY` set | Anthropic Messages API, `claude-opus-5-5` |
+| else `CLAUDE_BIN` is an executable | Claude Code CLI, `claude -p --model opus --output-format json` |
+| else | the openclaw gateway (a GPT-5-family model) |
+
+`GET /upstream` reports which one it picked. `server/README.md` has the setup.
+
+### 4. Rules in the page
+
+If no model answers, the page builds the recipe itself. The rules come from this fact sheet.
+
+### Honesty
+
+Every card names the backend that wrote it. A rules recipe never claims to come from a model.
+
+### UNVERIFIED
+
+- The page has not yet made a live call to api.anthropic.com in this repo. Tests use a fake
+  fetch only.
+- The server's Claude Code CLI upstream has not run against the real CLI. Tests use a fake
+  script only.
+- The openclaw path is the only one proven live on Jeeves so far.
+
+---
+
 ## Bluetooth protocol (reverse-engineered, community sources)
 
 Not from xBloom. Six community repos, three of them with independent encoders, are listed at
