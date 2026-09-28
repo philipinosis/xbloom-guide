@@ -56,7 +56,7 @@
 <div id="out"></div>
 
 <section id="recent" hidden><h2>Recent</h2><div id="recentList"></div></section>
-<details id="claude"><summary>Connect Claude</summary><p class="quiet">Paste an Anthropic API key. It stays in this browser and goes only to api.anthropic.com. Recipes then come from Claude Opus 5.5.</p><div class="tin"><input class="tinp" id="akeyIn" type="password" autocomplete="off" placeholder="sk-ant-…" aria-label="Anthropic API key"><button class="fix" id="akeySave">Save</button></div><p class="quiet" id="akeySt" role="status"></p><button id="akeyClear" class="chip" hidden>Clear</button></details>
+<details id="claude"><summary>Connect Claude</summary><p class="quiet">Paste an Anthropic API key. It stays in this browser and goes only to api.anthropic.com. Recipes then come from Claude Opus 5.5.</p><div class="tin"><input class="tinp" id="akeyIn" type="password" autocomplete="off" placeholder="sk-ant-…" aria-label="Anthropic API key"><button class="fix" id="akeySave">Save</button></div><p class="quiet" id="akeySt" role="status"></p><button id="akeyClear" class="chip" hidden>Clear</button><p class="quiet">Running the recipe server yourself? Paste its https address.</p><div class="tin"><input class="tinp" id="apiIn" type="url" placeholder="https://…/recipe" aria-label="Server URL"><button class="fix" id="apiSave">Save</button></div><p class="quiet" id="apiSt" role="status"></p><button id="apiClear" class="chip" hidden>Clear</button></details>
 <details id="cloud"><summary>Connect the xBloom app</summary><p class="quiet">Paste the login response you captured with Proxyman, or memberId:token. It stays on this device. <a href="https://github.com/philipinosis/xbloom-guide/blob/main/FACTS.md#cloud-api-community-sources">How to capture it</a></p><div class="tin"><input class="tinp" id="skeyIn" type="password" autocomplete="off" placeholder="Paste here"><button class="fix" id="skeySave">Save</button></div><p class="quiet" id="skeySt" role="status"></p><button id="skeyForget" class="chip" hidden>Forget</button></details>
 <section id="slots" hidden><h2>Auto Mode slots</h2><div class="rows" id="slotRows"></div>
 <p class="quiet">Writes all three slots at once. The machine keeps them until you, or the app, write again.</p>
@@ -175,12 +175,11 @@ return TEMPLATE
 :"not stated, infer from the coffee text if possible")
 .split("{coffee}").join(coffee);
 }
-const API_URL=(location.port==="8018"||location.hostname==="95.216.221.95")
-? "/recipe" : "http://95.216.221.95:8018/recipe";
 const CLAUDE_URL="https://claude.ai/code/artifact/3eef3cf4-15f6-479e-9149-8fa8983eb65f";
 const Q=new URLSearchParams(location.search),M0=Q.get("mock"),DBG=Q.get("debug")==="ble",
 BLE=/^ble($|=)/.test(M0||"")?M0.slice(4):null,CLOUD=/^cloud($|=)/.test(M0||"")?M0.slice(6):null,CL=/^claude($|=)/.test(M0||"")?M0.slice(7):null,
-MOCK=BLE!==null?(/^taste=/.test(BLE)?BLE:"1"):CLOUD!==null?"1":CL!==null?null:M0;
+SV=/^server($|=)/.test(M0||"")?M0.slice(7):null,
+MOCK=BLE!==null?(/^taste=/.test(BLE)?BLE:"1"):CLOUD!==null?"1":CL!==null||SV!==null?null:M0;
 const CMOCK=CLOUD===null?undefined:{fetch:(u,o)=>{window.__cloudBody=o.body;const x=CLOUD==="401",j=x?{}:CLOUD==="fail"?{result:"fail",info:"The recipe name is too long."}
 :{result:"success",tableId:424242,info:"Operation Successful"};
 return new Promise(z=>setTimeout(z,600,{ok:!x,status:x?401:200,json:()=>Promise.resolve(j)}));}};
@@ -190,6 +189,9 @@ const m=/PREVIOUS RECIPE\n(.*)\n\nTASTE/.exec(JSON.parse(o.body).messages[0].con
 r=m?JSON.parse(m[1]):GUJI(),x=CL==="401";if(m)r.grind-=3;
 const j=CL==="refusal"?{stop_reason:"refusal",content:[]}:{content:[{type:"text",text:"```json\n"+JSON.stringify(r)+"\n```"}]};
 return new Promise(z=>setTimeout(z,300,{ok:!x,status:x?401:200,json:()=>Promise.resolve(j)}));}});
+// ?mock=server fakes a stored server URL; =500 fails it
+const SMOCK=SV===null?undefined:(window.__serverReqs=[],{fetch:(u,o)=>{__serverReqs.push({u,o});const x=SV==="500";
+return new Promise(z=>setTimeout(z,300,{ok:!x,status:x?500:200,json:()=>Promise.resolve(x?{error:"mock"}:GUJI())}));}});
 let mockRound=/^taste=/.test(MOCK || "") ? MOCK.slice(6).split(",") : null;
 const MOCKTASTE=mockRound;
 const ST=o=>o?"1‑2":"3‑5",BODY="for more body.",KEPT="Saved as it is.";
@@ -507,10 +509,11 @@ if (MOCK==="local"||MOCKTASTE) return localResult(payload);
 if(MOCK) return mockAsk(onText);
 const j=await askLLM(buildPrompt(payload),onText,onStatus,signal);
 if(j) return j;
-if (CL===null && !(location.protocol === "https:" && /^http:/i.test(API_URL))){
+const u=apiUrl();
+if(CL===null&&u&&!apiBlocked(u,location.protocol)){
 try {
 if (onStatus) onStatus("Asking the recipe server…");
-const r=await fetch(API_URL,{method:"POST",headers:{"content-type":"application/json"},
+const r=await (SMOCK||window).fetch(u,{method:"POST",headers:{"content-type":"application/json"},
 body:JSON.stringify(payload),signal:tsig(signal,125000)});
 if(!r.ok){
 let msg="HTTP " + r.status;
@@ -698,14 +701,24 @@ holder.append(b);
 } catch(err){console.warn(err);}
 });
 }
-const SKEY="xbloom.slots",CKEY="xbloom.skey",AKEY="xbloom.anthropic",NOKEY=!isSecureContext;
+const SKEY="xbloom.slots",CKEY="xbloom.skey",AKEY="xbloom.anthropic",PKEY="xbloom.api",NOKEY=!isSecureContext;
 // Pre-v7 Recent: local:true is rules, else server or claude.ai
 const srcOf=x=>x&&x.src||(x&&x.local?"rules":"server");
 // ?mock=claude acts as if a key were stored
-const akeyRead=()=>{try{return NOKEY?null:localStorage.getItem(AKEY)||(CL!==null?"sk-ant-mock":null);}catch(e){return null;}}
+const akeyRead=()=>{try{return NOKEY||SV!==null?null:localStorage.getItem(AKEY)||(CL!==null?"sk-ant-mock":null);}catch(e){return null;}}
 const akeyDraw=m=>{const k=akeyRead(),s=$("#akeySt");
 s.textContent=m||(k?"Connected. Recipes come from Claude Opus 5.5.":"");
 s.classList.toggle("st",!!k&&!m);$("#akeyClear").hidden=!k;}
+// Browsers block an http fetch from an https page
+const apiBlocked=(u,protocol)=>protocol==="https:"&&/^http:/i.test(u);
+const apiRead=()=>{try{return NOKEY?null:localStorage.getItem(PKEY);}catch(e){return null;}}
+// The stored URL, else same-origin on Jeeves, else none
+const apiUrl=()=>SV!==null?"https://example.invalid/recipe":apiRead()
+||(location.port==="8018"||location.hostname==="95.216.221.95"?"/recipe":null);
+const apiDraw=m=>{const u=apiRead(),s=$("#apiSt"),b=!!u&&apiBlocked(u,location.protocol);
+s.textContent=m||(b?"This page is https, so the browser blocks an http server. Use an https address."
+:u?"Recipes come from this server when Claude is not connected.":"");
+s.classList.toggle("st",!!u&&!m&&!b);$("#apiClear").hidden=!u;}
 let current,credraw=()=>{};
 // null on plain HTTP, or unless cloud.js loaded and a key is stored
 const skeyRead=()=>{try{return NOKEY?null:XCLOUD.parseAuth(localStorage.getItem(CKEY));}catch(e){return null;}}
@@ -1018,13 +1031,21 @@ on($("#akeySave"),()=>{const i=$("#akeyIn"),v=i.value.trim(),ok=/^sk-ant-\S{13,3
 if(ok){try{localStorage.setItem(AKEY,v);}catch(e){}i.value="";}
 akeyDraw(ok?0:"That does not look like an Anthropic key.");});
 on($("#akeyClear"),()=>{try{localStorage.removeItem(AKEY);}catch(e){}akeyDraw();});
-restoreMachine(); drawRecent(); setCups2(); drawSlots(); skeyDraw(); akeyDraw();
-$("#cloud").hidden=$("#claude").hidden=NOKEY;if(NOKEY){localStorage.removeItem(CKEY);localStorage.removeItem(AKEY);}
+on($("#apiSave"),()=>{const i=$("#apiIn");let u=null;
+try{u=new URL(i.value.trim());}catch(e){}
+if(!u||!/^https?:$/.test(u.protocol)) return apiDraw("That is not a web address.");
+if(u.pathname==="/") u.pathname="/recipe";
+i.value=u.href;try{localStorage.setItem(PKEY,u.href);}catch(e){}apiDraw();});
+on($("#apiClear"),()=>{try{localStorage.removeItem(PKEY);}catch(e){}$("#apiIn").value="";apiDraw();});
+restoreMachine(); drawRecent(); setCups2(); drawSlots(); skeyDraw(); akeyDraw(); apiDraw();
+$("#apiIn").value=apiRead()||"";
+$("#cloud").hidden=$("#claude").hidden=NOKEY;if(NOKEY){localStorage.removeItem(CKEY);localStorage.removeItem(AKEY);localStorage.removeItem(PKEY);}
 window.normalize=normalize; window.copyText=copyText; window.BASE=BASE;
 window.localRecipe=localRecipe; window.notesFor=notesFor;
 window.buildPrompt=buildPrompt; window.inputs=inputs;
 window.applyTaste=applyTaste; window.parseTaste=parseTaste; window.buildPours=buildPours;
 window.adjustFor=adjustFor; window.RULES=RULES; window.askClaude=askClaude; window.pickBackend=pickBackend;
+window.apiBlocked=apiBlocked; window.apiUrl=apiUrl;
 </script>
 </body>
 </html>
