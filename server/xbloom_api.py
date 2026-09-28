@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """xBloom recipe API. Python 3.12 standard library only, one file."""
 
+import hmac
 import json
 import math
 import os
@@ -12,6 +13,7 @@ import threading
 import time
 import urllib.error
 import urllib.request
+from urllib.parse import urlsplit
 from collections import defaultdict, deque
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
@@ -310,12 +312,19 @@ def pick_upstream():
 
 
 UPSTREAM = pick_upstream()
+API_KEY = (os.environ.get("XBLOOM_API_KEY") or "").strip()  # blank = open, as before
+CLI_ENV = ("PATH", "HOME", "CLAUDE_CODE_OAUTH_TOKEN", "LANG", "LC_ALL")
 
 
 def ask_anthropic(prompt):
     """Return (recipe object, total tokens or None) from the Anthropic Messages API."""
+    url = os.environ.get("ANTHROPIC_URL") or "https://api.anthropic.com/v1/messages"
+    parts = urlsplit(url)
+    if not (parts.scheme == "https" or (parts.scheme == "http"
+                                        and parts.hostname in ("127.0.0.1", "localhost"))):
+        raise ValueError("ANTHROPIC_URL must be https, or http to localhost")
     req = urllib.request.Request(
-        os.environ.get("ANTHROPIC_URL") or "https://api.anthropic.com/v1/messages",
+        url,
         data=json.dumps({"model": "claude-opus-5-5", "max_tokens": 8000,
                          "messages": [{"role": "user", "content": prompt}]}).encode("utf-8"),
         headers={"content-type": "application/json",
@@ -343,9 +352,10 @@ def ask_claude_cli(prompt):
     """Return (recipe object, None) from the Claude Code CLI. The prompt goes on stdin."""
     with tempfile.TemporaryDirectory() as empty:
         run = subprocess.run(
-            [os.environ["CLAUDE_BIN"], "-p", "--model", "opus", "--output-format", "json"],
-            input=prompt, capture_output=True, text=True, timeout=120,
-            cwd=empty, env=dict(os.environ))
+            [os.environ["CLAUDE_BIN"], "-p", "--model", "opus", "--output-format", "json",
+             "--restricted", "--tools", "", "--strict-mcp-config", "--setting-sources", ""],
+            input=prompt, capture_output=True, text=True, timeout=120, cwd=empty,
+            env={k: os.environ[k] for k in CLI_ENV if k in os.environ})  # no gateway token
     log("claude-cli rc %d out %d B err %d B" % (run.returncode, len(run.stdout), len(run.stderr)))
     if run.returncode != 0:
         raise RuntimeError("claude-cli exit %d" % run.returncode)
@@ -400,7 +410,7 @@ class Handler(BaseHTTPRequestHandler):
         if body or code != 204:
             self.send_header("content-length", str(len(body)))
         self.send_header("access-control-allow-origin", "*")
-        self.send_header("access-control-allow-headers", "content-type")
+        self.send_header("access-control-allow-headers", "content-type, x-xbloom-key")
         self.send_header("access-control-allow-methods", "POST, GET, OPTIONS")
         self.send_header("access-control-max-age", "86400")
         self.end_headers()
@@ -436,6 +446,10 @@ class Handler(BaseHTTPRequestHandler):
         if self.path != "/recipe":
             self.close_connection = True  # body unread, so the socket must go
             return self._error(404, "not found")
+        if API_KEY and not hmac.compare_digest(
+                (self.headers.get("x-xbloom-key") or "").encode("utf-8"), API_KEY.encode("utf-8")):
+            self.close_connection = True  # body unread, so the socket must go
+            return self._error(401, "key required")  # never log the key or the header
         ip = self.client_address[0]
         now = time.time()
         with HITS_LOCK:
