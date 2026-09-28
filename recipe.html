@@ -7,7 +7,7 @@
 <title>xBloom Recipe Advisor</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <style>
-:root{--bg:#eef1ef; --panel:#fafcfb; --ink:#121816; --dim:#566360;--line:#d3dad7; --line2:#c3ccc9; --accent:#121816; --accent-ink:#f4f7f5;--copper:#0c7361; --copper-ink:#f2fbf8; --focus:#0c7361;--disp:"Bricolage Grotesque","Helvetica Neue",Helvetica,Arial,sans-serif;--body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1211; --panel:#151b1a; --ink:#e6edea; --dim:#94a6a1;--line:#28322f; --line2:#33403c; --accent:#e6edea; --accent-ink:#0d1211;--copper:#2ea88c; --copper-ink:#04100d; --focus:#3fbf9f;}}:root[data-theme="dark"]{--bg:#0d1211; --panel:#151b1a; --ink:#e6edea; --dim:#94a6a1;--line:#28322f; --line2:#33403c; --accent:#e6edea; --accent-ink:#0d1211;--copper:#2ea88c; --copper-ink:#04100d; --focus:#3fbf9f;}*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 var(--body);padding:20px 18px 40px}main{max-width:560px;margin:0 auto}h1{font:600 1.5rem/1.2 var(--disp);margin:0 0 16px;letter-spacing:-.01em}label.f,fieldset legend,#recent h2,#slots h2,#cloud summary,.mach,h3{font-size:.8rem;font-weight:600;color:var(--dim);letter-spacing:.04em;text-transform:uppercase}label.f{display:block;margin:0 0 6px}fieldset legend{padding:0;margin-bottom:6px}#recent h2,#slots h2{margin:0 0 6px}.mach{margin:0 0 4px}h3{margin:18px 0 6px}#coffee,.tinp,.acts button,.acts .btn,#slotRows button,.chip{color:var(--ink);background:var(--panel);border:1px solid var(--line2)}#coffee,.tinp{width:100%;min-height:46px;padding:10px 12px;font:inherit;border-radius:10px}#coffee::placeholder,.tinp::placeholder{color:var(--dim)}fieldset{border:0;padding:0;margin:0 0 12px}.seg{display:flex;border:1px solid var(--line2);border-radius:10px;overflow:hidden;background:var(--panel)}.seg label{flex:1 1 0;display:flex;align-items:center;justify-content:center;min-height:44px;padding:0 6px;font-size:.94rem;cursor:pointer;border-left:1px solid var(--line)}.seg label:first-child{border-left:0}.seg input{position:absolute;opacity:0;width:1px;height:1px;margin:0}.seg input:checked + span{color:inherit;font-weight:600;text-decoration:underline}.seg label:has(input:checked){background:var(--accent);color:var(--accent-ink);font-weight:600}.seg label:has(input:checked) span{text-decoration:none}.seg label:has(input:focus-visible){outline:2px solid var(--focus);outline-offset:-3px}.field{margin:0 0 12px}#go,.fix{width:100%;min-height:52px;margin-top:4px;font:600 1.05rem var(--body);color:var(--copper-ink);background:var(--copper);border:1px solid var(--copper);border-radius:10px;cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,.card h2:focus-visible{outline:2px solid var(--focus);outline-offset:2px}#recent,#slots,#cloud{margin-top:20px}#cloud summary{padding:12px 0}#skeyForget{min-height:44px}[hidden]{display:none!important}button[disabled],.acts .primary[disabled]{background:var(--line2);border-color:var(--line2);color:var(--dim)}#slotRows b{color:var(--ink)}#recent button{display:block;width:100%;text-align:left;min-height:44px;padding:8px 12px;background:none;border:0;border-top:1px solid var(--line);color:var(--ink);font:inherit;cursor:pointer}#recent button span{color:var(--dim);font-size:.86rem}#out{margin-top:22px;min-height:3.5rem}.quiet{color:var(--dim);font-size:.94rem;margin:0}.st{color:var(--ink);font-weight:500}pre.plain{font:12px/1.4 var(--mono);color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin:10px 0 0;white-space:pre-wrap;word-break:break-word;user-select:text}.card{border-top:2px solid var(--line2);padding-top:16px}.card h2{font:600 1.35rem/1.25 var(--disp);margin:0 0 14px}.lbl{margin:-8px 0 14px}.twice,.max{color:var(--ink);font-weight:500;margin:-8px 0 14px}.err{border-top:2px solid var(--line2);padding-top:16px}.err > p{color:var(--ink);font-size:1rem}.lbl a,#cloud a{color:var(--copper)}.rows{margin:0 0 16px}.rows div{display:flex;justify-content:space-between;gap:16px;padding:7px 0;border-bottom:1px solid var(--line)}.rows b{font-weight:500;color:var(--dim);font-size:.94rem}.rows i{font-style:normal;font-size:1.2rem;font-weight:600;font-variant-numeric:tabular-nums;text-align:right;line-height:1.2}ul.pours{list-style:none;margin:0;padding:0}ul.pours li{padding:6px 0;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums;display:flex;justify-content:space-between;gap:12px}ul.pours em{font-style:normal;color:var(--ink);font-size:.9rem}p.notes{margin:0;white-space:pre-line}table.adj{width:100%;border-collapse:collapse;font-size:.94rem}table.adj td{padding:6px 0;border-bottom:1px solid var(--line);vertical-align:top}table.adj td:first-child{color:var(--ink);font-weight:500;width:40%;padding-right:14px}p.why{margin:0;color:var(--dim);font-size:.94rem;white-space:pre-line}.acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}.acts .primary{flex:1 1 100%;background:var(--copper);color:var(--copper-ink);border-color:var(--copper)}.acts button,.acts .btn,#slotRows button{flex:1 1 0;min-height:46px;font:500 .96rem var(--body);border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;text-decoration:none;text-align:center}#slotRows button{flex:0 0 auto;padding:0 14px}.notice{margin:12px 0 0;font-size:.86rem;color:var(--dim)}ul.changed{list-style:none;margin:0;padding-left:10px;border-left:2px solid var(--copper)}ul.changed li{color:var(--ink);font-size:.94rem;padding:3px 0}section.taste{margin-top:14px;padding-top:10px;border-top:1px solid var(--line)}section.taste h3{margin-top:0}.chips{display:flex;flex-wrap:wrap;gap:6px}.chip{min-height:36px;padding:0 10px;font:500 .9rem var(--body);border-radius:18px;cursor:pointer}.chip[data-k="right"]{color:var(--copper)}.chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:600}.tin{display:flex;gap:8px;margin-top:10px}.tinp{flex:1 1 0;min-width:0}.fix{width:auto;min-height:44px;margin-top:0;padding:0 14px;font-size:.94rem;font-weight:500}.miss{margin:8px 0 0}footer{max-width:560px;margin:36px auto 0;padding-top:14px;border-top:1px solid var(--line);font-size:.9rem}footer a{color:var(--copper);display:inline-block;padding:12px 0}@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+:root{--bg:#eef1ef; --panel:#fafcfb; --ink:#121816; --dim:#566360;--line:#d3dad7; --line2:#c3ccc9; --accent:#121816; --accent-ink:#f4f7f5;--copper:#0c7361; --copper-ink:#f2fbf8; --focus:#0c7361;--disp:"Bricolage Grotesque","Helvetica Neue",Helvetica,Arial,sans-serif;--body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1211; --panel:#151b1a; --ink:#e6edea; --dim:#94a6a1;--line:#28322f; --line2:#33403c; --accent:#e6edea; --accent-ink:#0d1211;--copper:#2ea88c; --copper-ink:#04100d; --focus:#3fbf9f;}}:root[data-theme="dark"]{--bg:#0d1211; --panel:#151b1a; --ink:#e6edea; --dim:#94a6a1;--line:#28322f; --line2:#33403c; --accent:#e6edea; --accent-ink:#0d1211;--copper:#2ea88c; --copper-ink:#04100d; --focus:#3fbf9f;}*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 var(--body);padding:20px 18px 40px}main{max-width:560px;margin:0 auto}h1{font:600 1.5rem/1.2 var(--disp);margin:0 0 16px;letter-spacing:-.01em}label.f,fieldset legend,#recent h2,#slots h2,#cloud summary,#claude summary,.mach,h3{font-size:.8rem;font-weight:600;color:var(--dim);letter-spacing:.04em;text-transform:uppercase}label.f{display:block;margin:0 0 6px}fieldset legend{padding:0;margin-bottom:6px}#recent h2,#slots h2{margin:0 0 6px}.mach{margin:0 0 4px}h3{margin:18px 0 6px}#coffee,.tinp,.acts button,.acts .btn,#slotRows button,.chip{color:var(--ink);background:var(--panel);border:1px solid var(--line2)}#coffee,.tinp{width:100%;min-height:46px;padding:10px 12px;font:inherit;border-radius:10px}#coffee::placeholder,.tinp::placeholder{color:var(--dim)}fieldset{border:0;padding:0;margin:0 0 12px}.seg{display:flex;border:1px solid var(--line2);border-radius:10px;overflow:hidden;background:var(--panel)}.seg label{flex:1 1 0;display:flex;align-items:center;justify-content:center;min-height:44px;padding:0 6px;font-size:.94rem;cursor:pointer;border-left:1px solid var(--line)}.seg label:first-child{border-left:0}.seg input{position:absolute;opacity:0;width:1px;height:1px;margin:0}.seg input:checked + span{color:inherit;font-weight:600;text-decoration:underline}.seg label:has(input:checked){background:var(--accent);color:var(--accent-ink);font-weight:600}.seg label:has(input:checked) span{text-decoration:none}.seg label:has(input:focus-visible){outline:2px solid var(--focus);outline-offset:-3px}.field{margin:0 0 12px}#go,.fix{width:100%;min-height:52px;margin-top:4px;font:600 1.05rem var(--body);color:var(--copper-ink);background:var(--copper);border:1px solid var(--copper);border-radius:10px;cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,.card h2:focus-visible{outline:2px solid var(--focus);outline-offset:2px}#recent,#slots,#cloud,#claude{margin-top:20px}#cloud summary,#claude summary{padding:12px 0}#skeyForget{min-height:44px}[hidden]{display:none!important}button[disabled],.acts .primary[disabled]{background:var(--line2);border-color:var(--line2);color:var(--dim)}#slotRows b{color:var(--ink)}#recent button{display:block;width:100%;text-align:left;min-height:44px;padding:8px 12px;background:none;border:0;border-top:1px solid var(--line);color:var(--ink);font:inherit;cursor:pointer}#recent button span{color:var(--dim);font-size:.86rem}#out{margin-top:22px;min-height:3.5rem}.quiet{color:var(--dim);font-size:.94rem;margin:0}.st{color:var(--ink);font-weight:500}pre.plain{font:12px/1.4 var(--mono);color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin:10px 0 0;white-space:pre-wrap;word-break:break-word;user-select:text}.card{border-top:2px solid var(--line2);padding-top:16px}.card h2{font:600 1.35rem/1.25 var(--disp);margin:0 0 14px}.lbl{margin:-8px 0 14px}.twice,.max{color:var(--ink);font-weight:500;margin:-8px 0 14px}.err{border-top:2px solid var(--line2);padding-top:16px}.err > p{color:var(--ink);font-size:1rem}.lbl a,#cloud a{color:var(--copper)}.rows{margin:0 0 16px}.rows div{display:flex;justify-content:space-between;gap:16px;padding:7px 0;border-bottom:1px solid var(--line)}.rows b{font-weight:500;color:var(--dim);font-size:.94rem}.rows i{font-style:normal;font-size:1.2rem;font-weight:600;font-variant-numeric:tabular-nums;text-align:right;line-height:1.2}ul.pours{list-style:none;margin:0;padding:0}ul.pours li{padding:6px 0;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums;display:flex;justify-content:space-between;gap:12px}ul.pours em{font-style:normal;color:var(--ink);font-size:.9rem}p.notes{margin:0;white-space:pre-line}table.adj{width:100%;border-collapse:collapse;font-size:.94rem}table.adj td{padding:6px 0;border-bottom:1px solid var(--line);vertical-align:top}table.adj td:first-child{color:var(--ink);font-weight:500;width:40%;padding-right:14px}p.why{margin:0;color:var(--dim);font-size:.94rem;white-space:pre-line}.acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}.acts .primary{flex:1 1 100%;background:var(--copper);color:var(--copper-ink);border-color:var(--copper)}.acts button,.acts .btn,#slotRows button{flex:1 1 0;min-height:46px;font:500 .96rem var(--body);border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;text-decoration:none;text-align:center}#slotRows button{flex:0 0 auto;padding:0 14px}.notice{margin:12px 0 0;font-size:.86rem;color:var(--dim)}ul.changed{list-style:none;margin:0;padding-left:10px;border-left:2px solid var(--copper)}ul.changed li{color:var(--ink);font-size:.94rem;padding:3px 0}section.taste{margin-top:14px;padding-top:10px;border-top:1px solid var(--line)}section.taste h3{margin-top:0}.chips{display:flex;flex-wrap:wrap;gap:6px}.chip{min-height:36px;padding:0 10px;font:500 .9rem var(--body);border-radius:18px;cursor:pointer}.chip[data-k="right"]{color:var(--copper)}.chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:600}.tin{display:flex;gap:8px;margin-top:10px}.tinp{flex:1 1 0;min-width:0}.fix{width:auto;min-height:44px;margin-top:0;padding:0 14px;font-size:.94rem;font-weight:500}.miss{margin:8px 0 0}footer{max-width:560px;margin:36px auto 0;padding-top:14px;border-top:1px solid var(--line);font-size:.9rem}footer a{color:var(--copper);display:inline-block;padding:12px 0}@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
@@ -56,6 +56,7 @@
 <div id="out"></div>
 
 <section id="recent" hidden><h2>Recent</h2><div id="recentList"></div></section>
+<details id="claude"><summary>Connect Claude</summary><p class="quiet">Paste an Anthropic API key. It stays in this browser and goes only to api.anthropic.com. Recipes then come from Claude Opus 5.5.</p><div class="tin"><input class="tinp" id="akeyIn" type="password" autocomplete="off" placeholder="sk-ant-…" aria-label="Anthropic API key"><button class="fix" id="akeySave">Save</button></div><p class="quiet" id="akeySt" role="status"></p><button id="akeyClear" class="chip" hidden>Clear</button></details>
 <details id="cloud"><summary>Connect the xBloom app</summary><p class="quiet">Paste the login response you captured with Proxyman, or memberId:token. It stays on this device. <a href="https://github.com/philipinosis/xbloom-guide/blob/main/FACTS.md#cloud-api-community-sources">How to capture it</a></p><div class="tin"><input class="tinp" id="skeyIn" type="password" autocomplete="off" placeholder="Paste here"><button class="fix" id="skeySave">Save</button></div><p class="quiet" id="skeySt" role="status"></p><button id="skeyForget" class="chip" hidden>Forget</button></details>
 <section id="slots" hidden><h2>Auto Mode slots</h2><div class="rows" id="slotRows"></div>
 <p class="quiet">Writes all three slots at once. The machine keeps them until you, or the app, write again.</p>
@@ -161,34 +162,40 @@ const ORIGINAL_RULES=`- model: "original"
 
 const CTRL=/[\x00-\x08\x0b\x0c\x0e-\x1f\x7f‪-‮]/g;
 const cleanCoffee=s => String(s == null ? "" : s).replace(/<[^>]*>/g, " ").replace(/[<>]/g, "").replace(CTRL, "").replace(/\s+/g, " ").trim().slice(0, 200);
-const PROCS=["washed", "natural", "honey"];
+const PROCS=["washed","natural","honey"];
 function buildPrompt(p){
 const coffee=cleanCoffee(p.coffee);
 return TEMPLATE
-.split("{machine}").join(p.model === "original" ? "Original" : "Studio")
-.split("{machine_rules}").join(p.model === "original" ? ORIGINAL_RULES : STUDIO_RULES)
+.split("{machine}").join(p.model==="original"?"Original":"Studio")
+.split("{machine_rules}").join(p.model==="original"?ORIGINAL_RULES:STUDIO_RULES)
 .split("{roast}").join(p.roast)
 .split("{cups}").join(String(p.cups))
 .split("{strength}").join(p.strength)
-.split("{process}").join(PROCS.includes(p.process) ? p.process
-: "not stated, infer from the coffee text if possible")
+.split("{process}").join(PROCS.includes(p.process)?p.process
+:"not stated, infer from the coffee text if possible")
 .split("{coffee}").join(coffee);
 }
-const API_URL=(location.port === "8018" || location.hostname === "95.216.221.95")
+const API_URL=(location.port==="8018"||location.hostname==="95.216.221.95")
 ? "/recipe" : "http://95.216.221.95:8018/recipe";
 const CLAUDE_URL="https://claude.ai/code/artifact/3eef3cf4-15f6-479e-9149-8fa8983eb65f";
 const Q=new URLSearchParams(location.search),M0=Q.get("mock"),DBG=Q.get("debug")==="ble",
-BLE=/^ble($|=)/.test(M0||"")?M0.slice(4):null,CLOUD=/^cloud($|=)/.test(M0||"")?M0.slice(6):null,
-MOCK=BLE!==null?(/^taste=/.test(BLE)?BLE:"1"):CLOUD!==null?"1":M0;
+BLE=/^ble($|=)/.test(M0||"")?M0.slice(4):null,CLOUD=/^cloud($|=)/.test(M0||"")?M0.slice(6):null,CL=/^claude($|=)/.test(M0||"")?M0.slice(7):null,
+MOCK=BLE!==null?(/^taste=/.test(BLE)?BLE:"1"):CLOUD!==null?"1":CL!==null?null:M0;
 const CMOCK=CLOUD===null?undefined:{fetch:(u,o)=>{window.__cloudBody=o.body;const x=CLOUD==="401",j=x?{}:CLOUD==="fail"?{result:"fail",info:"The recipe name is too long."}
 :{result:"success",tableId:424242,info:"Operation Successful"};
 return new Promise(z=>setTimeout(z,600,{ok:!x,status:x?401:200,json:()=>Promise.resolve(j)}));}};
+// ?mock=claude fakes api.anthropic.com; taste replies set grind 3 finer
+const AMOCK=CL===null?undefined:(window.__claudeReqs=[],{fetch:(u,o)=>{__claudeReqs.push({u,o});
+const m=/PREVIOUS RECIPE\n(.*)\n\nTASTE/.exec(JSON.parse(o.body).messages[0].content),
+r=m?JSON.parse(m[1]):GUJI(),x=CL==="401";if(m)r.grind-=3;
+const j=CL==="refusal"?{stop_reason:"refusal",content:[]}:{content:[{type:"text",text:"```json\n"+JSON.stringify(r)+"\n```"}]};
+return new Promise(z=>setTimeout(z,300,{ok:!x,status:x?401:200,json:()=>Promise.resolve(j)}));}});
 let mockRound=/^taste=/.test(MOCK || "") ? MOCK.slice(6).split(",") : null;
 const MOCKTASTE=mockRound;
-const ST=o=>o?"1‑2":"3‑5", BODY="for more body.", KEPT="Saved as it is.";
-const BIGCAP="This is as big as one brew gets at this dose.", AGAIN=" For more, run it again.";
+const ST=o=>o?"1‑2":"3‑5",BODY="for more body.",KEPT="Saved as it is.";
+const BIGCAP="This is as big as one brew gets at this dose.",AGAIN=" For more, run it again.";
 // FACTS 177/183: the pour-over band on each grind scale
-const LO=o=>o?12:13, HI=o=>o?25:70, LIM="Grind and heat are at their limits. Try ";
+const LO=o=>o?12:13,HI=o=>o?25:70,LIM="Grind and heat are at their limits. Try ";
 const TAIL={sour:" If it is still sour, the beans may be stale.",
 bitter:" If it is still bitter, try a lighter roast."};
 const RULES=[
@@ -285,7 +292,7 @@ return say("Ratio 1:"+f+" → 1:"+r.ratio+", so "+r.dose_g+" g makes "+m+" ml, a
 +(ok?" Grind "+g0+" → "+r.grind+" to keep up.":""));}};
 const has=k=>keys.indexOf(k)>=0,skip={},late=[];
 if(has("bigger")&&["sour","bitter","weak","muddy","thin"].some(k=>has(k))){
-keys=keys.filter(k=>k!=="bigger"); late.push("Fixed the taste first. Ask for a bigger cup next round."); }
+keys=keys.filter(k=>k!=="bigger"); late.push("Fixed the taste first. Ask for a bigger cup next round.");}
 if(has("muddy")&&has("thin")){keys=keys.filter(k=>k!=="thin");
 late.push("Muddy and thin body pull against each other. Fixed the muddy first; ask for body next round.");}
 const HEAD="Sour and bitter together usually means uneven extraction. ";
@@ -330,8 +337,8 @@ hist.push({symptoms:keys,changes:ch,dir:dir});
 r.history=hist.slice(-20);
 return {recipe:r,changes:ch};
 }
-const BASE={name:"House filter", dose_g:15, ratio:16, total_ml:240, grind:36, rpm:90,
-temp_c:92, flow_ml_s:3, pattern:"spiral",
+const BASE={name:"House filter",dose_g:15,ratio:16,total_ml:240,grind:36,rpm:90,
+temp_c:92,flow_ml_s:3,pattern:"spiral",
 pours:[{label:"Bloom",ml:45,pause_s:40,shake_after:true},
 {label:"Pour 2",ml:100,pause_s:20},{label:"Pour 3",ml:95,pause_s:0}],
 tasting_notes:"Stone fruit and brown sugar.\nSyrupy body, gentle acidity.\nClean, dry finish.",
@@ -341,13 +348,14 @@ function adjustFor(orig,ratio,temp,grind,rpm){
 return RULES.filter(x=>x.advice).map(x=>({taste:x.chip,do:x.advice(orig,ratio,temp,grind,rpm)}));
 }
 const wait=ms=>new Promise(r=>setTimeout(r,ms));
+const GUJI=()=>Object.assign({},BASE,{name:"Guji natural, medium"});
 async function mockAsk(onText){
-if (MOCK === "slow") await wait(6500);
+if (MOCK==="slow") await wait(6500);
 await wait(300); onText('{"name":"Guji natural, medium","dose_g":15,');
-await wait(300); onText(JSON.stringify(Object.assign({}, BASE, {name:"Guji natural, medium"})).slice(0, 420));
+await wait(300); onText(JSON.stringify(GUJI()).slice(0,420));
 await wait(200);
-if (MOCK === "err") throw new Error("mock error");
-return JSON.parse(JSON.stringify(Object.assign({}, BASE, {name:"Guji natural, medium"})));
+if (MOCK==="err") throw new Error("mock error");
+return JSON.parse(JSON.stringify(GUJI()));
 }
 const ORIGINS=[
 [/\b(ethiopia|ethiopian|yirgacheffe|guji|sidamo|sidama)\b/, "Floral and bright up front, with peach and lemon. The body is light and tea-like."],
@@ -383,171 +391,181 @@ const PROCESS=[
 [/\bwashed\b/, "Washed process keeps it clean. Acidity and clarity lead."]
 ];
 const ROAST_NOTE={
-light: "Bright and juicy, with the sweetness arriving late.",
-medium: "Sweetness sits in the middle with a clean finish.",
-dark: "Toast and molasses, with the roast sitting on top."
+light:"Bright and juicy, with the sweetness arriving late.",
+medium:"Sweetness sits in the middle with a clean finish.",
+dark:"Toast and molasses, with the roast sitting on top."
 };
 const ROAST_LOOK={
-light: "Brightness should read as juice, not as sourness.",
-medium: "The body should come out round, with no bitter edge.",
-dark: "Smoke should show without ash. Harshness means you pulled too much."
+light:"Brightness should read as juice, not as sourness.",
+medium:"The body should come out round, with no bitter edge.",
+dark:"Smoke should show without ash. Harshness means you pulled too much."
 };
 function notesFor(text,roast,process){
-const low=String(text || "").toLowerCase();
-const hit=table => { const m=table.find(x => x[0].test(low)); return m ? m[1] : ""; };
-const r=Object.hasOwn(ROAST_NOTE, roast) ? roast : "medium";
+const low=String(text||"").toLowerCase();
+const hit=table=>{const m=table.find(x=>x[0].test(low)); return m?m[1]:"";};
+const r=Object.hasOwn(ROAST_NOTE,roast)?roast:"medium";
 const origin=hit(ORIGINS);
-const pm=PROCESS.find(x => x[0].test(String(process || ""))) || PROCESS.find(x => x[0].test(low));
-const proc=pm ? pm[1] : "";
+const pm=PROCESS.find(x=>x[0].test(String(process||"")))||PROCESS.find(x=>x[0].test(low));
+const proc=pm?pm[1]:"";
 const BRIGHT=/bright|floral|jasmine|blackcurrant|citrus|berry|juicy|tea-like|acidity/i;
-if (r === "dark" && BRIGHT.test(origin + " " + proc))
+if (r==="dark"&&BRIGHT.test(origin + " " + proc))
 return [ROAST_NOTE.dark,
 "The roast covers most of the origin here. Expect cocoa and toast ahead of fruit.",
 ROAST_LOOK.dark].join("\n");
-return (origin ? [origin,proc,ROAST_LOOK[r]]
-: [ROAST_NOTE[r], ROAST_LOOK[r]]).filter(Boolean).join("\n");
+return (origin?[origin,proc,ROAST_LOOK[r]]
+:[ROAST_NOTE[r],ROAST_LOOK[r]]).filter(Boolean).join("\n");
 }
 const RATIOS={lighter:17,standard:16,stronger:15};
-const SAY={lighter:"A lighter cup is", standard:"Standard strength is", stronger:"A stronger cup is"};
+const SAY={lighter:"A lighter cup is",standard:"Standard strength is",stronger:"A stronger cup is"};
 function short(t){
 if(t.length > 28)
 t = t.replace(/\b(hacienda|finca|estate|farm|washing station|micro-?lot)\b/gi, " ")
 .replace(/\bthermal\s+shock\b/gi, " ")
 .replace(/\s+/g, " ").replace(/\s+([,;:.])/g, "$1").trim();
 const c=t.indexOf(",");
-let s=(c >= 10 && c <= 28) ? t.slice(0,c)
+let s=(c >=10&&c <=28)?t.slice(0,c)
 : (t.length > 28 ? t.slice(0, 29).replace(/\s*\S*$/, "") : t);
 s = s.replace(/[^\p{L}\p{N}\s&'’.\-]/gu, "").replace(/\s+/g, " ").trim();
 if (!/[\p{L}\p{N}]/u.test(s)) return "House filter";
 return s.replace(/[\s,;:.\-]+$/, "").replace(/(\s*\b(and|with|from|the|of)\b)+\s*[,.\-]*$/i, "").replace(/[\s,;:.\-]+$/, "") || "House filter";
 }
 function localRecipe(p){
-const orig=p.model === "original";
+const orig=p.model==="original";
 const txt=cleanCoffee(p.coffee);
 const low=txt.toLowerCase();
 const rm=/\b(light|medium|dark)[- ]?roast(ed)?\b/i.exec(low) || /\broast(ed)?\s*:?\s*(light|medium|dark)\b/i.exec(low);
-const named=rm && (Object.hasOwn(ROAST_NOTE,rm[1]) ? rm[1] : rm[2]);
-const roast=named || (Object.hasOwn(ROAST_NOTE, p.roast) ? p.roast : "medium");
-const dose=(orig || Number(p.cups) !== 2) ? 15 : 18;
-const rat=Object.hasOwn(RATIOS,p.strength) ? RATIOS[p.strength] : 16;
+const named=rm&&(Object.hasOwn(ROAST_NOTE,rm[1])?rm[1]:rm[2]);
+const roast=named||(Object.hasOwn(ROAST_NOTE,p.roast)?p.roast:"medium");
+const dose=(orig||Number(p.cups)!==2)?15:18;
+const rat=Object.hasOwn(RATIOS,p.strength)?RATIOS[p.strength]:16;
 const total=Math.min(500,dose * rat);
-const baseGrind=orig ? 18 : 36;
-const step=orig ? 1 : 3;
-let grind=baseGrind + (roast === "light" ? -step : roast === "dark" ? step : 0);
-let temp=92 + (roast === "light" ? 2 : roast === "dark" ? -3 : 0);
+const baseGrind=orig?18:36;
+const step=orig?1:3;
+let grind=baseGrind + (roast==="light"?-step:roast==="dark"?step:0);
+let temp=92 + (roast==="light"?2:roast==="dark"?-3:0);
 let bloomPause=40;const offs=[];
-const proc=PROCS.includes(p.process) ? p.process
+const proc=PROCS.includes(p.process)?p.process
 : /\b(natural|anaerobic|co-?ferment(ed)?|coferment(ed)?)\b/.test(low) ? "natural"
 : /\bhoney\b/.test(low) ? "honey" : "";
 if (proc === "natural"){ temp -= 2; bloomPause = 45; offs.push(/\b(anaerobic|co-?ferment(ed)?|coferment(ed)?)\b/.test(low)
-? "an anaerobic ferment" : "a natural process"); }
-else if (proc === "honey"){ temp -= 1; offs.push("honey process"); }
+?"an anaerobic ferment":"a natural process");}
+else if (proc==="honey"){temp -=1; offs.push("honey process");}
 if (/\bdecaf(f?einated)?\b/.test(low)){ grind -= (orig ? 1 : 2); temp -= 2; offs.push("decaf"); }
-grind=Math.min(orig ? 30 : 80,Math.max(1,grind));
-temp=Math.min(orig ? 95 : 98,Math.max(40,temp));
+grind=Math.min(orig?30:80,Math.max(1,grind));
+temp=Math.min(orig?95:98,Math.max(40,temp));
 const pours=buildPours(dose,total,bloomPause,true);
 const ratio=Math.round((total / dose) * 10) / 10;
 const cap=s=>s.charAt(0).toUpperCase() + s.slice(1);
-const dg=grind - baseGrind, why0 = [cap(roast) + " roast"].concat(offs);
-const gw=dg ? Math.abs(dg) + (Math.abs(dg) === 1 ? " step " : " steps ")
-+ (dg < 0 ? "finer" : "coarser") + " than the baseline"
-: (orig ? "the middle of the Original's range" : "the xBloom baseline");
+const dg=grind - baseGrind,why0=[cap(roast) + " roast"].concat(offs);
+const gw=dg?Math.abs(dg) + (Math.abs(dg)===1?" step ":" steps ")
++ (dg < 0?"finer":"coarser") + " than the baseline"
+:(orig?"the middle of the Original's range":"the xBloom baseline");
 const why=[
-(why0.length > 1 ? why0.slice(0, -1).join(", ") + " and " + why0[why0.length - 1] : why0[0])
+(why0.length > 1?why0.slice(0,-1).join(", ") + " and " + why0[why0.length - 1]:why0[0])
 + ", so grind " + grind + ", " + gw + ", at "
 + temp + " °C.",
-(Object.hasOwn(SAY,p.strength) ? SAY[p.strength] : SAY.standard)
+(Object.hasOwn(SAY,p.strength)?SAY[p.strength]:SAY.standard)
 + " 1:" + ratio + ", so " + dose + " g makes " + total + " ml."
 ];
 return {
-name: short((rm ? txt.slice(0, rm.index) + " " + txt.slice(rm.index + rm[0].length) : txt)
+name:short((rm?txt.slice(0,rm.index) + " " + txt.slice(rm.index + rm[0].length):txt)
 .replace(/\s+/g, " ").replace(/\s+([,;:.])/g, "$1").trim()) + ", " + roast,
-model: orig ? "original" : "studio",
-dose_g: dose,ratio: ratio,total_ml: total,
-grind: grind,rpm: orig ? null : 90,temp_c: temp,flow_ml_s: 3.0,
-pattern: "spiral", cup: "omni", pours: pours,
-tasting_notes: notesFor(txt, roast, p.process), why: why.join("\n"), adjust: adjustFor(orig, ratio, temp)
+model:orig?"original":"studio",
+dose_g:dose,ratio:ratio,total_ml:total,
+grind:grind,rpm:orig?null:90,temp_c:temp,flow_ml_s:3.0,
+pattern:"spiral",cup:"omni",pours:pours,
+tasting_notes:notesFor(txt,roast,p.process),why:why.join("\n"),adjust:adjustFor(orig,ratio,temp)
 };
 }
-const localResult=p=>Object.assign(localRecipe(p),{local:true});
-async function askModel(payload,onText,onStatus,signal){
-if (MOCK === "local" || MOCKTASTE) return localResult(payload);
-if(MOCK) return mockAsk(onText);
-try {
-const sample=await (window.claude?.use?.("sample") ?? Promise.resolve(null));
-if(sample){
-const j=await Promise.race([
-sample.json(buildPrompt(payload), {modelTier:"complex", onText:({text})=>onText(text)}),
-new Promise((_, rej) => setTimeout(() => rej(new Error("sample timed out")), 100000)),
-new Promise((_, rej) => signal.addEventListener("abort", () => rej(new Error("cancelled"))))
-]);
-if (j && typeof j === "object" && !Array.isArray(j)) return j;
+const localResult=p=>Object.assign(localRecipe(p),{src:"rules"});
+const pickBackend=o=>o.hasSample?"artifact":o.key?"claude":o.apiUrl?"server":"rules";
+const tsig=(signal,ms)=>{if(AbortSignal.any) return AbortSignal.any([signal,AbortSignal.timeout(ms)]);
+const c=new AbortController();signal.addEventListener("abort",()=>c.abort());setTimeout(()=>c.abort(),ms);return c.signal;};
+async function askClaude(prompt,key,signal){
+const r=await (AMOCK||window).fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"content-type":"application/json",
+"x-api-key":key,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},
+body:JSON.stringify({model:"claude-opus-5-5",max_tokens:8000,messages:[{role:"user",content:prompt}]}),signal:tsig(signal,60000)});
+if(!r.ok) throw Object.assign(new Error("Anthropic HTTP "+r.status),{status:r.status});
+const j=await r.json(),t=(j.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("");
+if(j.stop_reason==="refusal"||!t) throw new Error("Claude sent no recipe");
+return JSON.parse(t.slice(t.indexOf("{"),t.lastIndexOf("}")+1));
 }
-} catch(e){ console.warn(e); }
-if (!(location.protocol === "https:" && /^http:/i.test(API_URL))){
+// The Artifact's sample, then the stored Anthropic key; null when neither answers
+const askLLM=async(prompt,onText,onStatus,signal)=>{
+try {const sample=await window.claude?.use?.("sample");
+if(sample){const j=await Promise.race([sample.json(prompt,{modelTier:"complex",onText:({text})=>onText(text)}),
+new Promise((_,rej)=>{setTimeout(()=>rej(new Error("sample timed out")),100000);signal.addEventListener("abort",()=>rej(new Error("cancelled")));})]);
+if(j&&typeof j==="object"&&!Array.isArray(j)) return Object.assign(j,{src:"artifact"});}
+} catch(e){console.warn(e);}
+const k=akeyRead();
+if(k) try {onStatus("Asking Claude Opus 5.5…");return Object.assign(await askClaude(prompt,k,signal),{src:"claude"});}
+catch(e){if(e.status===401||e.status===403) akeyDraw("Anthropic rejected this key.");console.warn(e);}
+return null;
+};
+async function askModel(payload,onText,onStatus,signal){
+if (MOCK==="local"||MOCKTASTE) return localResult(payload);
+if(MOCK) return mockAsk(onText);
+const j=await askLLM(buildPrompt(payload),onText,onStatus,signal);
+if(j) return j;
+if (CL===null && !(location.protocol === "https:" && /^http:/i.test(API_URL))){
 try {
 if (onStatus) onStatus("Asking the recipe server…");
-let sig=signal;
-if(AbortSignal.any) sig=AbortSignal.any([signal,AbortSignal.timeout(125000)]);
-else {const c=new AbortController();
-signal.addEventListener("abort", () => c.abort());
-setTimeout(()=>c.abort(),125000);sig=c.signal;}
 const r=await fetch(API_URL,{method:"POST",headers:{"content-type":"application/json"},
-body:JSON.stringify(payload),signal:sig});
+body:JSON.stringify(payload),signal:tsig(signal,125000)});
 if(!r.ok){
 let msg="HTTP " + r.status;
-try {const j=await r.json();if(j && j.error) msg=String(j.error);} catch(e){}
+try {const j=await r.json();if(j&&j.error) msg=String(j.error);} catch(e){}
 const err=new Error(msg);err.status=r.status;throw err;
 }
 return await r.json();
 } catch(e){
-if(e && e.status === 429) throw e;
+if(e&&e.status===429) throw e;
 console.warn(e);
 }
 }
-if (onStatus){ onStatus("Building from xBloom's rules…"); await wait(150); }
+if (onStatus){onStatus("Building from xBloom's rules…"); await wait(150);}
 return localResult(payload);
 }
 function normalize(raw,model){
-const r=(raw && typeof raw === "object") ? raw : {};
-const orig=model === "original";
+const r=(raw&&typeof raw==="object")?raw:{};
+const orig=model==="original";
 let fixes=0;
-const num=v => (typeof v === "number" && isFinite(v)) ? v
-: (typeof v === "string" && v.trim() !== "" && isFinite(Number(v)) ? Number(v) : null);
-const fix=(given,out)=>{if(given === null || given !== out) fixes++;return out;};
+const num=v=>(typeof v==="number"&&isFinite(v))?v
+:(typeof v==="string"&&v.trim()!==""&&isFinite(Number(v))?Number(v):null);
+const fix=(given,out)=>{if(given===null||given!==out) fixes++;return out;};
 const clamp=(given,lo,hi,fallback,round)=>{
 let v=num(given);
-if(v === null) return fix(null,fallback);
+if(v===null) return fix(null,fallback);
 if(round) v=round(v);
 const c=Math.min(hi,Math.max(lo,v));
-return (c === num(given)) ? c : fix(num(given),c);
+return (c===num(given))?c:fix(num(given),c);
 };
 const o={};
-o.name = (typeof r.name === "string" && r.name.trim()) ? r.name.trim().slice(0,40) : "xBloom recipe";
-o.dose_g=orig ? (num(r.dose_g) === 15 ? 15 : fix(num(r.dose_g),15))
+o.name=(typeof r.name==="string"&&r.name.trim())?r.name.trim().slice(0,40):"xBloom recipe";
+o.dose_g=orig?(num(r.dose_g)===15?15:fix(num(r.dose_g),15))
 : clamp(r.dose_g,5,18,15,v=>Math.round(v*10)/10);
-o.grind=clamp(r.grind,1,orig ? 30 : 80,orig ? 18 : 36,Math.round);
+o.grind=clamp(r.grind,1,orig?30:80,orig?18:36,Math.round);
 o.rpm=orig ? null : clamp(r.rpm,60,120,90,v=>Math.round(v/10)*10);
 const tc=String(r.temp_c).trim().toUpperCase();
-if (tc === "RT" || tc === "BP") o.temp_c = tc;
-else o.temp_c=clamp(r.temp_c,40,orig ? 95 : 98,92,Math.round);
+if (tc==="RT"||tc==="BP") o.temp_c=tc;
+else o.temp_c=clamp(r.temp_c,40,orig?95:98,92,Math.round);
 o.flow_ml_s=clamp(r.flow_ml_s,3.0,3.5,3.0,v=>Math.round(v*10)/10);
 const pats=["spiral","centered","circular"];
-const p=String(r.pattern || "").toLowerCase();
-o.pattern = pats.includes(p) ? p : fix(r.pattern == null ? null : r.pattern, "spiral");
+const p=String(r.pattern||"").toLowerCase();
+o.pattern=pats.includes(p)?p:fix(r.pattern==null?null:r.pattern,"spiral");
 let pours=Array.isArray(r.pours)
-? r.pours.slice(0, 9).filter(x => { if (x && typeof x === "object") return true; fixes++; return false; })
-: null;
-if(!pours || !pours.length){pours=BASE.pours.map(x=>Object.assign({},x));fixes++;}
+?r.pours.slice(0,9).filter(x=>{if (x&&typeof x==="object") return true; fixes++; return false;})
+:null;
+if(!pours||!pours.length){pours=BASE.pours.map(x=>Object.assign({},x));fixes++;}
 o.pours=pours.map((q,i)=>{
 const ml=clamp(q.ml,5,160,45,Math.round);
-const lo=i === 0 ? 30 : 0;
-const ps=clamp(q.pause_s,lo,45,i === 0 ? 40 : 0,Math.round);
-return { label: (typeof q.label === "string" && q.label.trim()) ? q.label.trim().slice(0,24)
-: (i === 0 ? "Bloom" : "Pour " + (i+1)),
-ml: ml,pause_s: ps,
-shake_before: !!(q.shake_before ?? q.agitate_before),
-shake_after: !!(q.shake_after ?? q.agitate_after)};
+const lo=i===0?30:0;
+const ps=clamp(q.pause_s,lo,45,i===0?40:0,Math.round);
+return {label:(typeof q.label==="string"&&q.label.trim())?q.label.trim().slice(0,24)
+:(i===0?"Bloom":"Pour " + (i+1)),
+ml:ml,pause_s:ps,
+shake_before:!!(q.shake_before??q.agitate_before),
+shake_after:!!(q.shake_after??q.agitate_after)};
 });
 let sum=o.pours.reduce((a,b)=>a + b.ml,0);
 if(sum > 500){
@@ -555,132 +573,139 @@ const k=500 / sum;
 o.pours.forEach(x=>{x.ml=Math.max(5,Math.floor(x.ml * k));});
 sum=o.pours.reduce((a,b)=>a + b.ml,0);
 while(sum > 500){
-const big=o.pours.reduce((a,b)=>b.ml > a.ml ? b : a);
+const big=o.pours.reduce((a,b)=>b.ml > a.ml?b:a);
 const cut=Math.min(sum - 500,big.ml - 5);
-if(cut <= 0) break;
-big.ml -= cut;sum -= cut;
+if(cut <=0) break;
+big.ml -=cut;sum -=cut;
 }
 fixes++;
 }
 const givenTotal=num(r.total_ml);
-if(givenTotal !== sum){if(givenTotal !== null) fixes++;}
+if(givenTotal!==sum){if(givenTotal!==null) fixes++;}
 o.total_ml=sum;
 const ratio=num(r.ratio);
 o.ratio=Math.round((o.total_ml / o.dose_g) * 10) / 10;
-if(ratio === null || Math.abs(ratio - o.ratio) > 0.15) fixes++;
+if(ratio===null||Math.abs(ratio - o.ratio) > 0.15) fixes++;
 o.cup=/^omni$/i.test(r.cup||"omni")?"omni":"other";
-o.tasting_notes = typeof r.tasting_notes === "string" ? r.tasting_notes.trim().slice(0,600) : "";
-o.why = typeof r.why === "string" ? r.why.trim().slice(0,600) : "";
-const isStr=x => typeof x === "string";
+o.tasting_notes=typeof r.tasting_notes==="string"?r.tasting_notes.trim().slice(0,600):"";
+o.why=typeof r.why==="string"?r.why.trim().slice(0,600):"";
+const isStr=x=>typeof x==="string";
 if(Array.isArray(r.history)) o.history=r.history.slice(-20)
-.filter(h=>h && Array.isArray(h.symptoms) && Array.isArray(h.changes))
+.filter(h=>h&&Array.isArray(h.symptoms)&&Array.isArray(h.changes))
 .map(h=>{const e={symptoms:h.symptoms.filter(isStr),changes:h.changes.filter(isStr)};
-if (h.dir && typeof h.dir === "object") e.dir = h.dir;
+if (h.dir&&typeof h.dir==="object") e.dir=h.dir;
 return e;});
 if(r.locked) o.locked=true;
 o.adjust=adjustFor(orig,o.ratio,o.temp_c,o.grind,o.rpm);
-return {recipe: o,fixes: fixes};
+return {recipe:o,fixes:fixes};
 }
 function copyText(r,payload){
-const model=payload && payload.model;
+const model=payload&&payload.model;
 const cap=s=>s.charAt(0).toUpperCase() + s.slice(1);
-const t=(r.temp_c === "RT" || r.temp_c === "BP") ? r.temp_c : r.temp_c + " °C";
+const t=(r.temp_c==="RT"||r.temp_c==="BP")?r.temp_c:r.temp_c + " °C";
 const line3=["Grind " + r.grind];
-if (r.rpm != null) line3.push("RPM " + r.rpm);
+if (r.rpm !=null) line3.push("RPM " + r.rpm);
 line3.push(t, "Flow " + r.flow_ml_s.toFixed(1) + " ml/s", cap(r.pattern));
 const L=[
-r.name + " · xBloom " + (model === "original" ? "Original" : "Studio"),
+r.name + " · xBloom " + (model==="original"?"Original":"Studio"),
 "Dose " + r.dose_g + " g · Ratio 1:" + r.ratio + " · Water " + r.total_ml + " ml",
 line3.join(" · ")
 ];
 r.pours.forEach(p=>{
 let s=p.label + " " + p.ml + " ml";
-if (p.pause_s) s += ", pause " + p.pause_s + " s";
-if (p.shake_before) s += ", shake before";
-if (p.shake_after) s += ", shake after";
+if (p.pause_s) s +=", pause " + p.pause_s + " s";
+if (p.shake_before) s +=", shake before";
+if (p.shake_after) s +=", shake after";
 L.push(s);
 });
-if (model === "original" && Number(payload.cups) === 2)
+if (model==="original"&&Number(payload.cups)===2)
 L.push("15 g makes one cup. Brew this twice for two.");
-const tn =String(r.tasting_notes || "").split("\n").map(s => s.trim()).filter(Boolean).join(" ");
+const tn=String(r.tasting_notes||"").split("\n").map(s=>s.trim()).filter(Boolean).join(" ");
 if (tn) L.push("Tasting notes: " + tn);
-const wy=String(r.why || "").split("\n").map(s => s.trim()).filter(Boolean).join(" ");
-const hs=Array.isArray(r.history) ? r.history : [];
-const hy=hs.reduce((a,h)=>a.concat(h.changes),[]).filter(s=>s !== KEPT);
-if (wy) L.push((realRound(hs) ? "Why (first version): " : "Why: ") + wy);
-L.push("Adjust: " + r.adjust.map(a => a.taste + ": " + a.do).join(" | "));
+const wy=String(r.why||"").split("\n").map(s=>s.trim()).filter(Boolean).join(" ");
+const hs=Array.isArray(r.history)?r.history:[];
+const hy=hs.reduce((a,h)=>a.concat(h.changes),[]).filter(s=>s!==KEPT);
+if (wy) L.push((realRound(hs)?"Why (first version): ":"Why: ") + wy);
+L.push("Adjust: " + r.adjust.map(a=>a.taste + ": " + a.do).join(" | "));
 if (hy.length) L.push("Changed: " + hy.join(" "));
 return L.join("\n").replace(/‑/g, "-").replace(/ /g, " ");
 }
 const KEY="xbloom.recent";
 function readRecent(){
-try { const v=JSON.parse(localStorage.getItem(KEY) || "[]");
-return Array.isArray(v) ? v.filter(e => e && typeof e.recipe === "object" && e.recipe
-&& typeof e.payload === "object" && e.payload) : []; }
+try {const v=JSON.parse(localStorage.getItem(KEY)||"[]");
+return Array.isArray(v)?v.filter(e=>e&&typeof e.recipe==="object"&&e.recipe
+&&typeof e.payload==="object"&&e.payload):[];}
 catch(e){return [];}
 }
 function pushRecent(entry){
 try {const l=readRecent(),same=JSON.stringify(entry.payload);
-if(l.length && JSON.stringify(l[0].payload) === same) l[0]=entry;else l.unshift(entry);
+if(l.length&&JSON.stringify(l[0].payload)===same) l[0]=entry;else l.unshift(entry);
 localStorage.setItem(KEY,JSON.stringify(l.slice(0,5)));}
 catch(e){/* storage blocked */}
 drawRecent();
 }
 const $=s=>document.querySelector(s);
-const out=$("#out"), go = $("#go"), form = $("#form");
+const out=$("#out"),go=$("#go"),form=$("#form");
 const el=(tag,cls,text)=>{const n=document.createElement(tag);
-if(cls) n.className=cls;if(text != null) n.textContent=text;return n;};
+if(cls) n.className=cls;if(text !=null) n.textContent=text;return n;};
 const on=(n,f)=>n.addEventListener("click",f);
-const bring=n => n.scrollIntoView({ block:"start",
-behavior: matchMedia("(prefers-reduced-motion:reduce)").matches ? "auto" : "smooth" });
+const bring=n=>n.scrollIntoView({block:"start",
+behavior:matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth"});
 function inputs(){
-const g=n => form.querySelector('input[name="'+n+'"]:checked').value;
-return { coffee: cleanCoffee($("#coffee").value), roast: g("roast"), process: g("process"),
-cups: Number(g("cups")), strength: g("strength"), model: g("model") };
+const g=n=>form.querySelector('input[name="'+n+'"]:checked').value;
+return {coffee:cleanCoffee($("#coffee").value),roast:g("roast"),process:g("process"),
+cups:Number(g("cups")),strength:g("strength"),model:g("model")};
 }
 function setCups2(){
-$("#cups2").textContent = form.querySelector('input[name="model"]:checked').value === "original"
-? "2 cups · brew twice" : "Max · 18 g";
+$("#cups2").textContent=form.querySelector('input[name="model"]:checked').value==="original"
+?"2 cups · brew twice":"Max · 18 g";
 }
 const MKEY="xbloom.machine";
-const pick=(n,v) => { form.querySelector('input[name="'+n+'"][value="'+v+'"]').checked = true; };
-form.addEventListener("change", ev => { if (ev.target.name !== "model") return;
-setCups2(); drawSlots(); pick("cups", ev.target.value === "studio" ? 2 : 1);
+const pick=(n,v)=>{form.querySelector('input[name="'+n+'"][value="'+v+'"]').checked=true;};
+form.addEventListener("change",ev=>{if (ev.target.name!=="model") return;
+setCups2(); drawSlots(); pick("cups",ev.target.value==="studio"?2:1);
 try {localStorage.setItem(MKEY,ev.target.value);} catch(e){}});
 function restoreMachine(){let m=null;
 try {m=localStorage.getItem(MKEY);} catch(e){}
-if (m !== "studio" && m !== "original") return;
-pick("model", m); pick("cups", m === "studio" ? 2 : 1); }
+if (m!=="studio"&&m!=="original") return;
+pick("model",m); pick("cups",m==="studio"?2:1);}
 function setInputs(p){
-$("#coffee").value = p.coffee || "";
-const v=Object.assign({process:"unsure"}, p);
-["roast","process","cups","strength","model"].forEach(n => {
-form.querySelectorAll('input[name="'+n+'"]').forEach(i => {
-if(i.value === String(v[n])) i.checked=true;
+$("#coffee").value=p.coffee||"";
+const v=Object.assign({process:"unsure"},p);
+["roast","process","cups","strength","model"].forEach(n=>{
+form.querySelectorAll('input[name="'+n+'"]').forEach(i=>{
+if(i.value===String(v[n])) i.checked=true;
 });
 });
 setCups2();
 }
 function drawRecent(){
-const list=readRecent(), box = $("#recent"), holder = $("#recentList");
-holder.textContent = "";
+const list=readRecent(),box=$("#recent"),holder=$("#recentList");
+holder.textContent="";
 box.hidden=list.length < 2;
 if(box.hidden) return;
 list.forEach(e=>{
 try {
-const b=el("button"); b.type = "button";
-b.append(String(e.recipe.name || "Recipe") + " ",
-el("span",null,"xBloom " + (e.payload.model === "original" ? "Original" : "Studio")));
-on(b, () => {
+const b=el("button"); b.type="button";
+b.append(String(e.recipe.name||"Recipe") + " ",
+el("span",null,"xBloom " + (e.payload.model==="original"?"Original":"Studio")));
+on(b,()=>{
 try {setInputs(e.payload);
-const n=normalize(e.recipe,e.payload.model);show(n.recipe,e.payload,n.fixes,e.local);}
-catch(err){ console.warn(err); }
+const n=normalize(e.recipe,e.payload.model);show(n.recipe,e.payload,n.fixes,srcOf(e));}
+catch(err){console.warn(err);}
 });
 holder.append(b);
-} catch(err){ console.warn(err); }
+} catch(err){console.warn(err);}
 });
 }
-const SKEY="xbloom.slots",CKEY="xbloom.skey",NOKEY=!isSecureContext;
+const SKEY="xbloom.slots",CKEY="xbloom.skey",AKEY="xbloom.anthropic",NOKEY=!isSecureContext;
+// Pre-v7 Recent: local:true is rules, else server or claude.ai
+const srcOf=x=>x&&x.src||(x&&x.local?"rules":"server");
+// ?mock=claude acts as if a key were stored
+const akeyRead=()=>{try{return NOKEY?null:localStorage.getItem(AKEY)||(CL!==null?"sk-ant-mock":null);}catch(e){return null;}}
+const akeyDraw=m=>{const k=akeyRead(),s=$("#akeySt");
+s.textContent=m||(k?"Connected. Recipes come from Claude Opus 5.5.":"");
+s.classList.toggle("st",!!k&&!m);$("#akeyClear").hidden=!k;}
 let current,credraw=()=>{};
 // null on plain HTTP, or unless cloud.js loaded and a key is stored
 const skeyRead=()=>{try{return NOKEY?null:XCLOUD.parseAuth(localStorage.getItem(CKEY));}catch(e){return null;}}
@@ -733,38 +758,38 @@ d.append(u);rows.append(d);});}
 function rowsBox(pairs){
 const d=el("div","rows");
 pairs.forEach(([k,v])=>{const r=el("div");
-r.append(el("b",null,k),el("i",null,v));d.append(r); });
+r.append(el("b",null,k),el("i",null,v));d.append(r);});
 return d;
 }
-function show(r,payload,fixes,local){
+function show(r,payload,fixes,src){
 current=r;
 const card=el("div","card");
-card.append(el("p","mach","xBloom " + (payload.model === "original" ? "Original" : "Studio")));
+card.append(el("p","mach","xBloom " + (payload.model==="original"?"Original":"Studio")));
 const h2=el("h2",null,r.name); h2.setAttribute("tabindex","-1"); card.append(h2);
-if (payload.model === "original" && Number(payload.cups) === 2)
+if (payload.model==="original"&&Number(payload.cups)===2)
 card.append(el("p","quiet twice","15 g makes one cup. Brew this twice for two."));
-else if (r.ratio >= 18) card.append(el("p","quiet max","This is the most one brew makes." + AGAIN));
-else if (payload.model !== "original" && r.dose_g >= 18)
+else if (r.ratio >=18) card.append(el("p","quiet max","This is the most one brew makes." + AGAIN));
+else if (payload.model!=="original"&&r.dose_g >=18)
 card.append(el("p","quiet max","18 g is all the dripper holds."
-+ (r.locked ? "" : " The taste panel below can stretch the water.")));
-if(local){
-const lbl=el("p","quiet lbl");
++ (r.locked?"":" The taste panel below can stretch the water.")));
+const lbl=el("p","quiet lbl",{claude:"Written by Claude Opus 5.5.",server:"Written by the recipe server.",artifact:"Written by Claude on claude.ai."}[src]);
+if(src==="rules"){
 lbl.append("Built from xBloom's rules. For notes on this exact coffee, open the ");
 const a=el("a",null,"Claude version");
-a.href = CLAUDE_URL; a.target = "_blank"; a.rel = "noopener";
+a.href=CLAUDE_URL; a.target="_blank"; a.rel="noopener";
 lbl.append(a,".");
-card.append(lbl);
 }
-const t=(r.temp_c === "RT" || r.temp_c === "BP") ? r.temp_c : r.temp_c + "\u00a0°C";
+card.append(lbl);
+const t=(r.temp_c==="RT"||r.temp_c==="BP")?r.temp_c:r.temp_c + "\u00a0°C";
 const pairs=[
-["Dose", r.dose_g + " g"],
-["Ratio", "1:" + r.ratio],
-["Water", r.total_ml + " ml"],
-["Grind", String(r.grind)]
+["Dose",r.dose_g + " g"],
+["Ratio","1:" + r.ratio],
+["Water",r.total_ml + " ml"],
+["Grind",String(r.grind)]
 ];
-if (r.rpm != null) pairs.push(["RPM", String(r.rpm)]);
+if (r.rpm !=null) pairs.push(["RPM",String(r.rpm)]);
 pairs.push(["Temperature", t], ["Flow", r.flow_ml_s.toFixed(1) + " ml/s"],
-["Pattern", r.pattern.charAt(0).toUpperCase() + r.pattern.slice(1)]);
+["Pattern",r.pattern.charAt(0).toUpperCase() + r.pattern.slice(1)]);
 card.append(rowsBox(pairs));
 card.append(el("h3",null,"Pours"));
 const ul=el("ul","pours");
@@ -773,62 +798,62 @@ const li=el("li");
 const flags=[];
 if (p.shake_before) flags.push("shake before");
 if (p.shake_after) flags.push("shake after");
-li.append(el("span",null,p.label + (flags.length ? " · " : "")));
+li.append(el("span",null,p.label + (flags.length?" · ":"")));
 if (flags.length) li.firstChild.append(el("em",null,flags.join(", ")));
-li.append(el("span",null,p.ml + " ml" + (p.pause_s ? " · pause " + p.pause_s + " s" : "")));
+li.append(el("span",null,p.ml + " ml" + (p.pause_s?" · pause " + p.pause_s + " s":"")));
 ul.append(li);
 });
 card.append(ul);
-const hist=Array.isArray(r.history) ? r.history : [];
-if (hist.length){ card.append(el("h3","changedH","Changed"));
+const hist=Array.isArray(r.history)?r.history:[];
+if (hist.length){card.append(el("h3","changedH","Changed"));
 const cl=el("ul","changed");
-hist[hist.length - 1].changes.forEach(t => cl.append(el("li",null,t)));
+hist[hist.length - 1].changes.forEach(t=>cl.append(el("li",null,t)));
 card.append(cl);}
 if(r.tasting_notes){
 card.append(el("h3",null,"Tasting notes"));
 card.append(el("p","notes",r.tasting_notes));
 }
 card.append(el("h3",null,"Adjust to taste"));
-const tb=el("table","adj"), tbody = el("tbody");
-r.adjust.forEach(a => { const tr=el("tr");
-tr.append(el("td",null,a.taste),el("td",null,a.do));tbody.append(tr); });
+const tb=el("table","adj"),tbody=el("tbody");
+r.adjust.forEach(a=>{const tr=el("tr");
+tr.append(el("td",null,a.taste),el("td",null,a.do));tbody.append(tr);});
 tb.append(tbody);card.append(tb);
 if(r.why){
-card.append(el("h3",null,realRound(hist) ? "Why (first version)" : "Why"));
+card.append(el("h3",null,realRound(hist)?"Why (first version)":"Why"));
 card.append(el("p","why",r.why));
 }
-if(!r.locked) card.append(tastePanel(r,payload,local));
+if(!r.locked) card.append(tastePanel(r,payload,src));
 const acts=el("div","acts");
-const copyBtn=el("button",null,"Copy"); copyBtn.type = "button";
-const shareBtn=el("button",null,"Share"); shareBtn.type = "button";
-const againBtn=el("button",null,"Again"); againBtn.type = "button";
+const copyBtn=el("button",null,"Copy"); copyBtn.type="button";
+const shareBtn=el("button",null,"Share"); shareBtn.type="button";
+const againBtn=el("button",null,"Again"); againBtn.type="button";
 const text=()=>copyText(r,payload);
 const flash=(btn,word)=>{const old=btn.textContent;btn.textContent=word;
-setTimeout(()=>{ btn.textContent=old; },1500); };
-const plain=el("pre","plain"); plain.hidden = true;
+setTimeout(()=>{btn.textContent=old;},1500);};
+const plain=el("pre","plain"); plain.hidden=true;
 const execCopy=s=>{
-const ta=el("textarea"); ta.value = s; ta.readOnly = true;
-ta.style.cssText = "position:fixed;left:-9999px";
+const ta=el("textarea"); ta.value=s; ta.readOnly=true;
+ta.style.cssText="position:fixed;left:-9999px";
 document.body.append(ta); ta.select();
 let ok=false;
-try { ok = document.execCommand("copy"); } catch(err){ ok = false; }
+try {ok=document.execCommand("copy");} catch(err){ok=false;}
 ta.remove();
 return ok;
 };
-const failed=btn => { plain.textContent = text(); plain.hidden = false; flash(btn, "Copy failed"); };
-const fallback=btn => { if (execCopy(text())) flash(btn, "Copied"); else failed(btn); };
+const failed=btn=>{plain.textContent=text(); plain.hidden=false; flash(btn,"Copy failed");};
+const fallback=btn=>{if (execCopy(text())) flash(btn,"Copied"); else failed(btn);};
 const toClip=btn=>{
-if (navigator.clipboard && navigator.clipboard.writeText)
-navigator.clipboard.writeText(text()).then(() => flash(btn, "Copied"), () => fallback(btn));
+if (navigator.clipboard&&navigator.clipboard.writeText)
+navigator.clipboard.writeText(text()).then(()=>flash(btn,"Copied"),()=>fallback(btn));
 else fallback(btn);
 };
-on(copyBtn, () => toClip(copyBtn));
-on(shareBtn, () => {
-if (navigator.share) navigator.share({ title: r.name,text: text() })
-.catch(e => { if (!e || e.name !== "AbortError") toClip(shareBtn); });
+on(copyBtn,()=>toClip(copyBtn));
+on(shareBtn,()=>{
+if (navigator.share) navigator.share({title:r.name,text:text()})
+.catch(e=>{if (!e||e.name!=="AbortError") toClip(shareBtn);});
 else toClip(shareBtn);
 });
-on(againBtn, () => run(payload));
+on(againBtn,()=>run(payload));
 acts.append(copyBtn); acts.append(shareBtn); acts.append(againBtn);
 let bl=sendLine(),sb=null;
 try{if(!bl) XBLE.encodeRecipe(r);}catch(e){bl=e.message;}
@@ -847,10 +872,11 @@ try{d(XBLE.loadSequence(r));const sl=slotsRead();
 if(sl.every(Boolean)){L.push("");d(XBLE.slotSequence(sl));}}catch(e){L.push(e.message);}
 plain.textContent=L.join("\n");plain.hidden=false;}
 card.append(plain);
-if (fixes > 0) card.append(el("p","notice","Adjusted " + fixes + " value" + (fixes === 1 ? "" : "s") + " to the machine's limits."));
-out.textContent = ""; out.append(card); bring(card); drawSlots();
+if (fixes > 0) card.append(el("p","notice","Adjusted " + fixes + " value" + (fixes===1?"":"s") + " to the machine's limits."));
+out.textContent=""; out.append(card); bring(card); drawSlots();
 }
-function tastePanel(r,payload,local){
+const TD=[["dose_g","Dose",""," g"],["ratio","Ratio","1:",""],["total_ml","Water",""," ml"],["grind","Grind","",""],["rpm","RPM","",""],["temp_c","Temperature",""," °C"]];
+function tastePanel(r,payload,src){
 const sec=el("section","taste");
 sec.append(el("h3",null,"How did it taste?"));
 const miss=el("p","quiet miss","I did not catch a symptom. Pick a chip."); miss.hidden=true;
@@ -869,14 +895,30 @@ inp.addEventListener("input",()=>{miss.hidden=true;});
 const fix=el("button","fix","Fix the recipe"); fix.type="button";
 const tin=el("div","tin"); tin.append(inp,fix);
 sec.append(chips); sec.append(tin); sec.append(miss);
-const apply=()=>{
+const apply=async()=>{
 const typed=parseTaste(inp.value);
 const keys=KEYS.filter(k=>typed.indexOf(k)>=0
 ||chips.querySelector('[data-k="'+k+'"]').getAttribute("aria-pressed")==="true");
 if(!keys.length){miss.hidden=false;return;}
-const n=normalize(applyTaste(r,keys,payload.model==="original").recipe,payload.model);
-show(n.recipe,payload,n.fixes,local);
-pushRecent({payload:payload,recipe:n.recipe,fixes:n.fixes,local:local});
+let n=null,s=src;
+// The model rewrites, normalize clamps; applyTaste is the fallback
+if(!MOCK&&keys.indexOf("right")<0&&pickBackend({hasSample:!!window.claude?.use,key:akeyRead()})!=="rules"){
+fix.disabled=true;
+const j=await askLLM(buildPrompt(payload)+"\n\nPREVIOUS RECIPE\n"
++JSON.stringify(Object.fromEntries(["name","dose_g","ratio","total_ml","grind","rpm","temp_c","flow_ml_s","pattern","pours"].map(k=>[k,r[k]])))
++"\n\nTASTE FEEDBACK\n"+RULES.filter(x=>keys.indexOf(x.key)>=0).map(x=>x.chip).concat(inp.value.trim()||[]).join("\n")
++"\n\nRewrite the recipe to fix the feedback. Change as few numbers as needed. Keep the same JSON shape. Output one JSON object only.",
+()=>{},t=>{fix.textContent=t;},new AbortController().signal);
+if(!sec.isConnected) return;
+fix.disabled=false;
+if(j){const m=normalize(j,payload.model),q=m.recipe;
+const ch=TD.filter(([k])=>r[k]!==q[k]).map(([k,l,p,u])=>l+" "+p+r[k]+" → "+p+q[k]+u+".");
+if(r.pours.length!==q.pours.length) ch.push("Pours "+r.pours.length+" → "+q.pours.length+".");
+if(ch.length){q.history=(r.history||[]).concat({symptoms:keys,changes:ch}).slice(-20);n=m;s=j.src;}}
+}
+if(!n) n=normalize(applyTaste(r,keys,payload.model==="original").recipe,payload.model);
+show(n.recipe,payload,n.fixes,s);
+pushRecent({payload:payload,recipe:n.recipe,fixes:n.fixes,src:s});
 const h=out.querySelector(".card h2"); if(h) h.focus();
 };
 on(fix,apply);
@@ -884,32 +926,32 @@ inp.addEventListener("keydown",ev=>{if(ev.key==="Enter"){ev.preventDefault();app
 return sec;
 }
 function showError(payload,status){credraw=()=>{};
-const msg=status === 429
-? "You've hit the hourly limit of 30 recipes. Try again in an hour."
-: "The recipe server isn't reachable right now.";
+const msg=status===429
+?"You've hit the hourly limit of 30 recipes. Try again in an hour."
+:"The recipe server isn't reachable right now.";
 const box=el("div","err");
 box.setAttribute("role","alert");
 box.append(el("p","quiet",msg));
 const acts=el("div","acts");
-const loc=el("button","primary","Use xBloom's rules"); loc.type = "button";
-on(loc, () => {
+const loc=el("button","primary","Use xBloom's rules"); loc.type="button";
+on(loc,()=>{
 const n=normalize(localResult(payload),payload.model);
-show(n.recipe,payload,n.fixes,true);
-pushRecent({ payload: payload,recipe: n.recipe,fixes: n.fixes,local: true });
+show(n.recipe,payload,n.fixes,"rules");
+pushRecent({payload:payload,recipe:n.recipe,fixes:n.fixes,src:"rules"});
 });
 acts.append(loc);
-const retry=el("button",null,"Retry"); retry.type = "button";
-on(retry, () => run(payload));
+const retry=el("button",null,"Retry"); retry.type="button";
+on(retry,()=>run(payload));
 acts.append(retry);
 const ask=el("a","btn","Ask Claude instead");
-ask.href = CLAUDE_URL; ask.target = "_blank"; ask.rel = "noopener";
+ask.href=CLAUDE_URL; ask.target="_blank"; ask.rel="noopener";
 acts.append(ask);
 box.append(acts);
-out.textContent = ""; out.append(box); bring(box);
+out.textContent=""; out.append(box); bring(box);
 }
 async function run(payload){credraw=()=>{};
-go.disabled = true; go.textContent = "Writing…";
-out.textContent = "";
+go.disabled=true; go.textContent="Writing…";
+out.textContent="";
 const status=el("p","quiet");
 status.setAttribute("aria-live","polite");
 let base="Writing your recipe\u2026";
@@ -918,34 +960,34 @@ const ac=new AbortController();
 let exitBtn=null;
 const paint=()=>{ const s=Math.round((Date.now() - t0) / 1000);
 status.textContent = s >= 5 ? base.replace(/\u2026$/, "") + " · " + s + " s so far" : base;
-if (s >= 20 && !exitBtn && MOCK !== "local"){
-exitBtn = el("button",null,"Use xBloom's rules"); exitBtn.type = "button";
-on(exitBtn, () => ac.abort());
+if (s >=20&&!exitBtn&&MOCK!=="local"){
+exitBtn=el("button",null,"Use xBloom's rules"); exitBtn.type="button";
+on(exitBtn,()=>ac.abort());
 const box=el("div","acts"); box.append(exitBtn); out.append(box);
-} };
+}};
 paint();
 out.append(status);
 const tick=setInterval(paint,1000);
 try {
 const raw=await askModel(payload,text=>{
 const m=/"name"\s*:\s*"([^"]*)"/.exec(String(text || ""));
-base=(m && m[1].trim())
-? "Writing your recipe: " + m[1].trim() + "…" : "Writing your recipe…";
+base=(m&&m[1].trim())
+?"Writing your recipe: " + m[1].trim() + "…":"Writing your recipe…";
 paint();
-},s=>{ base=s; paint(); },ac.signal);
-const local=!!(raw && raw.local);
+},s=>{base=s; paint();},ac.signal);
+const src=srcOf(raw);
 let n=normalize(raw,payload.model);
 if (mockRound){
-n = normalize(applyTaste(n.recipe, mockRound, payload.model === "original").recipe, payload.model);
-mockRound=null; }
-show(n.recipe,payload,n.fixes,local);
-pushRecent({ payload: payload,recipe: n.recipe,fixes: n.fixes,local: local });
+n=normalize(applyTaste(n.recipe,mockRound,payload.model==="original").recipe,payload.model);
+mockRound=null;}
+show(n.recipe,payload,n.fixes,src);
+pushRecent({payload:payload,recipe:n.recipe,fixes:n.fixes,src:src});
 } catch (e){
 console.warn(e);
-showError(payload,e && e.status);
+showError(payload,e&&e.status);
 } finally {
 clearInterval(tick);
-go.disabled = false; go.textContent = "Make my recipe";
+go.disabled=false; go.textContent="Make my recipe";
 }
 }
 sender($("#slotGo"),$("#slotSt"),()=>XBLE.slotSequence(slotsRead()),
@@ -967,18 +1009,22 @@ const gt={connect:()=>P(gt),disconnect(){},getPrimaryService:()=>
 P({getCharacteristic:u=>P(u===XBLE.WRITE?wr:nt)})};
 Object.defineProperty(navigator,"bluetooth",
 {configurable:true,value:{requestDevice:()=>wait(800).then(()=>({gatt:gt}))}});}
-form.addEventListener("submit", ev => { ev.preventDefault(); run(inputs()); });
+form.addEventListener("submit",ev=>{ev.preventDefault(); run(inputs());});
 on($("#skeySave"),()=>{const i=$("#skeyIn"),a=window.XCLOUD&&XCLOUD.parseAuth(i.value);
 if(a){try{localStorage.setItem(CKEY,JSON.stringify(a));}catch(e){}i.value="";}
 skeyDraw(a?0:"That did not look like a login response. Paste the whole JSON, or memberId:token.");});
 on($("#skeyForget"),()=>{try{localStorage.removeItem(CKEY);}catch(e){}skeyDraw();});
-restoreMachine(); drawRecent(); setCups2(); drawSlots(); skeyDraw();
-$("#cloud").hidden=NOKEY;NOKEY&&localStorage.removeItem(CKEY);
+on($("#akeySave"),()=>{const i=$("#akeyIn"),v=i.value.trim(),ok=/^sk-ant-\S{13,393}$/.test(v);
+if(ok){try{localStorage.setItem(AKEY,v);}catch(e){}i.value="";}
+akeyDraw(ok?0:"That does not look like an Anthropic key.");});
+on($("#akeyClear"),()=>{try{localStorage.removeItem(AKEY);}catch(e){}akeyDraw();});
+restoreMachine(); drawRecent(); setCups2(); drawSlots(); skeyDraw(); akeyDraw();
+$("#cloud").hidden=$("#claude").hidden=NOKEY;if(NOKEY){localStorage.removeItem(CKEY);localStorage.removeItem(AKEY);}
 window.normalize=normalize; window.copyText=copyText; window.BASE=BASE;
 window.localRecipe=localRecipe; window.notesFor=notesFor;
 window.buildPrompt=buildPrompt; window.inputs=inputs;
 window.applyTaste=applyTaste; window.parseTaste=parseTaste; window.buildPours=buildPours;
-window.adjustFor=adjustFor; window.RULES=RULES;
+window.adjustFor=adjustFor; window.RULES=RULES; window.askClaude=askClaude; window.pickBackend=pickBackend;
 </script>
 </body>
 </html>
